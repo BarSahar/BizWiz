@@ -26,5 +26,11 @@ namespace BizWizProj.Controllers
 
             return View();
         }
+        public ActionResult Yoni_test()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
     }
 }
