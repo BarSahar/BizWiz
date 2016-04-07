@@ -160,18 +160,23 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Context\DB.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BizUsersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\openShiftsController.cs" />
+    <Compile Include="Controllers\stockItemsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Shift.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\closedShift.cs" />
+    <Compile Include="Models\openShift.cs" />
+    <Compile Include="Models\stockItem.cs" />
+    <Compile Include="Models\BizUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -231,10 +236,35 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\closedShifts\Create.cshtml" />
+    <Content Include="Views\closedShifts\Delete.cshtml" />
+    <Content Include="Views\closedShifts\Details.cshtml" />
+    <Content Include="Views\closedShifts\Edit.cshtml" />
+    <Content Include="Views\closedShifts\Index.cshtml" />
+    <Content Include="Views\openShifts\Create.cshtml" />
+    <Content Include="Views\openShifts\Delete.cshtml" />
+    <Content Include="Views\openShifts\Details.cshtml" />
+    <Content Include="Views\openShifts\Edit.cshtml" />
+    <Content Include="Views\openShifts\Index.cshtml" />
+    <Content Include="Views\stockItems\Create.cshtml" />
+    <Content Include="Views\stockItems\Delete.cshtml" />
+    <Content Include="Views\stockItems\Details.cshtml" />
+    <Content Include="Views\stockItems\Edit.cshtml" />
+    <Content Include="Views\stockItems\Index.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
+    <Content Include="Views\Users\Delete.cshtml" />
+    <Content Include="Views\Users\Details.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\BizUsers\Create.cshtml" />
+    <Content Include="Views\BizUsers\Delete.cshtml" />
+    <Content Include="Views\BizUsers\Details.cshtml" />
+    <Content Include="Views\BizUsers\Edit.cshtml" />
+    <Content Include="Views\BizUsers\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutManager.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Context\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

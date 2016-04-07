@@ -29,5 +29,13 @@ namespace BizWizProj.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<BizWizProj.Models.closedShift> closedShifts { get; set; }
+
+        public System.Data.Entity.DbSet<BizWizProj.Models.openShift> openShifts { get; set; }
+
+        public System.Data.Entity.DbSet<BizWizProj.Models.stockItem> stockItems { get; set; }
+
+        public System.Data.Entity.DbSet<BizWizProj.Models.BizUser> BizUsers { get; set; }
     }
 }
