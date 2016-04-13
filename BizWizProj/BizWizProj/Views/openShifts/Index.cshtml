@@ -12,16 +12,13 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.numOfEmployees)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.dayIndex)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.shiftIndex)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.weekDate)
+            @Html.DisplayNameFor(model => model.numOfEmployees)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.startHour)
@@ -29,14 +26,14 @@
         <th>
             @Html.DisplayNameFor(model => model.endHour)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.weekDate)
+        </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.numOfEmployees)
-        </td>
         <td>
             @Html.DisplayFor(modelItem => item.dayIndex)
         </td>
@@ -44,13 +41,16 @@
             @Html.DisplayFor(modelItem => item.shiftIndex)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.weekDate)
+            @Html.DisplayFor(modelItem => item.numOfEmployees)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.startHour)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.endHour)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.weekDate)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |

@@ -7,15 +7,17 @@ using System.Web;
 
 namespace BizWizProj.Context
 {
-    public class DB
+    public class DB:DbContext
     {
         public DB()
         {
 
         }
-        public DbSet<closedShift> closedShifts { get; set; }
-        public DbSet<openShift> shiftInProgress { get; set; }
-        public DbSet<BizUser> Users { get; set; }
-        public DbSet<stockItem> stocks { get; set; }
+
+        public DbSet<modelShift> ModelShifts { get; set; }
+        public DbSet<closedShift> ShiftHistory { get; set; }
+        public DbSet<openShift> ShiftInProgress { get; set; }
+        public DbSet<BizUser> BizUsers { get; set; }
+        public DbSet<stockItem> Stocks { get; set; }
     }
 }

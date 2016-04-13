@@ -6,13 +6,14 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using BizWizProj.Context;
 using BizWizProj.Models;
 
 namespace BizWizProj.Controllers
 {
     public class BizUsersController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private DB db = new DB();
 
         // GET: BizUsers
         public ActionResult Index()

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BizWizProj.Models.User>
+﻿@model IEnumerable<BizWizProj.Models.modelShift>
 
 @{
     ViewBag.Title = "Index";
@@ -12,19 +12,19 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.userName)
+            @Html.DisplayNameFor(model => model.dayIndex)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.password)
+            @Html.DisplayNameFor(model => model.shiftIndex)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.email)
+            @Html.DisplayNameFor(model => model.numOfEmployees)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.phoneNumber)
+            @Html.DisplayNameFor(model => model.startHour)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.employeeType)
+            @Html.DisplayNameFor(model => model.endHour)
         </th>
         <th></th>
     </tr>
@@ -32,19 +32,19 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.userName)
+            @Html.DisplayFor(modelItem => item.dayIndex)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.password)
+            @Html.DisplayFor(modelItem => item.shiftIndex)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.email)
+            @Html.DisplayFor(modelItem => item.numOfEmployees)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.phoneNumber)
+            @Html.DisplayFor(modelItem => item.startHour)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.employeeType)
+            @Html.DisplayFor(modelItem => item.endHour)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |

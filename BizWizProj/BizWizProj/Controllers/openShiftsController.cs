@@ -6,18 +6,19 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using BizWizProj.Context;
 using BizWizProj.Models;
 
 namespace BizWizProj.Controllers
 {
     public class openShiftsController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private DB db = new DB();
 
         // GET: openShifts
         public ActionResult Index()
         {
-            return View(db.openShifts.ToList());
+            return View(db.ShiftInProgress.ToList());
         }
 
         // GET: openShifts/Details/5
@@ -27,7 +28,7 @@ namespace BizWizProj.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            openShift openShift = db.openShifts.Find(id);
+            openShift openShift = db.ShiftInProgress.Find(id);
             if (openShift == null)
             {
                 return HttpNotFound();
@@ -46,11 +47,11 @@ namespace BizWizProj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,numOfEmployees,dayIndex,shiftIndex,weekDate,startHour,endHour")] openShift openShift)
+        public ActionResult Create([Bind(Include = "ID,dayIndex,shiftIndex,numOfEmployees,startHour,endHour,weekDate")] openShift openShift)
         {
             if (ModelState.IsValid)
             {
-                db.openShifts.Add(openShift);
+                db.ShiftInProgress.Add(openShift);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -65,7 +66,7 @@ namespace BizWizProj.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            openShift openShift = db.openShifts.Find(id);
+            openShift openShift = db.ShiftInProgress.Find(id);
             if (openShift == null)
             {
                 return HttpNotFound();
@@ -78,7 +79,7 @@ namespace BizWizProj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,numOfEmployees,dayIndex,shiftIndex,weekDate,startHour,endHour")] openShift openShift)
+        public ActionResult Edit([Bind(Include = "ID,dayIndex,shiftIndex,numOfEmployees,startHour,endHour,weekDate")] openShift openShift)
         {
             if (ModelState.IsValid)
             {
@@ -96,7 +97,7 @@ namespace BizWizProj.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            openShift openShift = db.openShifts.Find(id);
+            openShift openShift = db.ShiftInProgress.Find(id);
             if (openShift == null)
             {
                 return HttpNotFound();
@@ -109,8 +110,8 @@ namespace BizWizProj.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            openShift openShift = db.openShifts.Find(id);
-            db.openShifts.Remove(openShift);
+            openShift openShift = db.ShiftInProgress.Find(id);
+            db.ShiftInProgress.Remove(openShift);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

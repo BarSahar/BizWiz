@@ -12,9 +12,10 @@ namespace BizWizProj.Models
         public int ID { get; set; }
         public int dayIndex { get; set; }
         public int shiftIndex { get; set; }
-        public DateTime weekDate { get; set; }
         public TimeSpan startHour { get; set; }
         public TimeSpan endHour { get; set; }
+
+        public DateTime weekDate { get; set; }
         public BizUser shiftManager { get; set; }
         public List<BizUser> workers { get; set; }
     }

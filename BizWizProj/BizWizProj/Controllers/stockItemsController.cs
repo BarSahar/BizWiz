@@ -6,18 +6,19 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using BizWizProj.Context;
 using BizWizProj.Models;
 
 namespace BizWizProj.Controllers
 {
     public class stockItemsController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private DB db = new DB();
 
         // GET: stockItems
         public ActionResult Index()
         {
-            return View(db.stockItems.ToList());
+            return View(db.Stocks.ToList());
         }
 
         // GET: stockItems/Details/5
@@ -27,7 +28,7 @@ namespace BizWizProj.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            stockItem stockItem = db.stockItems.Find(id);
+            stockItem stockItem = db.Stocks.Find(id);
             if (stockItem == null)
             {
                 return HttpNotFound();
@@ -50,7 +51,7 @@ namespace BizWizProj.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.stockItems.Add(stockItem);
+                db.Stocks.Add(stockItem);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -65,7 +66,7 @@ namespace BizWizProj.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            stockItem stockItem = db.stockItems.Find(id);
+            stockItem stockItem = db.Stocks.Find(id);
             if (stockItem == null)
             {
                 return HttpNotFound();
@@ -96,7 +97,7 @@ namespace BizWizProj.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            stockItem stockItem = db.stockItems.Find(id);
+            stockItem stockItem = db.Stocks.Find(id);
             if (stockItem == null)
             {
                 return HttpNotFound();
@@ -109,8 +110,8 @@ namespace BizWizProj.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            stockItem stockItem = db.stockItems.Find(id);
-            db.stockItems.Remove(stockItem);
+            stockItem stockItem = db.Stocks.Find(id);
+            db.Stocks.Remove(stockItem);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

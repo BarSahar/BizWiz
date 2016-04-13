@@ -18,13 +18,13 @@
             @Html.DisplayNameFor(model => model.shiftIndex)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.weekDate)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.startHour)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.endHour)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.weekDate)
         </th>
         <th></th>
     </tr>
@@ -38,13 +38,13 @@
             @Html.DisplayFor(modelItem => item.shiftIndex)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.weekDate)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.startHour)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.endHour)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.weekDate)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |

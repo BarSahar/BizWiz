@@ -14,7 +14,7 @@ namespace BizWizProj.Models
         public string password { get; set; }
         public string email { get; set; }
         public string phoneNumber { get; set; }
-        public int employeeType { get; set; }
+        public string employeeType { get; set; }
         //1-Employee
         //2-Shift manager
         //3-SuperShift manager
