@@ -8,11 +8,32 @@ using System.Web;
 using System.Web.Mvc;
 using BizWizProj.Context;
 using BizWizProj.Models;
+using DayPilot.Web.Mvc;
+using DayPilot.Web.Mvc.Enums;
+using DayPilot.Web.Mvc.Events.Calendar;
 
 namespace BizWizProj.Controllers
 {
+
+
     public class openShiftsController : Controller
     {
+
+        public ActionResult Backend()
+        {
+            return new Dpc().CallBack(this);
+        }
+
+         class Dpc : DayPilotCalendar
+  {
+      protected override void OnInit(InitArgs e)
+      {
+          UpdateWithMessage("Welcome!", CallBackUpdateType.Full);
+      }
+  }
+
+
+
         private DB db = new DB();
 
         // GET: openShifts

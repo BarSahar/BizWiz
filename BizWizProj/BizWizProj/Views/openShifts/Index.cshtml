@@ -1,4 +1,19 @@
-﻿@model IEnumerable<BizWizProj.Models.openShift>
+﻿
+<script src="@Url.Content("~/Scripts/DayPilot/daypilot-all.min.js")" type="text/javascript"></script>
+
+
+@Html.DayPilotCalendar("dp", new DayPilotCalendarConfig
+{
+    BackendUrl = Url.Action("Backend", "openShifts")
+})
+
+
+
+
+
+
+
+@*@model IEnumerable<BizWizProj.Models.openShift>
 
 @{
     ViewBag.Title = "Index";
@@ -60,4 +75,4 @@
     </tr>
 }
 
-</table>
+</table>*@
