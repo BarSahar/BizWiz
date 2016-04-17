@@ -24,17 +24,39 @@ namespace BizWizProj.Controllers
             return new Dpc().CallBack(this);
         }
 
-         class Dpc : DayPilotCalendar
-  {
-      protected override void OnInit(InitArgs e)
-      {
-          UpdateWithMessage("Welcome!", CallBackUpdateType.Full);
-      }
-  }
+        class Dpc : DayPilotCalendar
+        {
+
+            private DB dc = new DB();
+
+            protected override void OnInit(InitArgs e)
+            {
+                UpdateWithMessage("Welcome!", CallBackUpdateType.Full);
+            }
+
+            protected override void OnFinish()
+             {
+
+                      if (UpdateType == CallBackUpdateType.None)
+                        {
+                            return;
+                        }
+
+                     DataIdField = "Id";
+                     DataStartField = "Start";
+                     DataEndField = "End";
+                     DataTextField = "Text";
+
+                     Events = from e in dc.ShiftInProgress select e;
+             }
+
+
+        }
 
 
 
         private DB db = new DB();
+        
 
         // GET: openShifts
         public ActionResult Index()
