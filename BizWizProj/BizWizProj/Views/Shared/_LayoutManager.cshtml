@@ -17,15 +17,23 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Your BizName here", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("The BizzWizz Manager", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    @*<li>@Html.ActionLink("text to display", "action result", "controller to call")</li>*@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Manage Shifts", "Index", "modelShifts")</li>
+                    <li>@Html.ActionLink("Schedule in Progress", "Index", "openShifts")</li>
+                    <li>@Html.ActionLink("Watch Schedule History", "Index", "closedShifts")</li>
+                    <li>@Html.ActionLink("Manage Employees", "Index", "BizUsers")</li>
+                    <li>@Html.ActionLink("Manage Stock Items", "Index", "stockItems")</li>
                 </ul>
-                @Html.Partial("_LoginPartial")
+                <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.ActionLink("Logout", "Logout", "Login")</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -33,7 +41,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year -֍Team BizzWizz֍</p>
         </footer>
     </div>
 

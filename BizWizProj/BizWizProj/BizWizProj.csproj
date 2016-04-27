@@ -165,6 +165,7 @@
     <Compile Include="Controllers\BizUsersController.cs" />
     <Compile Include="Controllers\closedShiftsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\modelShiftsController.cs" />
     <Compile Include="Controllers\openShiftsController.cs" />
     <Compile Include="Controllers\stockItemsController.cs" />
@@ -219,7 +220,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_LayoutManager.cshtml" />
     <Content Include="Views\BizUsers\Create.cshtml" />
     <Content Include="Views\BizUsers\Delete.cshtml" />
@@ -246,6 +246,10 @@
     <Content Include="Views\stockItems\Details.cshtml" />
     <Content Include="Views\stockItems\Edit.cshtml" />
     <Content Include="Views\stockItems\Index.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Shared\_LayoutEmployee.cshtml" />
+    <Content Include="Views\Shared\_LayoutShiftManager.cshtml" />
+    <Content Include="Views\Shared\_LayoutSuperShiftManager.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

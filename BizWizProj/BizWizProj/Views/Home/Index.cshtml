@@ -1,6 +1,13 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+@{
+    var user = Session["user"] as BizWizProj.Models.BizUser;
+}
+@if (user != null)
+{ 
+    <h3>Welcome @user.userName</h3>
+}
 
 <div class="jumbotron">
     <h1>The BizzWizz</h1>
