@@ -19,7 +19,7 @@ namespace BizWizProj.Controllers
         [HttpPost]
         public ActionResult Login(string name, string password)
         {
-            DB db = new DB();
+            DB1 db = new DB1();
 
             //TODO: change password to "admin" "backdoor"
             if ("1".Equals(name) && "1".Equals(password))

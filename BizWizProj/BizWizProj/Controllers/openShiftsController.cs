@@ -28,7 +28,7 @@ namespace BizWizProj.Controllers
         class Dpc : DayPilotCalendar
         {
 
-            private DB dc = new DB();
+            private DB1 dc = new DB1();
 
             protected override void OnInit(InitArgs e)
             {
@@ -56,7 +56,7 @@ namespace BizWizProj.Controllers
 
 
 
-        private DB db = new DB();
+        private DB1 db = new DB1();
         
 
         // GET: openShifts
