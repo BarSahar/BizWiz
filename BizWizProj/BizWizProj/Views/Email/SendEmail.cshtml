@@ -6,7 +6,7 @@
 
 <h2>SendEmail</h2>
 
-@using (Html.BeginForm("SendEmail", "Account", FormMethod.Post, new { role = "form" }))
+@using (Html.BeginForm("SendEmail", "Email", FormMethod.Post, new { role = "form" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true,"", new { @class = "text-danger" } )
