@@ -13,7 +13,7 @@ namespace BizWizProj.Controllers
 {
     public class modelShiftsController : Controller
     {
-        private DB db = new DB();
+        private DB1 db = new DB1();
 
         // GET: modelShifts
         public ActionResult Index()

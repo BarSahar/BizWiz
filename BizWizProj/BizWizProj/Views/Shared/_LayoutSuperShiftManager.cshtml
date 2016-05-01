@@ -17,7 +17,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("The BizzWizz", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("The BizzWizz SuperShift", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -25,8 +25,14 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Manage Shifts", "Index", "modelShifts")</li>
+                    <li>@Html.ActionLink("Set Next Schedule", "Index", "openShifts")</li>
+                    <li>@Html.ActionLink("Watch Schedule History", "Index", "closedShifts")</li>
+                    <li>@Html.ActionLink("Manage Stock Items", "Index", "stockItems")</li>
                 </ul>
-                
+                <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.ActionLink("Logout", "Logout", "Login")</li>
+                </ul>
             </div>
         </div>
     </div>

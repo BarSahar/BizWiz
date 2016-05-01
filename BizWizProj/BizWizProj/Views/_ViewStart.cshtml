@@ -1,3 +1,27 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@{
+    if (Session["user"]!=null)
+        {
+            string s = (Session["user"] as BizWizProj.Models.BizUser).employeeType;
+            if (s.Equals("1"))
+            {
+                Layout = "~/Views/Shared/_LayoutEmployee.cshtml";
+            }
+            if (s.Equals("2"))
+            {
+                Layout = "~/Views/Shared/_LayoutShiftManager.cshtml";
+            }        
+            if (s.Equals("3"))
+            {
+                Layout = "~/Views/Shared/_LayoutSuperShiftManager.cshtml";
+            }
+            if (s.Equals("4"))
+            {
+                Layout = "~/Views/Shared/_LayoutManager.cshtml";
+            }
+        }        
+    }
+

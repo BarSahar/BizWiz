@@ -7,9 +7,9 @@ using System.Web;
 
 namespace BizWizProj.Context
 {
-    public class DB:DbContext
+    public class DB1:DbContext
     {
-        public DB()
+        public DB1()
         {
 
         }

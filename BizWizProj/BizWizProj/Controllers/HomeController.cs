@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BizWizProj.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,12 @@ namespace BizWizProj.Controllers
     {
         public ActionResult Index()
         {
+            if (Session["user"]==null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            //else switch ((Session["user"] as BizUser).employeeType){}
+            
             return View();
         }
 
