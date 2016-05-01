@@ -8,12 +8,51 @@ using System.Web;
 using System.Web.Mvc;
 using BizWizProj.Context;
 using BizWizProj.Models;
+using DayPilot.Web.Mvc;
+using DayPilot.Web.Mvc.Events.Calendar;
+using DayPilot.Web.Mvc.Enums;
 
 namespace BizWizProj.Controllers
 {
     public class modelShiftsController : Controller
     {
-        private DB1 db = new DB1();
+
+        public ActionResult Backend()
+        {
+            return new Dpc().CallBack(this);
+        }
+
+        class Dpc : DayPilotCalendar
+        {
+
+            private DB dc = new DB();
+
+            protected override void OnInit(InitArgs e)
+            {
+                UpdateWithMessage("Welcome!", CallBackUpdateType.Full);
+            }
+
+            protected override void OnFinish()
+            {
+
+                if (UpdateType == CallBackUpdateType.None)
+                {
+                    return;
+                }
+
+                DataIdField = "Id";
+                DataStartField = "Start";
+                DataEndField = "End";
+                DataTextField = "Text";
+
+                Events = from e in dc.ModelShifts select e;
+            }
+
+
+        }
+
+
+        private DB db = new DB();
 
         // GET: modelShifts
         public ActionResult Index()

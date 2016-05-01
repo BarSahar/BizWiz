@@ -15,12 +15,15 @@ namespace BizWizProj.Models
         public int dayIndex { get; set; }
         public int shiftIndex { get; set; }
         public int numOfEmployees { get; set; }
-        public TimeSpan startHour { get; set; }
-        public TimeSpan endHour { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
 
         public DateTime weekDate { get; set; }
         public BizUser shiftManager { get; set; }
         public List<BizUser> workers { get; set; }
+
+        //Text to display workers
+        public string Text { get; set; }
 
     }
 }

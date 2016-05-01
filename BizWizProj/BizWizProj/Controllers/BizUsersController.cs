@@ -13,7 +13,7 @@ namespace BizWizProj.Controllers
 {
     public class BizUsersController : Controller
     {
-        private DB1 db = new DB1();
+        private DB db = new DB();
 
         // GET: BizUsers
         public ActionResult Index()

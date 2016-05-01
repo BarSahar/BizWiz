@@ -13,7 +13,7 @@ namespace BizWizProj.Models
         public int dayIndex { get; set; }
         public int shiftIndex { get; set; }
         public int numOfEmployees { get; set; }
-        public TimeSpan startHour { get; set; }
-        public TimeSpan endHour { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
     }
 }

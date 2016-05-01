@@ -1,24 +1,4 @@
-﻿
-<script src="@Url.Content("~/Scripts/DayPilot/daypilot-all.min.js")" type="text/javascript"></script>
-
-<br />
-<br />
-<br />
-
-@Html.DayPilotCalendar("dp", new DayPilotCalendarConfig
-{
-    BackendUrl = Url.Action("Backend", "openShifts"),
-    ViewType = DayPilot.Web.Mvc.Enums.Calendar.ViewType.Week
-
-})
-
-
-
-
-
-
-
-@*@model IEnumerable<BizWizProj.Models.openShift>
+﻿@model IEnumerable<BizWizProj.Models.openShift>
 
 @{
     ViewBag.Title = "Index";
@@ -41,13 +21,16 @@
             @Html.DisplayNameFor(model => model.numOfEmployees)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.startHour)
+            @Html.DisplayNameFor(model => model.Start)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.endHour)
+            @Html.DisplayNameFor(model => model.End)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.weekDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Text)
         </th>
         <th></th>
     </tr>
@@ -64,13 +47,16 @@
             @Html.DisplayFor(modelItem => item.numOfEmployees)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.startHour)
+            @Html.DisplayFor(modelItem => item.Start)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.endHour)
+            @Html.DisplayFor(modelItem => item.End)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.weekDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Text)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
@@ -80,4 +66,4 @@
     </tr>
 }
 
-</table>*@
+</table>

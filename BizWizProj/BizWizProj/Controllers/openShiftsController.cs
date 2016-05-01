@@ -8,56 +8,12 @@ using System.Web;
 using System.Web.Mvc;
 using BizWizProj.Context;
 using BizWizProj.Models;
-using DayPilot.Web.Mvc;
-using DayPilot.Web.Mvc.Enums;
-using DayPilot.Web.Mvc.Events.Calendar;
-using BizWizProj.Context;
 
 namespace BizWizProj.Controllers
 {
-
-
     public class openShiftsController : Controller
     {
-
-        public ActionResult Backend()
-        {
-            return new Dpc().CallBack(this);
-        }
-
-        class Dpc : DayPilotCalendar
-        {
-
-            private DB1 dc = new DB1();
-
-            protected override void OnInit(InitArgs e)
-            {
-                UpdateWithMessage("Welcome!", CallBackUpdateType.Full);
-            }
-
-            protected override void OnFinish()
-             {
-
-                      if (UpdateType == CallBackUpdateType.None)
-                        {
-                            return;
-                        }
-
-                     DataIdField = "Id";
-                     DataStartField = "Start";
-                     DataEndField = "End";
-                     DataTextField = "Text";
-
-                     Events = from e in dc.ShiftInProgress select e;
-             }
-
-
-        }
-
-
-
-        private DB1 db = new DB1();
-        
+        private DB db = new DB();
 
         // GET: openShifts
         public ActionResult Index()
@@ -91,7 +47,7 @@ namespace BizWizProj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,dayIndex,shiftIndex,numOfEmployees,startHour,endHour,weekDate")] openShift openShift)
+        public ActionResult Create([Bind(Include = "ID,dayIndex,shiftIndex,numOfEmployees,Start,End,weekDate,Text")] openShift openShift)
         {
             if (ModelState.IsValid)
             {
@@ -123,7 +79,7 @@ namespace BizWizProj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,dayIndex,shiftIndex,numOfEmployees,startHour,endHour,weekDate")] openShift openShift)
+        public ActionResult Edit([Bind(Include = "ID,dayIndex,shiftIndex,numOfEmployees,Start,End,weekDate,Text")] openShift openShift)
         {
             if (ModelState.IsValid)
             {

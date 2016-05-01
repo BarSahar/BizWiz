@@ -13,7 +13,7 @@ namespace BizWizProj.Controllers
 {
     public class closedShiftsController : Controller
     {
-        private DB1 db = new DB1();
+        private DB db = new DB();
 
         // GET: closedShifts
         public ActionResult Index()
