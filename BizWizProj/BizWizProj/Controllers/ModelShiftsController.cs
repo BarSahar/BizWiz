@@ -86,7 +86,7 @@ namespace BizWizProj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,dayIndex,shiftIndex,numOfEmployees,startHour,endHour")] modelShift modelShift)
+        public ActionResult Create([Bind(Include = "ID,dayIndex,shiftIndex,numOfEmployees,Start,End")] modelShift modelShift)
         {
             if (ModelState.IsValid)
             {
@@ -118,7 +118,7 @@ namespace BizWizProj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,dayIndex,shiftIndex,numOfEmployees,startHour,endHour")] modelShift modelShift)
+        public ActionResult Edit([Bind(Include = "ID,dayIndex,shiftIndex,numOfEmployees,Start,End")] modelShift modelShift)
         {
             if (ModelState.IsValid)
             {
