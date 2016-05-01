@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -164,6 +165,7 @@
     <Compile Include="Context\DB1.cs" />
     <Compile Include="Controllers\BizUsersController.cs" />
     <Compile Include="Controllers\closedShiftsController.cs" />
+    <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\modelShiftsController.cs" />
@@ -172,7 +174,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\closedShift.cs" />
+    <Compile Include="Models\MessageServices.cs" />
     <Compile Include="Models\openShift.cs" />
     <Compile Include="Models\modelShift.cs" />
     <Compile Include="Models\stockItem.cs" />
