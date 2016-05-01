@@ -11,27 +11,17 @@ namespace BizWizProj.Models
     {
         /* replace the placeholder in our template*/
         [Required]
-        [Display (Name = "First Name")]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
         [Required]
-        [DataType (DataType.EmailAddress)]
-        [Display (Name = "Email")]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email")]
         public string Email { get; set; }
-
     }
-
-
-
-
-
-
-
-
-
-
 
     public class AccountViewModels
     {
+
     }
 }
