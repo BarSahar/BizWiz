@@ -2,37 +2,21 @@
 <br />
 <br />
 <br />
-@Html.ActionLink("Create New shift", "Create")
 <br />
 
+<div id="dp">
+    @Html.ActionLink("Create New shift", "Create")
 
-<div style="float:left; width: 160px;">
-    <div id="nav">
-        <script type="text/javascript">
-            var nav = new DayPilot.Navigator("nav");
-            nav.showMonths = 3;
-            nav.skipMonths = 3;
-            nav.selectMode = "week";
-            nav.init();
-        </script>
-    </div>
-</div>
-<div style="margin-left: 160px;">
-    <div id="dp">
-        @Html.ActionLink("Create New shift", "Create")
-
-        @Html.DayPilotCalendar("dp", new DayPilot.Web.Mvc.DayPilotCalendarConfig
+    @Html.DayPilotCalendar("dp", new DayPilot.Web.Mvc.DayPilotCalendarConfig
 {
-    
+
     BackendUrl = Url.Action("Backend", "modelShifts"),
     ViewType = DayPilot.Web.Mvc.Enums.Calendar.ViewType.Week,
     EventDeleteHandling = DayPilot.Web.Mvc.Events.Calendar.EventDeleteHandlingType.CallBack,
     TimeFormat = DayPilot.Web.Mvc.Enums.TimeFormat.Clock24Hours,
     TimeRangeSelectedHandling = DayPilot.Web.Mvc.Events.Calendar.TimeRangeSelectedHandlingType.JavaScript,
     TimeRangeSelectedJavaScript = "create(start, end)"
-
 })
-    </div>
 </div>
 
 <script type="text/javascript">

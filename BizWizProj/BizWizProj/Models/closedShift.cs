@@ -18,5 +18,8 @@ namespace BizWizProj.Models
         public DateTime weekDate { get; set; }
         public BizUser shiftManager { get; set; }
         public List<BizUser> workers { get; set; }
+
+        //Text to display workers
+        public string Text { get; set; }
     }
 }

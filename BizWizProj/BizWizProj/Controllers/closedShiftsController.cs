@@ -8,11 +8,92 @@ using System.Web;
 using System.Web.Mvc;
 using BizWizProj.Context;
 using BizWizProj.Models;
+using DayPilot.Web.Mvc;
+using DayPilot.Web.Mvc.Events.Calendar;
+using DayPilot.Web.Mvc.Enums;
 
 namespace BizWizProj.Controllers
 {
     public class closedShiftsController : Controller
     {
+        public ActionResult Backend()
+        {
+            return new Dpc().CallBack(this);
+        }
+        //TODO: maybe remove below this
+        public ActionResult Events(DateTime? start, DateTime? end)
+        {
+            var events = from ev in db.ShiftHistory.AsEnumerable() where !(ev.End <= start || ev.Start >= end) select ev;
+
+            var result = events
+            .Select(e => new JsonEvent()
+            {
+                start = e.Start.ToString("s"),
+                end = e.End.ToString("s"),
+                text = e.Text,
+                id = e.ID.ToString()
+            })
+            .ToList();
+            return new JsonResult { Data = result };
+        }
+
+        private class JsonEvent
+        {
+            public string id { get; set; }
+            public string text { get; set; }
+            public string start { get; set; }
+            public string end { get; set; }
+        }
+        //TODO: maybe remove above this
+
+        class Dpc : DayPilotCalendar
+        {
+
+            private DB dc = new DB();
+
+            protected override void OnCommand(CommandArgs e)
+            {
+                switch (e.Command)
+                {
+                    case "navigate":
+                        StartDate = (DateTime)e.Data["start"];
+                        Update(CallBackUpdateType.Full);
+                        break;
+                }
+            }
+
+            protected override void OnEventDelete(EventDeleteArgs e)
+            {
+                int Id = Convert.ToInt32(e.Id);
+                var item = (from ev in dc.ModelShifts where ev.ID == Id select ev).First();
+
+                dc.ModelShifts.Remove(item);
+                dc.SaveChanges();
+                Update();
+            }
+
+            protected override void OnInit(InitArgs e)
+            {
+                UpdateWithMessage("Welcome!", CallBackUpdateType.Full);
+            }
+
+            protected override void OnFinish()
+            {
+
+                if (UpdateType == CallBackUpdateType.None)
+                {
+                    return;
+                }
+
+                DataIdField = "Id";
+                DataStartField = "Start";
+                DataEndField = "End";
+                DataTextField = "Text";
+
+                Events = from e in dc.ModelShifts select e;
+            }
+        }
+
         private DB db = new DB();
 
         // GET: closedShifts
