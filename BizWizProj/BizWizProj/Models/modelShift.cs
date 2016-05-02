@@ -15,5 +15,7 @@ namespace BizWizProj.Models
         public int numOfEmployees { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
+        //Calander plug in requires text field.
+        public string Text { get; set; }
     }
 }

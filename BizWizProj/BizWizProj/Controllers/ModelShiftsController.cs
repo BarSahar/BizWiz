@@ -27,7 +27,28 @@ namespace BizWizProj.Controllers
 
             private DB dc = new DB();
 
+            protected override void OnCommand(CommandArgs e)
+            {
+                switch (e.Command)
+                {
+                    case "refresh":
+                        Update();
+                        break;
+                }
+            }
+
+            protected override void OnEventDelete(EventDeleteArgs e)
+            {
+                int Id = Convert.ToInt32(e.Id);
+                var item = (from ev in dc.ModelShifts where ev.ID == Id select ev).First();
+                
+                dc.ModelShifts.Remove(item);
+                dc.SaveChanges();
+                Update();
+            }
+
             protected override void OnInit(InitArgs e)
+            
             {
                 UpdateWithMessage("Welcome!", CallBackUpdateType.Full);
             }
@@ -47,8 +68,6 @@ namespace BizWizProj.Controllers
 
                 Events = from e in dc.ModelShifts select e;
             }
-
-
         }
 
 
@@ -90,6 +109,9 @@ namespace BizWizProj.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Start
+                //modelShift.Start = ;
+                //modelShift.End;
                 db.ModelShifts.Add(modelShift);
                 db.SaveChanges();
                 return RedirectToAction("Index");
