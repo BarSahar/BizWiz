@@ -55,8 +55,23 @@ namespace BizWizProj.Controllers
             {
                 switch (e.Command)
                 {
+                    case "previous":
+                        StartDate = StartDate.AddDays(-7);
+                        Update(CallBackUpdateType.Full);
+                        break;
+
+                    case "next":
+                        StartDate = StartDate.AddDays(7);
+                        Update(CallBackUpdateType.Full);
+                        break;
+
+                    case "today":
+                        StartDate = DateTime.Today;
+                        Update(CallBackUpdateType.Full);
+                        break;
                     case "navigate":
-                        StartDate = (DateTime)e.Data["start"];
+                        //Console.WriteLine(StartDate.ToString);
+                       // StartDate = (DateTime)e.Data["start"];
                         Update(CallBackUpdateType.Full);
                         break;
                 }
