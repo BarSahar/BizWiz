@@ -225,11 +225,6 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LayoutManager.cshtml" />
-    <Content Include="Views\BizUsers\Create.cshtml" />
-    <Content Include="Views\BizUsers\Delete.cshtml" />
-    <Content Include="Views\BizUsers\Details.cshtml" />
-    <Content Include="Views\BizUsers\Edit.cshtml" />
-    <Content Include="Views\BizUsers\Index.cshtml" />
     <Content Include="Views\closedShifts\Create.cshtml" />
     <Content Include="Views\closedShifts\Delete.cshtml" />
     <Content Include="Views\closedShifts\Details.cshtml" />
@@ -254,6 +249,11 @@
     <Content Include="Views\openShifts\Details.cshtml" />
     <Content Include="Views\openShifts\Edit.cshtml" />
     <Content Include="Views\openShifts\Index.cshtml" />
+    <Content Include="Views\BizUsers\Create.cshtml" />
+    <Content Include="Views\BizUsers\Delete.cshtml" />
+    <Content Include="Views\BizUsers\Details.cshtml" />
+    <Content Include="Views\BizUsers\Edit.cshtml" />
+    <Content Include="Views\BizUsers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

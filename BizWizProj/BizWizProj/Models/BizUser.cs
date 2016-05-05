@@ -11,6 +11,7 @@ namespace BizWizProj.Models
         [Key]
         public int ID { get; set; }
         public string userName { get; set; }
+        public string FullName { get; set; }
         [DataType(DataType.Password)]
         public string password { get; set; }
         public string email { get; set; }

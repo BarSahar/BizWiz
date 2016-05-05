@@ -34,8 +34,10 @@ namespace BizWizProj.Controllers
                 if(item.userName.Equals(name) && item.password.Equals(password))
                 {
                     Session["user"] = new BizUser() {
+                        FullName = item.FullName,
                         userName = item.userName,
                         employeeType = item.employeeType,
+                        ID = item.ID
                     };
                     return RedirectToAction("Index", "Home");
                 }
