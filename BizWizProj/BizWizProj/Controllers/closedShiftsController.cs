@@ -55,19 +55,12 @@ namespace BizWizProj.Controllers
             {
                 switch (e.Command)
                 {
-                    case "previous":
-                        StartDate = StartDate.AddDays(-7);
-                        Update(CallBackUpdateType.Full);
-                        break;
-
-                    case "next":
-                        StartDate = StartDate.AddDays(7);
-                        Update(CallBackUpdateType.Full);
-                        break;
+                  
 
                     case "today":
                         StartDate = DateTime.Today;
                         Update(CallBackUpdateType.Full);
+                   
                         break;
                     case "navigate":
                         //Console.WriteLine(StartDate.ToString);
@@ -77,15 +70,7 @@ namespace BizWizProj.Controllers
                 }
             }
 
-            protected override void OnEventDelete(EventDeleteArgs e)
-            {
-                int Id = Convert.ToInt32(e.Id);
-                var item = (from ev in dc.ModelShifts where ev.ID == Id select ev).First();
-
-                dc.ModelShifts.Remove(item);
-                dc.SaveChanges();
-                Update();
-            }
+   
 
             protected override void OnInit(InitArgs e)
             {
@@ -105,7 +90,7 @@ namespace BizWizProj.Controllers
                 DataEndField = "End";
                 DataTextField = "Text";
 
-                Events = from e in dc.ModelShifts select e;
+                Events = from e in dc.ShiftHistory select e;
             }
         }
 
