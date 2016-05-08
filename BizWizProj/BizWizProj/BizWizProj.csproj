@@ -162,6 +162,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Authorization\MyAuthorizeAttribute.cs" />
     <Compile Include="Context\DB.cs" />
     <Compile Include="Controllers\BizUsersController.cs" />
     <Compile Include="Controllers\closedShiftsController.cs" />

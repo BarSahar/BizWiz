@@ -11,12 +11,13 @@ using BizWizProj.Models;
 using DayPilot.Web.Mvc;
 using DayPilot.Web.Mvc.Events.Calendar;
 using DayPilot.Web.Mvc.Enums;
+using BizWizProj.Authorization;
 
 namespace BizWizProj.Controllers
 {
+    [MyAuthorize]
     public class modelShiftsController : Controller
     {
-
         public ActionResult Backend()
         {
             return new Dpc().CallBack(this);

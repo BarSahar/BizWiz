@@ -8,9 +8,11 @@ using System.Web;
 using System.Web.Mvc;
 using BizWizProj.Context;
 using BizWizProj.Models;
+using BizWizProj.Authorization;
 
 namespace BizWizProj.Controllers
 {
+    [MyAuthorize]
     public class BizUsersController : Controller
     {
         private DB db = new DB();
