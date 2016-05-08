@@ -31,8 +31,6 @@ namespace BizWizProj.Authorization
                                        { "controller", "Login" }
                                    });
             }
-
-
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model BizWizProj.Models.openShift
+﻿@model BizWizProj.Models.OpenShift
 
 @{
     ViewBag.Title = "Edit";
@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>openShift</h4>
+        <h4>OpenShift</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ID)

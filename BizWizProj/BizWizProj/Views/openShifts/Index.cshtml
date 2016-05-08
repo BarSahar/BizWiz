@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BizWizProj.Models.openShift>
+﻿@model IEnumerable<BizWizProj.Models.OpenShift>
 
 @{
     ViewBag.Title = "Index";
@@ -12,13 +12,13 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.dayIndex)
+            @Html.DisplayNameFor(model => model.DayIndex)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.shiftIndex)
+            @Html.DisplayNameFor(model => model.ShiftIndex)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.numOfEmployees)
+            @Html.DisplayNameFor(model => model.NumOfEmployees)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Start)
@@ -27,7 +27,7 @@
             @Html.DisplayNameFor(model => model.End)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.weekDate)
+            @Html.DisplayNameFor(model => model.WeekDate)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Text)
@@ -38,13 +38,13 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.dayIndex)
+            @Html.DisplayFor(modelItem => item.DayIndex)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.shiftIndex)
+            @Html.DisplayFor(modelItem => item.ShiftIndex)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.numOfEmployees)
+            @Html.DisplayFor(modelItem => item.NumOfEmployees)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Start)
@@ -53,7 +53,7 @@
             @Html.DisplayFor(modelItem => item.End)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.weekDate)
+            @Html.DisplayFor(modelItem => item.WeekDate)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Text)

@@ -16,7 +16,7 @@ using BizWizProj.Authorization;
 namespace BizWizProj.Controllers
 {
     [MyAuthorize]
-    public class modelShiftsController : Controller
+    public class ModelShiftsController : Controller
     {
         public ActionResult Backend()
         {
@@ -78,103 +78,103 @@ namespace BizWizProj.Controllers
 
         private DB db = new DB();
 
-        // GET: modelShifts
+        // GET: ModelShifts
         public ActionResult Index()
         {
             return View(db.ModelShifts.ToList());
         }
 
-        // GET: modelShifts/Details/5
+        // GET: ModelShifts/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            modelShift modelShift = db.ModelShifts.Find(id);
-            if (modelShift == null)
+            ModelShift ModelShift = db.ModelShifts.Find(id);
+            if (ModelShift == null)
             {
                 return HttpNotFound();
             }
-            return View(modelShift);
+            return View(ModelShift);
         }
 
-        // GET: modelShifts/Create
+        // GET: ModelShifts/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: modelShifts/Create
+        // POST: ModelShifts/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,dayIndex,shiftIndex,numOfEmployees,Start,End")] modelShift modelShift)
+        public ActionResult Create([Bind(Include = "ID,DayIndex,ShiftIndex,NumOfEmployees,Start,End")] ModelShift ModelShift)
         {
             if (ModelState.IsValid)
             {
-                db.ModelShifts.Add(modelShift);
+                db.ModelShifts.Add(ModelShift);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(modelShift);
+            return View(ModelShift);
         }
 
-        // GET: modelShifts/Edit/5
+        // GET: ModelShifts/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            modelShift modelShift = db.ModelShifts.Find(id);
-            if (modelShift == null)
+            ModelShift ModelShift = db.ModelShifts.Find(id);
+            if (ModelShift == null)
             {
                 return HttpNotFound();
             }
-            return View(modelShift);
+            return View(ModelShift);
         }
 
-        // POST: modelShifts/Edit/5
+        // POST: ModelShifts/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,dayIndex,shiftIndex,numOfEmployees,Start,End")] modelShift modelShift)
+        public ActionResult Edit([Bind(Include = "ID,DayIndex,,NumOfEmployees,Start,End")] ModelShift ModelShift)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(modelShift).State = EntityState.Modified;
+                db.Entry(ModelShift).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(modelShift);
+            return View(ModelShift);
         }
 
-        // GET: modelShifts/Delete/5
+        // GET: ModelShifts/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            modelShift modelShift = db.ModelShifts.Find(id);
-            if (modelShift == null)
+            ModelShift ModelShift = db.ModelShifts.Find(id);
+            if (ModelShift == null)
             {
                 return HttpNotFound();
             }
-            return View(modelShift);
+            return View(ModelShift);
         }
 
-        // POST: modelShifts/Delete/5
+        // POST: ModelShifts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            modelShift modelShift = db.ModelShifts.Find(id);
-            db.ModelShifts.Remove(modelShift);
+            ModelShift ModelShift = db.ModelShifts.Find(id);
+            db.ModelShifts.Remove(ModelShift);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

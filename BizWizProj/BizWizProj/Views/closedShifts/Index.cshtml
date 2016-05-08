@@ -6,13 +6,6 @@
 
 <div style="float:left; width: 160px;">
     <div id="nav">
-   @*     @Html.DayPilotNavigator("nav", new DayPilotNavigatorConfig
-   {
-       BoundDayPilot = "nav",
-       SelectMode = DayPilot.Web.Mvc.Enums.Navigator.NavigatorSelectMode.Week,
-       BindCommand
-       TimeRangeSelectedJavaScript = "navigate()"
-   })*@
     </div>
 </div>
 <div class="note">
@@ -34,8 +27,8 @@
 </div>
 <script type="text/javascript">
     var nav = new DayPilot.Navigator("nav");
-    nav.showMonths = 3;
-    nav.skipMonths = 3;
+    nav.showMonths = 1;
+    nav.skipMonths = 1;
     nav.selectMode = "week";
     nav.init();
 

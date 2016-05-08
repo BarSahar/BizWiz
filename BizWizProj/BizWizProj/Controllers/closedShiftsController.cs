@@ -16,7 +16,7 @@ using BizWizProj.Authorization;
 namespace BizWizProj.Controllers
 {
     [MyAuthorize]
-    public class closedShiftsController : Controller
+    public class ClosedShiftsController : Controller
     {
         public ActionResult Backend()
         {
@@ -98,103 +98,103 @@ namespace BizWizProj.Controllers
 
         private DB db = new DB();
 
-        // GET: closedShifts
+        // GET: ClosedShifts
         public ActionResult Index()
         {
             return View(db.ShiftHistory.ToList());
         }
 
-        // GET: closedShifts/Details/5
+        // GET: ClosedShifts/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            closedShift closedShift = db.ShiftHistory.Find(id);
-            if (closedShift == null)
+            ClosedShift ClosedShift = db.ShiftHistory.Find(id);
+            if (ClosedShift == null)
             {
                 return HttpNotFound();
             }
-            return View(closedShift);
+            return View(ClosedShift);
         }
 
-        // GET: closedShifts/Create
+        // GET: ClosedShifts/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: closedShifts/Create
+        // POST: ClosedShifts/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,dayIndex,shiftIndex,Start,End,weekDate")] closedShift closedShift)
+        public ActionResult Create([Bind(Include = "ID,DayIndex,ShiftIndex,Start,End,WeekDate")] ClosedShift ClosedShift)
         {
             if (ModelState.IsValid)
             {
-                db.ShiftHistory.Add(closedShift);
+                db.ShiftHistory.Add(ClosedShift);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(closedShift);
+            return View(ClosedShift);
         }
 
-        // GET: closedShifts/Edit/5
+        // GET: ClosedShifts/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            closedShift closedShift = db.ShiftHistory.Find(id);
-            if (closedShift == null)
+            ClosedShift ClosedShift = db.ShiftHistory.Find(id);
+            if (ClosedShift == null)
             {
                 return HttpNotFound();
             }
-            return View(closedShift);
+            return View(ClosedShift);
         }
 
-        // POST: closedShifts/Edit/5
+        // POST: ClosedShifts/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,dayIndex,shiftIndex,Start,End,weekDate")] closedShift closedShift)
+        public ActionResult Edit([Bind(Include = "ID,DayIndex,ShiftIndex,Start,End,WeekDate")] ClosedShift ClosedShift)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(closedShift).State = EntityState.Modified;
+                db.Entry(ClosedShift).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(closedShift);
+            return View(ClosedShift);
         }
 
-        // GET: closedShifts/Delete/5
+        // GET: ClosedShifts/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            closedShift closedShift = db.ShiftHistory.Find(id);
-            if (closedShift == null)
+            ClosedShift ClosedShift = db.ShiftHistory.Find(id);
+            if (ClosedShift == null)
             {
                 return HttpNotFound();
             }
-            return View(closedShift);
+            return View(ClosedShift);
         }
 
-        // POST: closedShifts/Delete/5
+        // POST: ClosedShifts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            closedShift closedShift = db.ShiftHistory.Find(id);
-            db.ShiftHistory.Remove(closedShift);
+            ClosedShift ClosedShift = db.ShiftHistory.Find(id);
+            db.ShiftHistory.Remove(ClosedShift);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

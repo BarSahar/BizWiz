@@ -6,20 +6,20 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BizWizProj.Models
 {
-    public class closedShift
+    public class ClosedShift
     {
         [Key]
         public int ID { get; set; }
-        public int dayIndex { get; set; }
-        public int shiftIndex { get; set; }
+        public int DayIndex { get; set; }
+        public int ShiftIndex { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
 
-        public DateTime weekDate { get; set; }
-        public BizUser shiftManager { get; set; }
-        public List<BizUser> workers { get; set; }
+        public DateTime WeekDate { get; set; }
+        public BizUser ShiftManager { get; set; }
+        public List<BizUser> Workers { get; set; }
 
-        //Text to display workers
+        //Text to display Workers
         public string Text { get; set; }
     }
 }

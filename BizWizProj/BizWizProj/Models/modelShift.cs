@@ -6,13 +6,13 @@ using System.Web;
 
 namespace BizWizProj.Models
 {
-    public class modelShift
+    public class ModelShift
     {
         [Key]
         public int ID { get; set; }
-        public int dayIndex { get; set; }
-        public int shiftIndex { get; set; }
-        public int numOfEmployees { get; set; }
+        public int DayIndex { get; set; }
+        public int ShiftIndex { get; set; }
+        public int NumOfEmployees { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         //Calander plug in requires text field.

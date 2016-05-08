@@ -1,4 +1,4 @@
-﻿@model BizWizProj.Models.closedShift
+﻿@model BizWizProj.Models.ClosedShift
 
 @{
     ViewBag.Title = "Create";
@@ -12,22 +12,22 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>closedShift</h4>
+        <h4>ClosedShift</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.dayIndex, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.DayIndex, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.dayIndex, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.dayIndex, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.DayIndex, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DayIndex, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.shiftIndex, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ShiftIndex, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.shiftIndex, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.shiftIndex, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.ShiftIndex, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ShiftIndex, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -48,10 +48,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.weekDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.WeekDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.weekDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.weekDate, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.WeekDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.WeekDate, "", new { @class = "text-danger" })
             </div>
         </div>
 
