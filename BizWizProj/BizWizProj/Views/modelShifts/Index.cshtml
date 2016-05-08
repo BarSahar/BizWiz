@@ -6,7 +6,6 @@
 
 <div id="dp">
     @Html.ActionLink("Create New shift", "Create")
-
     @Html.DayPilotCalendar("dp", new DayPilot.Web.Mvc.DayPilotCalendarConfig
 {
 
@@ -15,11 +14,12 @@
     EventDeleteHandling = DayPilot.Web.Mvc.Events.Calendar.EventDeleteHandlingType.CallBack,
     TimeFormat = DayPilot.Web.Mvc.Enums.TimeFormat.Clock24Hours,
     TimeRangeSelectedHandling = DayPilot.Web.Mvc.Events.Calendar.TimeRangeSelectedHandlingType.JavaScript,
-    TimeRangeSelectedJavaScript = "create(start, end)"
+    TimeRangeSelectedJavaScript = "create(start, end)",
 })
 </div>
 
 <script type="text/javascript">
+    dp.commandCallBack('initNav');
 
     function create(start, end) {
         var m = new DayPilot.Modal();
@@ -33,64 +33,3 @@
     }
 
 </script>
-
-
-
-
-@*@model IEnumerable<BizWizProj.Models.modelShift>
-
-@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.dayIndex)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.shiftIndex)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.numOfEmployees)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Start)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.End)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.dayIndex)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.shiftIndex)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.numOfEmployees)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Start)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.End)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
-
-</table>*@

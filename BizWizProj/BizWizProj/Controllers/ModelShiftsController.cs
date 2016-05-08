@@ -34,6 +34,10 @@ namespace BizWizProj.Controllers
                     case "refresh":
                         Update();
                         break;
+                    case "initNav":
+                        StartDate = new DateTime(2016, 05, 01);
+                        Update(CallBackUpdateType.Full);
+                        break;
                 }
             }
 
@@ -109,9 +113,6 @@ namespace BizWizProj.Controllers
         {
             if (ModelState.IsValid)
             {
-                //Start
-                //modelShift.Start = ;
-                //modelShift.End;
                 db.ModelShifts.Add(modelShift);
                 db.SaveChanges();
                 return RedirectToAction("Index");
