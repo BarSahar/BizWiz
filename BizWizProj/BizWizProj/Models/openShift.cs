@@ -10,7 +10,7 @@ namespace BizWizProj.Models
     {
         [Key]
         public int ID { get; set; }
-        public List<BizUser> PotentialWorkers { get; set; }
+        public List<BizUser> PotentialWeekDate { get; set; }
 
         public int DayIndex { get; set; }
         public int ShiftIndex { get; set; }
@@ -22,7 +22,7 @@ namespace BizWizProj.Models
         public BizUser ShiftManager { get; set; }
         public List<BizUser> Workers { get; set; }
 
-        //Text to display Workers
+        //Text to display WeekDate
         public string Text { get; set; }
 
     }

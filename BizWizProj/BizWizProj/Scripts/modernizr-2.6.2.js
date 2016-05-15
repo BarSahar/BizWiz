@@ -829,7 +829,7 @@ window.Modernizr = (function( window, document, undefined ) {
     };
 
 
-    tests['webworkers'] = function() {
+    tests['webWeekDate'] = function() {
         return !!window.Worker;
     };
 
