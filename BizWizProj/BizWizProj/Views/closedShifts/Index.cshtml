@@ -3,7 +3,16 @@
 <br />
 <br />
 <br />
+<div>
 
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <b>Mounthly Working Hours:</b> @ViewData["Hours"]<br />
+
+</div>
 <div style="float:left; width: 160px;">
     <div id="nav">
     </div>
@@ -19,7 +28,7 @@
     @Html.DayPilotCalendar("dp", new DayPilot.Web.Mvc.DayPilotCalendarConfig
 {
 
-    BackendUrl = Url.Action("Backend", "closedShifts"),
+    BackendUrl = Url.Action("Backend", "ClosedShifts"),
     ViewType = DayPilot.Web.Mvc.Enums.Calendar.ViewType.Week,
     TimeFormat = DayPilot.Web.Mvc.Enums.TimeFormat.Clock24Hours,
 })
@@ -42,7 +51,7 @@
 
     function loadEvents() {
         
-        $.post("closedShifts/Events",
+        $.post("ClosedShifts/Events",
         {
             start: dp.visibleStart().toString(),
             end: dp.visibleEnd().toString()

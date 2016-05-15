@@ -18,6 +18,10 @@ namespace BizWizProj.Controllers
     [MyAuthorize]
     public class ClosedShiftsController : Controller
     {
+        public ClosedShiftsController()
+        {
+            db.Database.CreateIfNotExists();
+        }
         public ActionResult Backend()
         {
             return new Dpc().CallBack(this);
@@ -101,6 +105,14 @@ namespace BizWizProj.Controllers
         // GET: ClosedShifts
         public ActionResult Index()
         {
+            //Yoni
+            var counter = 0;
+            counter = HoursSum.IniHours(db, (Session["user"] as BizWizProj.Models.BizUser).FullName);
+            ViewData["Hours"] = counter;
+            //Yoni
+           
+           
+
             return View(db.ShiftHistory.ToList());
         }
 
