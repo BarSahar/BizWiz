@@ -10,7 +10,12 @@ namespace BizWizProj.Models
     {
         [Key]
         public int ID { get; set; }
+<<<<<<< HEAD
         public List<BizUser> PotentialWeekDate { get; set; }
+=======
+        //public List<BizUser> PotentialWorkers { get; set; }
+        Dictionary<BizUser, int> PotentialWorkers { get; set; }
+>>>>>>> 3536792291ca5f1ef6b4654d76f2de21e7409135
 
         public int DayIndex { get; set; }
         public int ShiftIndex { get; set; }
