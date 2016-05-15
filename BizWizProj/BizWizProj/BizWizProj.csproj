@@ -193,6 +193,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\templates\WelcomeEmail.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DayPilot\daypilot-all.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -206,7 +207,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -254,6 +257,8 @@
     <Content Include="Views\Shared\_LayoutEmployee.cshtml" />
     <Content Include="Views\Shared\_LayoutShiftManager.cshtml" />
     <Content Include="Views\Shared\_LayoutSuperShiftManager.cshtml" />
+    <Content Include="Views\Email\EmailSent.cshtml" />
+    <Content Include="Views\Email\SendEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
