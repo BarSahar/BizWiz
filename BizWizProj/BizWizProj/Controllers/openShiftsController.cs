@@ -39,8 +39,8 @@ namespace BizWizProj.Controllers
                     case "refresh":
                         Update();
                         break;
-                    case "initNav":
-                        StartDate = new DateTime(2016, 05, 01);
+                    case "nextWeek":
+                        StartDate = DateTime.Now.AddDays(7);
                         Update(CallBackUpdateType.Full);
                         break;
                 }
@@ -84,9 +84,38 @@ namespace BizWizProj.Controllers
         // GET: OpenShifts
         public ActionResult Index()
         {
+            modelTopen();
             return View(db.ShiftInProgress.ToList());
         }
-
+        public void modelTopen() //Avi
+        {
+            DateTime shiftDate = DateTime.Now.AddDays(7); //seting date for next week
+            if (db.ShiftInProgress.Any())                 // preventing override of existing data in calendar
+                return;
+            List<ModelShift> modelist = new List<ModelShift>();
+            modelist = db.ModelShifts.ToList();               //loading all date from model-shift table 
+            DateTime firstDayOfWeek = shiftDate.AddDays(-(int)shiftDate.DayOfWeek); // seting first day of next week 
+            List<OpenShift> newlist = new List<OpenShift>();
+            //ModelShift--->OpenShift
+            if (modelist.Any())
+            {
+                for (int i = 0; i < modelist.Count; i++)
+                {
+                    int x = firstDayOfWeek.Day + (int)modelist[i].Start.DayOfWeek;
+                    DateTime tempStart = new DateTime(firstDayOfWeek.Year, firstDayOfWeek.Month, x, modelist[i].Start.Hour, modelist[i].Start.Minute, modelist[i].Start.Second);
+                    DateTime tempEnd = new DateTime(firstDayOfWeek.Year, firstDayOfWeek.Month, x, modelist[i].End.Hour, modelist[i].Start.Minute, modelist[i].Start.Second);
+                    newlist.Add(new OpenShift()
+                    {
+                        DayIndex = (int)tempStart.DayOfWeek,
+                        Start = tempStart,
+                        End = tempEnd,
+                        WeekDate = firstDayOfWeek
+                    });
+                }
+                db.ShiftInProgress.AddRange(newlist);
+                db.SaveChanges();
+            }
+        }
         // GET: OpenShifts/Details/5
         public ActionResult Details(int? id)
         {

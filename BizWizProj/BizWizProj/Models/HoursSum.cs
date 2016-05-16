@@ -18,7 +18,8 @@ namespace BizWizProj.Models
         {
 
             var counter = 0;
-            List<ClosedShift> shiftList = db.ShiftHistory.Local.ToList();
+          
+            List<ClosedShift> shiftList = db.ShiftHistory.ToList();
             shiftList.Reverse(); //start from the end
             if (shiftList != null)
             {
@@ -50,13 +51,13 @@ namespace BizWizProj.Models
                 }
             }
 
-
-            //Yoni
+        
+            
             return counter;
 
         }
 
-
+        
 
 
     }
