@@ -88,11 +88,11 @@ namespace BizWizProj.Controllers
             return View(db.ShiftInProgress.ToList());
         }
 
-        public ActionResult OpenToClose() //Avi OpenShift-->CloseShift
+        public void OpenToClose() //Avi OpenShift-->CloseShift
         {
             List<OpenShift> openShiftList = new List<OpenShift>();
             if (!db.ShiftInProgress.Any())  // checking if open shift is empty
-                return new Dpc().CallBack(this);
+                return;
             ;
             openShiftList = db.ShiftInProgress.ToList(); //loading all date from open shift table
             List<ClosedShift> newCloseShiftsList = new List<ClosedShift>(); //creating new close shift list that gonna be added to close shift table 
@@ -112,7 +112,7 @@ namespace BizWizProj.Controllers
             db.ShiftHistory.AddRange(newCloseShiftsList); //Adding all new close shift to close shift db
             db.ShiftInProgress.RemoveRange(openShiftList);// clearing open shift db
             db.SaveChanges();
-            return new Dpc().CallBack(this);
+            
             
         }
 
