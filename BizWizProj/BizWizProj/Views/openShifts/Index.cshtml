@@ -4,6 +4,8 @@
 <br />
 <br />
 
+
+
 <div id="dp">
 
     @Html.DayPilotCalendar("dp", new DayPilot.Web.Mvc.DayPilotCalendarConfig
@@ -20,6 +22,12 @@
     //EventClickJavaScript = "editEvent(e.value());"
 })
 </div>
+<br />
+@using (Html.BeginForm())
+{
+    <input type="button" name="button" class="button1" value="Close Shift" onclick="location.href='@Url.Action("OpenToClose", "OpenShifts")'" />
+}
+
 
 <script type="text/javascript">
     dp.commandCallBack('nextWeek');

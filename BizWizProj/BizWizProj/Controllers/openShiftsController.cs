@@ -84,19 +84,48 @@ namespace BizWizProj.Controllers
         // GET: OpenShifts
         public ActionResult Index()
         {
-            modelTopen();
+            ModelTopen();
             return View(db.ShiftInProgress.ToList());
         }
-        public void modelTopen() //Avi
+
+        public ActionResult OpenToClose() //Avi OpenShift-->CloseShift
+        {
+            List<OpenShift> openShiftList = new List<OpenShift>();
+            if (!db.ShiftInProgress.Any())  // checking if open shift is empty
+                return new Dpc().CallBack(this);
+            ;
+            openShiftList = db.ShiftInProgress.ToList(); //loading all date from open shift table
+            List<ClosedShift> newCloseShiftsList = new List<ClosedShift>(); //creating new close shift list that gonna be added to close shift table 
+            for(int i=0;i<openShiftList.Count;i++)
+            {
+                newCloseShiftsList.Add(new ClosedShift(){
+                DayIndex=openShiftList[i].DayIndex,
+                ShiftIndex=openShiftList[i].ShiftIndex,
+                Start=openShiftList[i].Start,
+                End=openShiftList[i].End,
+                WeekDate=openShiftList[i].WeekDate,
+                ShiftManager=openShiftList[i].ShiftManager,
+                Workers=openShiftList[i].Workers,
+                Text=openShiftList[i].Text
+                }); 
+            }
+            db.ShiftHistory.AddRange(newCloseShiftsList); //Adding all new close shift to close shift db
+            db.ShiftInProgress.RemoveRange(openShiftList);// clearing open shift db
+            db.SaveChanges();
+            return new Dpc().CallBack(this);
+            
+        }
+
+        public void ModelTopen() //Avi ModelShift--->OpenShift
         {
             DateTime shiftDate = DateTime.Now.AddDays(7); //seting date for next week
-            if (db.ShiftInProgress.Any())                 // preventing override of existing data in calendar
+            if (!db.ShiftInProgress.Any())                 // preventing override of existing data in calendar
                 return;
             List<ModelShift> modelist = new List<ModelShift>();
             modelist = db.ModelShifts.ToList();               //loading all date from model-shift table 
             DateTime firstDayOfWeek = shiftDate.AddDays(-(int)shiftDate.DayOfWeek); // seting first day of next week 
             List<OpenShift> newlist = new List<OpenShift>();
-            //ModelShift--->OpenShift
+            
             if (modelist.Any())
             {
                 for (int i = 0; i < modelist.Count; i++)
