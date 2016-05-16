@@ -1,24 +1,4 @@
-﻿
-<script src="@Url.Content("~/Scripts/DayPilot/daypilot-all.min.js")" type="text/javascript"></script>
-
-<br />
-<br />
-<br />
-
-@Html.DayPilotCalendar("dp", new DayPilotCalendarConfig
-{
-    BackendUrl = Url.Action("Backend", "openShifts"),
-    ViewType = DayPilot.Web.Mvc.Enums.Calendar.ViewType.Week
-
-})
-
-
-
-
-
-
-
-@*@model IEnumerable<BizWizProj.Models.openShift>
+﻿@model IEnumerable<BizWizProj.Models.OpenShift>
 
 @{
     ViewBag.Title = "Index";
@@ -32,22 +12,25 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.dayIndex)
+            @Html.DisplayNameFor(model => model.DayIndex)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.shiftIndex)
+            @Html.DisplayNameFor(model => model.ShiftIndex)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.numOfEmployees)
+            @Html.DisplayNameFor(model => model.NumOfEmployees)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.startHour)
+            @Html.DisplayNameFor(model => model.Start)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.endHour)
+            @Html.DisplayNameFor(model => model.End)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.weekDate)
+            @Html.DisplayNameFor(model => model.WeekDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Text)
         </th>
         <th></th>
     </tr>
@@ -55,22 +38,25 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.dayIndex)
+            @Html.DisplayFor(modelItem => item.DayIndex)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.shiftIndex)
+            @Html.DisplayFor(modelItem => item.ShiftIndex)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.numOfEmployees)
+            @Html.DisplayFor(modelItem => item.NumOfEmployees)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.startHour)
+            @Html.DisplayFor(modelItem => item.Start)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.endHour)
+            @Html.DisplayFor(modelItem => item.End)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.weekDate)
+            @Html.DisplayFor(modelItem => item.WeekDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Text)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
@@ -80,4 +66,4 @@
     </tr>
 }
 
-</table>*@
+</table>

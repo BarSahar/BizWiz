@@ -11,150 +11,113 @@ using BizWizProj.Models;
 using DayPilot.Web.Mvc;
 using DayPilot.Web.Mvc.Enums;
 using DayPilot.Web.Mvc.Events.Calendar;
+using BizWizProj.Context;
+using BizWizProj.Authorization;
 
 namespace BizWizProj.Controllers
 {
-
-
-    public class openShiftsController : Controller
+    [MyAuthorize]
+    public class OpenShiftsController : Controller
     {
+        private DB db = new DB();
 
-        public ActionResult Backend()
-        {
-            return new Dpc().CallBack(this);
-        }
-
-        class Dpc : DayPilotCalendar
-        {
-
-            private DB1 dc = new DB1();
-
-            protected override void OnInit(InitArgs e)
-            {
-                UpdateWithMessage("Welcome!", CallBackUpdateType.Full);
-            }
-
-            protected override void OnFinish()
-             {
-
-                      if (UpdateType == CallBackUpdateType.None)
-                        {
-                            return;
-                        }
-
-                     DataIdField = "Id";
-                     DataStartField = "Start";
-                     DataEndField = "End";
-                     DataTextField = "Text";
-
-                     Events = from e in dc.ShiftInProgress select e;
-             }
-
-
-        }
-
-
-
-        private DB1 db = new DB1();
-        
-
-        // GET: openShifts
+        // GET: OpenShifts
         public ActionResult Index()
         {
             return View(db.ShiftInProgress.ToList());
         }
 
-        // GET: openShifts/Details/5
+        // GET: OpenShifts/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            openShift openShift = db.ShiftInProgress.Find(id);
-            if (openShift == null)
+            OpenShift OpenShift = db.ShiftInProgress.Find(id);
+            if (OpenShift == null)
             {
                 return HttpNotFound();
             }
-            return View(openShift);
+            return View(OpenShift);
         }
 
-        // GET: openShifts/Create
+        // GET: OpenShifts/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: openShifts/Create
+        // POST: OpenShifts/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,dayIndex,shiftIndex,numOfEmployees,startHour,endHour,weekDate")] openShift openShift)
+        public ActionResult Create([Bind(Include = "ID,DayIndex,ShiftIndex,NumOfEmployees,Start,End,WeekDate,Text")] OpenShift OpenShift)
         {
             if (ModelState.IsValid)
             {
-                db.ShiftInProgress.Add(openShift);
+                db.ShiftInProgress.Add(OpenShift);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(openShift);
+            return View(OpenShift);
         }
 
-        // GET: openShifts/Edit/5
+        // GET: OpenShifts/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            openShift openShift = db.ShiftInProgress.Find(id);
-            if (openShift == null)
+            OpenShift OpenShift = db.ShiftInProgress.Find(id);
+            if (OpenShift == null)
             {
                 return HttpNotFound();
             }
-            return View(openShift);
+            return View(OpenShift);
         }
 
-        // POST: openShifts/Edit/5
+        // POST: OpenShifts/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,dayIndex,shiftIndex,numOfEmployees,startHour,endHour,weekDate")] openShift openShift)
+        public ActionResult Edit([Bind(Include = "ID,DayIndex,ShiftIndex,NumOfEmployees,Start,End,WeekDate,Text")] OpenShift OpenShift)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(openShift).State = EntityState.Modified;
+                db.Entry(OpenShift).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(openShift);
+            return View(OpenShift);
         }
 
-        // GET: openShifts/Delete/5
+        // GET: OpenShifts/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            openShift openShift = db.ShiftInProgress.Find(id);
-            if (openShift == null)
+            OpenShift OpenShift = db.ShiftInProgress.Find(id);
+            if (OpenShift == null)
             {
                 return HttpNotFound();
             }
-            return View(openShift);
+            return View(OpenShift);
         }
 
-        // POST: openShifts/Delete/5
+        // POST: OpenShifts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            openShift openShift = db.ShiftInProgress.Find(id);
-            db.ShiftInProgress.Remove(openShift);
+            OpenShift OpenShift = db.ShiftInProgress.Find(id);
+            db.ShiftInProgress.Remove(OpenShift);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

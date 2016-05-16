@@ -55,12 +55,24 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -162,25 +174,28 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Context\DB1.cs" />
+    <Compile Include="Authorization\MyAuthorizeAttribute.cs" />
+    <Compile Include="Context\DB.cs" />
     <Compile Include="Controllers\BizUsersController.cs" />
-    <Compile Include="Controllers\closedShiftsController.cs" />
+    <Compile Include="Controllers\ClosedShiftsController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
-    <Compile Include="Controllers\modelShiftsController.cs" />
-    <Compile Include="Controllers\openShiftsController.cs" />
-    <Compile Include="Controllers\stockItemsController.cs" />
+    <Compile Include="Controllers\ModelShiftsController.cs" />
+    <Compile Include="Controllers\OpenShiftsController.cs" />
+    <Compile Include="Controllers\StockItemsController.cs" />
+    <Compile Include="Controllers\SystemNoticesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\closedShift.cs" />
+    <Compile Include="Models\ClosedShift.cs" />
     <Compile Include="Models\MessageServices.cs" />
-    <Compile Include="Models\openShift.cs" />
-    <Compile Include="Models\modelShift.cs" />
-    <Compile Include="Models\stockItem.cs" />
+    <Compile Include="Models\OpenShift.cs" />
+    <Compile Include="Models\ModelShift.cs" />
+    <Compile Include="Models\StockItem.cs" />
     <Compile Include="Models\BizUser.cs" />
+    <Compile Include="Models\SystemNotices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -193,7 +208,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Content\templates\WelcomeEmail.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DayPilot\daypilot-all.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -228,40 +242,39 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LayoutManager.cshtml" />
+    <Content Include="Views\ClosedShifts\Create.cshtml" />
+    <Content Include="Views\ClosedShifts\Delete.cshtml" />
+    <Content Include="Views\ClosedShifts\Details.cshtml" />
+    <Content Include="Views\ClosedShifts\Edit.cshtml" />
+    <Content Include="Views\ClosedShifts\Index.cshtml" />
+    <Content Include="Views\ModelShifts\Create.cshtml" />
+    <Content Include="Views\ModelShifts\Delete.cshtml" />
+    <Content Include="Views\ModelShifts\Details.cshtml" />
+    <Content Include="Views\ModelShifts\Edit.cshtml" />
+    <Content Include="Views\ModelShifts\Index.cshtml" />
+    <Content Include="Views\StockItems\Create.cshtml" />
+    <Content Include="Views\StockItems\Delete.cshtml" />
+    <Content Include="Views\StockItems\Details.cshtml" />
+    <Content Include="Views\StockItems\Edit.cshtml" />
+    <Content Include="Views\StockItems\Index.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Shared\_LayoutEmployee.cshtml" />
+    <Content Include="Views\Shared\_LayoutShiftManager.cshtml" />
+    <Content Include="Views\Shared\_LayoutSuperShiftManager.cshtml" />
+    <Content Include="Views\OpenShifts\Create.cshtml" />
+    <Content Include="Views\OpenShifts\Delete.cshtml" />
+    <Content Include="Views\OpenShifts\Details.cshtml" />
+    <Content Include="Views\OpenShifts\Edit.cshtml" />
+    <Content Include="Views\OpenShifts\Index.cshtml" />
     <Content Include="Views\BizUsers\Create.cshtml" />
     <Content Include="Views\BizUsers\Delete.cshtml" />
     <Content Include="Views\BizUsers\Details.cshtml" />
     <Content Include="Views\BizUsers\Edit.cshtml" />
     <Content Include="Views\BizUsers\Index.cshtml" />
-    <Content Include="Views\closedShifts\Create.cshtml" />
-    <Content Include="Views\closedShifts\Delete.cshtml" />
-    <Content Include="Views\closedShifts\Details.cshtml" />
-    <Content Include="Views\closedShifts\Edit.cshtml" />
-    <Content Include="Views\closedShifts\Index.cshtml" />
-    <Content Include="Views\modelShifts\Create.cshtml" />
-    <Content Include="Views\modelShifts\Delete.cshtml" />
-    <Content Include="Views\modelShifts\Details.cshtml" />
-    <Content Include="Views\modelShifts\Edit.cshtml" />
-    <Content Include="Views\modelShifts\Index.cshtml" />
-    <Content Include="Views\openShifts\Create.cshtml" />
-    <Content Include="Views\openShifts\Delete.cshtml" />
-    <Content Include="Views\openShifts\Details.cshtml" />
-    <Content Include="Views\openShifts\Edit.cshtml" />
-    <Content Include="Views\openShifts\Index.cshtml" />
-    <Content Include="Views\stockItems\Create.cshtml" />
-    <Content Include="Views\stockItems\Delete.cshtml" />
-    <Content Include="Views\stockItems\Details.cshtml" />
-    <Content Include="Views\stockItems\Edit.cshtml" />
-    <Content Include="Views\stockItems\Index.cshtml" />
-    <Content Include="Views\Login\Login.cshtml" />
-    <Content Include="Views\Shared\_LayoutEmployee.cshtml" />
-    <Content Include="Views\Shared\_LayoutShiftManager.cshtml" />
-    <Content Include="Views\Shared\_LayoutSuperShiftManager.cshtml" />
-    <Content Include="Views\Email\EmailSent.cshtml" />
-    <Content Include="Views\Email\SendEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\SystemNotices\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

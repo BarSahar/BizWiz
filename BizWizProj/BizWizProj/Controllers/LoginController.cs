@@ -17,25 +17,27 @@ namespace BizWizProj.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(string name, string password)
+        public ActionResult Login(string name, string Password)
         {
-            DB1 db = new DB1();
+            DB db = new DB();
 
-            //TODO: change password to "admin" "backdoor"
-            if ("1".Equals(name) && "1".Equals(password))
+            //TODO: change Password to "admin" "backdoor"
+            if ("1".Equals(name) && "1".Equals(Password))
             {
-                Session["user"] = new BizUser() { userName = name, employeeType ="4" };
+                Session["user"] = new BizUser() { FullName = name, EmployeeType ="4" };
                     return RedirectToAction("Index","Home");
             }
             //for real users.
             List<BizUser> userList = db.BizUsers.ToList();
             foreach (var item in userList)
             {
-                if(item.userName.Equals(name) && item.password.Equals(password))
+                if(item.Email.Equals(name) && item.Password.Equals(Password))
                 {
                     Session["user"] = new BizUser() {
-                        userName = item.userName,
-                        employeeType = item.employeeType,
+                        FullName = item.FullName,
+                        Email = item.Email,
+                        EmployeeType = item.EmployeeType,
+                        ID = item.ID
                     };
                     return RedirectToAction("Index", "Home");
                 }

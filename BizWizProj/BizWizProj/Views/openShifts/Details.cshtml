@@ -1,4 +1,4 @@
-﻿@model BizWizProj.Models.openShift
+﻿@model BizWizProj.Models.OpenShift
 
 @{
     ViewBag.Title = "Details";
@@ -7,7 +7,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>openShift</h4>
+    <h4>OpenShift</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -35,19 +35,19 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.startHour)
+            @Html.DisplayNameFor(model => model.Start)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.startHour)
+            @Html.DisplayFor(model => model.Start)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.endHour)
+            @Html.DisplayNameFor(model => model.End)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.endHour)
+            @Html.DisplayFor(model => model.End)
         </dd>
 
         <dt>
@@ -56,6 +56,14 @@
 
         <dd>
             @Html.DisplayFor(model => model.weekDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Text)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Text)
         </dd>
 
     </dl>

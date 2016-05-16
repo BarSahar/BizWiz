@@ -8,110 +8,112 @@ using System.Web;
 using System.Web.Mvc;
 using BizWizProj.Context;
 using BizWizProj.Models;
+using BizWizProj.Authorization;
 
 namespace BizWizProj.Controllers
 {
-    public class stockItemsController : Controller
+    [MyAuthorize]
+    public class StockItemsController : Controller
     {
-        private DB1 db = new DB1();
+        private DB db = new DB();
 
-        // GET: stockItems
+        // GET: StockItems
         public ActionResult Index()
         {
             return View(db.Stocks.ToList());
         }
 
-        // GET: stockItems/Details/5
+        // GET: StockItems/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            stockItem stockItem = db.Stocks.Find(id);
-            if (stockItem == null)
+            StockItem StockItem = db.Stocks.Find(id);
+            if (StockItem == null)
             {
                 return HttpNotFound();
             }
-            return View(stockItem);
+            return View(StockItem);
         }
 
-        // GET: stockItems/Create
+        // GET: StockItems/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: stockItems/Create
+        // POST: StockItems/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,name,quantity,category,notes")] stockItem stockItem)
+        public ActionResult Create([Bind(Include = "ID,Name,Quantity,Category,Notes")] StockItem StockItem)
         {
             if (ModelState.IsValid)
             {
-                db.Stocks.Add(stockItem);
+                db.Stocks.Add(StockItem);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(stockItem);
+            return View(StockItem);
         }
 
-        // GET: stockItems/Edit/5
+        // GET: StockItems/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            stockItem stockItem = db.Stocks.Find(id);
-            if (stockItem == null)
+            StockItem StockItem = db.Stocks.Find(id);
+            if (StockItem == null)
             {
                 return HttpNotFound();
             }
-            return View(stockItem);
+            return View(StockItem);
         }
 
-        // POST: stockItems/Edit/5
+        // POST: StockItems/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,name,quantity,category,notes")] stockItem stockItem)
+        public ActionResult Edit([Bind(Include = "ID,Name,Quantity,Category,Notes")] StockItem StockItem)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(stockItem).State = EntityState.Modified;
+                db.Entry(StockItem).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(stockItem);
+            return View(StockItem);
         }
 
-        // GET: stockItems/Delete/5
+        // GET: StockItems/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            stockItem stockItem = db.Stocks.Find(id);
-            if (stockItem == null)
+            StockItem StockItem = db.Stocks.Find(id);
+            if (StockItem == null)
             {
                 return HttpNotFound();
             }
-            return View(stockItem);
+            return View(StockItem);
         }
 
-        // POST: stockItems/Delete/5
+        // POST: StockItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            stockItem stockItem = db.Stocks.Find(id);
-            db.Stocks.Remove(stockItem);
+            StockItem StockItem = db.Stocks.Find(id);
+            db.Stocks.Remove(StockItem);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

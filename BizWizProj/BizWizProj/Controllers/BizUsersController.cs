@@ -13,7 +13,7 @@ namespace BizWizProj.Controllers
 {
     public class BizUsersController : Controller
     {
-        private DB1 db = new DB1();
+        private DB db = new DB();
 
         // GET: BizUsers
         public ActionResult Index()
@@ -47,7 +47,7 @@ namespace BizWizProj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,userName,password,email,phoneNumber,employeeType")] BizUser bizUser)
+        public ActionResult Create([Bind(Include = "ID,FullName,Password,Email,PhoneNumber,EmployeeType")] BizUser bizUser)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace BizWizProj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,userName,password,email,phoneNumber,employeeType")] BizUser bizUser)
+        public ActionResult Edit([Bind(Include = "ID,FullName,Password,Email,PhoneNumber,EmployeeType")] BizUser bizUser)
         {
             if (ModelState.IsValid)
             {

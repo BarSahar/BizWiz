@@ -6,13 +6,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BizWizProj.Models
 {
-    public class stockItem
+    public class StockItem
     {
         [Key]
         public int ID { get; set; }
-        public string name { get; set; }
-        public int quantity { get; set; }
-        public string category { get; set; }
-        public string notes { get; set; }
+        public string Name { get; set; }
+        public int Quantity { get; set; }
+        public string Category { get; set; }
+        public string Notes { get; set; }
     }
 }

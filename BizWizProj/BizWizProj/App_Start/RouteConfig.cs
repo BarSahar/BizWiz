@@ -16,7 +16,7 @@ namespace BizWizProj
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "ClosedShifts", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

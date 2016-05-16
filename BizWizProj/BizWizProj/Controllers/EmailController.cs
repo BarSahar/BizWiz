@@ -1,4 +1,5 @@
-﻿using BizWizProj.Models;
+﻿using BizWizProj.Authorization;
+using BizWizProj.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -11,12 +12,11 @@ using System.Web.Mvc;
 
 namespace BizWizProj.Controllers
 {
+    [MyAuthorize]
     public class EmailController : Controller
     {
-
         [HttpGet]
         [AllowAnonymous]
-
         public ActionResult SendEmail()
         {
             return View();
