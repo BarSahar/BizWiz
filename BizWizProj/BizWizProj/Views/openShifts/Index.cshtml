@@ -23,11 +23,10 @@
 })
 </div>
 <br />
-@using (Html.BeginForm())
+@using (Html.BeginForm("OpenToClose","OpenShifts"))
 {
-    <input type="button" name="button" class="button1" value="Close Shift" onclick="location.href='@Url.Action("OpenToClose", "OpenShifts")'" />
+    <input type="submit" value="Close Shift"  class="btn btn-default" />
 }
-
 
 <script type="text/javascript">
     dp.commandCallBack('nextWeek');
