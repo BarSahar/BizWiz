@@ -16,9 +16,7 @@ namespace BizWizProj.Models
     {
         static public int IniHours(DB db, string session_name)
         {
-
             var counter = 0;
-          
             List<ClosedShift> shiftList = db.ShiftHistory.ToList();
             shiftList.Reverse(); //start from the end
             if (shiftList != null)
@@ -43,25 +41,13 @@ namespace BizWizProj.Models
                                 }
                             }
                         }
-
-
                     }
                     else
                         break;
                 }
             }
-
-        
-            
             return counter;
-
         }
-
-        
-
-
     }
-
-
 }
 

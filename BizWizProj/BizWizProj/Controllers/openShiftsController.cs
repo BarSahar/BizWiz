@@ -88,12 +88,13 @@ namespace BizWizProj.Controllers
             return View(db.ShiftInProgress.ToList());
         }
 
-        public void OpenToClose() //Avi OpenShift-->CloseShift
+
+        [HttpPost]
+        public ActionResult OpenToClose() //Avi OpenShift-->CloseShift
         {
             List<OpenShift> openShiftList = new List<OpenShift>();
             if (!db.ShiftInProgress.Any())  // checking if open shift is empty
-                return;
-            ;
+                return RedirectToAction("Index");
             openShiftList = db.ShiftInProgress.ToList(); //loading all date from open shift table
             List<ClosedShift> newCloseShiftsList = new List<ClosedShift>(); //creating new close shift list that gonna be added to close shift table 
             for(int i=0;i<openShiftList.Count;i++)
@@ -112,8 +113,7 @@ namespace BizWizProj.Controllers
             db.ShiftHistory.AddRange(newCloseShiftsList); //Adding all new close shift to close shift db
             db.ShiftInProgress.RemoveRange(openShiftList);// clearing open shift db
             db.SaveChanges();
-            
-            
+            return RedirectToAction("Index");
         }
 
         public void ModelTopen() //Avi ModelShift--->OpenShift
@@ -125,7 +125,6 @@ namespace BizWizProj.Controllers
             modelist = db.ModelShifts.ToList();               //loading all date from model-shift table 
             DateTime firstDayOfWeek = shiftDate.AddDays(-(int)shiftDate.DayOfWeek); // seting first day of next week 
             List<OpenShift> newlist = new List<OpenShift>();
-            
             if (modelist.Any())
             {
                 for (int i = 0; i < modelist.Count; i++)
