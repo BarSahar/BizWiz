@@ -10,7 +10,8 @@ namespace BizWizProj.Models
     {
         [Key]
         public int ID { get; set; }
-        public List<BizUser> PotentialWorkers { get; set; }
+        //public List<BizUser> PotentialWorkers { get; set; }
+        Dictionary<BizUser, int> PotentialWorkers { get; set; }
 
         public int DayIndex { get; set; }
         public int ShiftIndex { get; set; }
@@ -27,3 +28,4 @@ namespace BizWizProj.Models
 
     }
 }
+

@@ -190,6 +190,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ClosedShift.cs" />
+    <Compile Include="Models\HoursSum.cs" />
     <Compile Include="Models\MessageServices.cs" />
     <Compile Include="Models\OpenShift.cs" />
     <Compile Include="Models\ModelShift.cs" />
@@ -271,10 +272,16 @@
     <Content Include="Views\BizUsers\Details.cshtml" />
     <Content Include="Views\BizUsers\Edit.cshtml" />
     <Content Include="Views\BizUsers\Index.cshtml" />
+    <Content Include="Views\SystemNotices\Create.cshtml" />
+    <Content Include="Views\SystemNotices\Delete.cshtml" />
+    <Content Include="Views\SystemNotices\Details.cshtml" />
+    <Content Include="Views\SystemNotices\Edit.cshtml" />
+    <Content Include="Views\SystemNotices\Index.cshtml" />
+    <Content Include="Views\Email\EmailSent.cshtml" />
+    <Content Include="Views\Email\SendEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\SystemNotices\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
