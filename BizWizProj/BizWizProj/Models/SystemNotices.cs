@@ -6,20 +6,23 @@ using System.Web;
 using BizWizProj.Models;
 using System.Web.Mvc;
 using System.Web.Routing;
+
 namespace BizWizProj.Models
 {
     public class SystemNotices
     {
         [Key]
         public int Id { get; set; }
+        public string Subject { get; set; } //title of the notice
         public string Text { get; set; }   //body message
-        public DateTime SentDate { get; set; }
-        public string Sender { get; set; }
-        public string Receiver { get; set; }//1,2,3 or all employee types
+        public DateTime Date { get; set; }
+        public string From { get; set; }
+        public string To { get; set; }//1,2,3 or all employee types
 
-        private void set(HttpContextBase httpContext)
+        public SystemNotices()
         {
-            this.Sender = httpContext.Session["user"].ToString();
+            this.Date = DateTime.Now;
+            this.From = (HttpContext.Current.Session["user"] as BizUser).FullName;
         }
     }
 }
