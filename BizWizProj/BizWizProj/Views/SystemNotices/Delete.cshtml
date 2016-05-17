@@ -12,6 +12,14 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.Subject)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subject)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Text)
         </dt>
 
@@ -20,27 +28,27 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.SentDate)
+            @Html.DisplayNameFor(model => model.Date)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.SentDate)
+            @Html.DisplayFor(model => model.Date)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Sender)
+            @Html.DisplayNameFor(model => model.From)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Sender)
+            @Html.DisplayFor(model => model.From)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Receiver)
+            @Html.DisplayNameFor(model => model.To)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Receiver)
+            @Html.DisplayFor(model => model.To)
         </dd>
 
     </dl>
