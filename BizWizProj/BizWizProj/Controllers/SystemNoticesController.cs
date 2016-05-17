@@ -15,9 +15,14 @@ namespace BizWizProj.Controllers
     {
         private DB db = new DB();
 
+
+        
+
+
         // GET: SystemNotices
         public ActionResult Index()
         {
+            
             return View(db.Notices.ToList());
         }
 
@@ -47,11 +52,11 @@ namespace BizWizProj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Text,SentDate,Sender,Receiver")] SystemNotices systemNotices)
+        public ActionResult Create([Bind(Include = "Id,Subject,Text,Date,From,To")] SystemNotices systemNotices)
         {
             if (ModelState.IsValid)
             {
-                
+
                 db.Notices.Add(systemNotices);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -80,7 +85,7 @@ namespace BizWizProj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Text,SentDate,Sender,Receiver")] SystemNotices systemNotices)
+        public ActionResult Edit([Bind(Include = "Id,Subject,Text,Date,From,To")] SystemNotices systemNotices)
         {
             if (ModelState.IsValid)
             {
