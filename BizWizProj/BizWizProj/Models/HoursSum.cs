@@ -17,6 +17,10 @@ namespace BizWizProj.Models
         static public int IniHours(DB db, string session_name)
         {
             var counter = 0;
+
+            
+
+
             List<ClosedShift> shiftList = db.ShiftHistory.ToList();
             shiftList.Reverse(); //start from the end
             if (shiftList != null)
@@ -48,6 +52,27 @@ namespace BizWizProj.Models
             }
             return counter;
         }
+
+        static public String AllWorkers(DB db)
+        {
+            var counter = 0;
+            String WorkesrHours="";
+            List<BizUser> WorkersList = db.BizUsers.ToList();
+
+            if (WorkersList != null)
+                foreach (var s_item in WorkersList)
+                {
+                    counter = IniHours(db, s_item.FullName);
+                    WorkesrHours += s_item.FullName + " " + counter.ToString() + " MH. ";
+                }
+            else
+                return "No workers Listed";
+            
+            return WorkesrHours;
+            
+        }
+
+
     }
 }
 
