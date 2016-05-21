@@ -17,7 +17,8 @@ namespace BizWizProj.Models
 
         public DateTime WeekDate { get; set; }
         public BizUser ShiftManager { get; set; }
-        public List<BizUser> Workers { get; set; }
+        public virtual ICollection<BizUser> Workers { get; set; }
+
 
         //Text to display WeekDate
         public string Text { get; set; }

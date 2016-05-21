@@ -27,7 +27,7 @@ namespace BizWizProj.Models
                     {
                         if (DateTime.Now.Day <= s_item.WeekDate.Day) // wouldnt count the future days
                         {
-                            List<BizUser> names = s_item.Workers;
+                            ICollection<BizUser> names = s_item.Workers;
                             if (names != null)
                             {
                                 foreach (var u_item in names)

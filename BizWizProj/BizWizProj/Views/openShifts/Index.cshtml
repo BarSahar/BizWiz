@@ -1,4 +1,6 @@
-﻿<script src="@Url.Content("~/Scripts/DayPilot/daypilot-all.min.js")" type="text/javascript"></script>
+﻿OPEN SHIFT INDEXXXXXXX
+
+<script src="@Url.Content("~/Scripts/DayPilot/daypilot-all.min.js")" type="text/javascript"></script>
 <br />
 <br />
 <br />
@@ -13,9 +15,14 @@
     BackendUrl = Url.Action("Backend", "OpenShifts"),
     ViewType = DayPilot.Web.Mvc.Enums.Calendar.ViewType.Week,
     TimeFormat = DayPilot.Web.Mvc.Enums.TimeFormat.Clock24Hours,
-    
-    
-     
+
+
+
+
+
+    EventClickHandling = DayPilot.Web.Mvc.Events.Calendar.EventClickHandlingType.JavaScript,
+    EventClickJavaScript = "editEvent(e.value());",
+    //    OnEventRightClick
     //EventSelectHandling
     //EventSelectColor
     //EventClickHandling = DayPilot.Web.Mvc.Events.Calendar.EventClickHandlingType.JavaScript,
@@ -23,23 +30,72 @@
 })
 </div>
 <br />
-@using (Html.BeginForm("OpenToClose","OpenShifts"))
+@using (Html.BeginForm("OpenToClose", "OpenShifts"))
 {
-    <input type="submit" value="Close Shift"  class="btn btn-default" />
+    <input type="submit" value="Close Shift" class="btn btn-default" />
 }
+
+@using (Html.BeginForm("SendShift", "OpenShifts"))
+{
+    <label for="shiftID">shiftID:</label>
+    <input type="text" name="shiftID" />
+    <br />
+    <label for="senderID">senderID:</label>
+    <input type="text" name="senderID" />
+    <br />
+    <label for="preference">preference:</label>
+    <input type="text" name="preference" />
+    <br />
+
+    <input type="submit" value="Close Shift" class="btn btn-default" />
+}
+
+
 
 <script type="text/javascript">
     dp.commandCallBack('nextWeek');
     dp.contextMenu = new DayPilot.Menu({
         items: [
-      { text: "Edit", onclick: function () { dp.events.edit(this.source); } },
-      { text: "Delete", onclick: function () { dp.events.remove(this.source); } },
+      { text: "Edit", onclick: function (args) { debugger; editEvent(e.value()); } },
+      {
+          text: "Delete", onclick: function (args) {
+              alert("clicked: " + args.e.Id());
+          }
+      },
       { text: "-" },
       { text: "Change background color", onclick: function () { var e = this.source; e.data.backColor = "red"; dp.events.update(e); } },
-      { text: "-" },
-      { text: "Select", onclick: function () { dp.multiselect.add(this.source); } },
+          { text: "Show event ID", onclick: function () { alert("Event value: " + this.source.value()); } },
+    { text: "Show event text", onclick: function () { alert("Event text: " + this.source.text()); } },
+    { text: "Show event start", onclick: function () { alert("Event start: " + this.source.start().toStringSortable()); } },
+    { text: "Go to google.com", href: "http://www.google.com/?q={0}" },
+
+
         ]
     });
+
+
+
+
+
+    function editEvent(id) {
+        debugger;
+        var modal = new DayPilot.Modal();
+        modal.top = 60;
+        modal.width = 300;
+        modal.opacity = 70;
+        modal.border = "10px solid #d0d0d0";
+        modal.closed = function () {
+            if (this.result == "OK") {
+                dpc.commandCallBack('refresh');
+            }
+            dpc.clearSelection();
+        };
+        modal.height = 250;
+        modal.zIndex = 100;
+        modal.showUrl("Edit/" + id);
+    }
+
+
     function select(e) {
         var m = new DayPilot.Modal();
         m.closed = function () {

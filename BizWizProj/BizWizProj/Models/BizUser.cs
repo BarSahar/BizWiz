@@ -16,6 +16,10 @@ namespace BizWizProj.Models
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string EmployeeType { get; set; }
+
+        public virtual ICollection<OpenShift> OpenShift { get; set; }
+        public virtual ICollection<ClosedShift> ClosedShift { get; set; }
+ 
         //1-Employee
         //2-Shift manager
         //3-SuperShift manager

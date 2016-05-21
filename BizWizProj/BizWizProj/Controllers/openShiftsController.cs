@@ -88,6 +88,20 @@ namespace BizWizProj.Controllers
             return View(db.ShiftInProgress.ToList());
         }
 
+        [HttpPost]
+        public ActionResult SendShift(int shiftID, int senderID, int preference) //Bar - employee registers to a shift
+        {
+            if (!db.ShiftInProgress.Any()&& !db.BizUsers.Any())  // checking if open shift and user list is empty
+                return RedirectToAction("Index");
+            OpenShift tempShift = db.ShiftInProgress.Find(shiftID);
+            BizUser tempUser = db.BizUsers.Find(senderID);
+            if (tempShift!=null && tempUser!=null)
+            {
+                tempShift.PotentialWorkers.Add(new UserPref() { User = tempUser, Preference = preference });
+            }
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
         [HttpPost]
         public ActionResult OpenToClose() //Avi OpenShift-->CloseShift

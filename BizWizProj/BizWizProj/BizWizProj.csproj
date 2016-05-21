@@ -197,6 +197,7 @@
     <Compile Include="Models\StockItem.cs" />
     <Compile Include="Models\BizUser.cs" />
     <Compile Include="Models\SystemNotices.cs" />
+    <Compile Include="Models\UserPref.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

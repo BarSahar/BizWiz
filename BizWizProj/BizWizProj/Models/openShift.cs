@@ -10,8 +10,6 @@ namespace BizWizProj.Models
     {
         [Key]
         public int ID { get; set; }
-        //public List<BizUser> PotentialWorkers { get; set; }
-        Dictionary<BizUser, int> PotentialWorkers { get; set; }
 
         public int DayIndex { get; set; }
         public int ShiftIndex { get; set; }
@@ -21,11 +19,12 @@ namespace BizWizProj.Models
 
         public DateTime WeekDate { get; set; }
         public BizUser ShiftManager { get; set; }
-        public List<BizUser> Workers { get; set; }
+
+        public virtual ICollection<BizUser> Workers { get; set; }
+        public virtual ICollection<UserPref> PotentialWorkers { get; set; }
 
         //Text to display Workers
         public string Text { get; set; }
-
     }
 }
 
