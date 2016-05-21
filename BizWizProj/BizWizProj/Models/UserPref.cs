@@ -11,7 +11,7 @@ namespace BizWizProj.Models
         [Key]
         public int ID { get; set; }
 
-        public BizUser User { get; set; }
+        public int UserID { get; set; }
         public int Preference { get; set; }
     }
 }

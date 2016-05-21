@@ -1,32 +1,24 @@
-﻿OPEN SHIFT INDEXXXXXXX
-
-<script src="@Url.Content("~/Scripts/DayPilot/daypilot-all.min.js")" type="text/javascript"></script>
+﻿<script src="@Url.Content("~/Scripts/DayPilot/daypilot-all.min.js")" type="text/javascript"></script>
 <br />
 <br />
 <br />
 <br />
-
-
 
 <div id="dp">
-
     @Html.DayPilotCalendar("dp", new DayPilot.Web.Mvc.DayPilotCalendarConfig
 {
     BackendUrl = Url.Action("Backend", "OpenShifts"),
     ViewType = DayPilot.Web.Mvc.Enums.Calendar.ViewType.Week,
     TimeFormat = DayPilot.Web.Mvc.Enums.TimeFormat.Clock24Hours,
 
-
-
-
-
-    EventClickHandling = DayPilot.Web.Mvc.Events.Calendar.EventClickHandlingType.JavaScript,
-    EventClickJavaScript = "editEvent(e.value());",
+    //EventClickHandling = DayPilot.Web.Mvc.Events.Calendar.EventClickHandlingType.JavaScript,
+    //EventClickJavaScript = "editEvent(e.value())",
     //    OnEventRightClick
     //EventSelectHandling
     //EventSelectColor
     //EventClickHandling = DayPilot.Web.Mvc.Events.Calendar.EventClickHandlingType.JavaScript,
     //EventClickJavaScript = "editEvent(e.value());"
+    
 })
 </div>
 <br />
@@ -53,48 +45,54 @@
 
 
 <script type="text/javascript">
-    dp.commandCallBack('nextWeek');
+    dp.commandCallBack('nextWeek'); //Setting the Shift in progress to always be in next Week
+    
+
     dp.contextMenu = new DayPilot.Menu({
         items: [
-      { text: "Edit", onclick: function (args) { debugger; editEvent(e.value()); } },
-      {
-          text: "Delete", onclick: function (args) {
-              alert("clicked: " + args.e.Id());
-          }
-      },
-      { text: "-" },
-      { text: "Change background color", onclick: function () { var e = this.source; e.data.backColor = "red"; dp.events.update(e); } },
-          { text: "Show event ID", onclick: function () { alert("Event value: " + this.source.value()); } },
-    { text: "Show event text", onclick: function () { alert("Event text: " + this.source.text()); } },
-    { text: "Show event start", onclick: function () { alert("Event start: " + this.source.start().toStringSortable()); } },
-    { text: "Go to google.com", href: "http://www.google.com/?q={0}" },
-
-
+            {
+                text: "Want", onclick: function (args) {
+                    debugger;
+                    Post(this.source.value(), 1)
+                    this.source.data.backColor = "green";
+                    dp.events.update(this.source);
+                }
+            },
+            { text: "-" },
+            {
+                text: "Don't Care", onclick: function (args) {
+                    this.source.data.backColor = "blue";
+                    Post(this.source.value(), 2)
+                    dp.events.update(this.source);
+                }
+            },
+            { text: "-" },
+            {
+                text: "Don't Want", onclick: function (args) {
+                    this.source.data.backColor = "red";
+                    Post(this.source.value(), 3)
+                    dp.events.update(this.source);
+                }
+            },
+            {
+                text: "Refresh", onclick: function (args) {
+                    debugger;
+                    dp.events.update(this.source);
+                }
+            },
         ]
+
     });
 
 
+    function Post(shiftID,pref) {
 
-
-
-    function editEvent(id) {
-        debugger;
-        var modal = new DayPilot.Modal();
-        modal.top = 60;
-        modal.width = 300;
-        modal.opacity = 70;
-        modal.border = "10px solid #d0d0d0";
-        modal.closed = function () {
-            if (this.result == "OK") {
-                dpc.commandCallBack('refresh');
-            }
-            dpc.clearSelection();
-        };
-        modal.height = 250;
-        modal.zIndex = 100;
-        modal.showUrl("Edit/" + id);
+        $.post("OpenShifts/SendShift",
+        {
+            shiftID: shiftID,
+            preference:pref
+        })
     }
-
 
     function select(e) {
         var m = new DayPilot.Modal();

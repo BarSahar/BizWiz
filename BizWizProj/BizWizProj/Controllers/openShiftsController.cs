@@ -18,18 +18,19 @@ namespace BizWizProj.Controllers
     [MyAuthorize]
     public class OpenShiftsController : Controller
     {
+        public static HttpSessionStateBase CurrentSession;
+
         public ActionResult Backend()
         {
+            CurrentSession = this.Session;
             return new Dpc().CallBack(this);
         }
 
         class Dpc : DayPilotCalendar
         {
-
             private DB dc = new DB();
             protected override void OnEventClick(EventClickArgs e)
             {
-
                 base.OnEventClick(e);
             }
             protected override void OnCommand(CommandArgs e)
@@ -56,6 +57,37 @@ namespace BizWizProj.Controllers
                 Update();
             }
 
+            protected override void OnBeforeEventRender(BeforeEventRenderArgs e)
+            {
+                if (CurrentSession["user"] == null || !dc.ShiftInProgress.Any())
+                    return;
+                int currentUserId = ((BizUser)CurrentSession["user"]).ID;
+
+                OpenShift tempShift = dc.ShiftInProgress.Find(int.Parse(e.Id));
+                if (tempShift.PotentialWorkers.Count>=0)
+                {
+                    foreach (UserPref worker in tempShift.PotentialWorkers.ToList())
+                    {
+                        if (worker.UserID == currentUserId)
+                        {
+                            switch (worker.Preference)
+                            {
+                                case 1:
+                                    e.BackgroundColor = "green";
+                                    break;
+                                case 2:
+                                    e.BackgroundColor = "blue";
+                                    break;
+                                case 3:
+                                    e.BackgroundColor = "red";
+                                    break;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
             protected override void OnInit(InitArgs e)
             {
                 UpdateWithMessage("Welcome!", CallBackUpdateType.Full);
@@ -63,7 +95,6 @@ namespace BizWizProj.Controllers
 
             protected override void OnFinish()
             {
-
                 if (UpdateType == CallBackUpdateType.None)
                 {
                     return;
@@ -73,11 +104,9 @@ namespace BizWizProj.Controllers
                 DataStartField = "Start";
                 DataEndField = "End";
                 DataTextField = "Text";
-
                 Events = from e in dc.ShiftInProgress select e;
             }
         }
-
 
         private DB db = new DB();
 
@@ -89,15 +118,29 @@ namespace BizWizProj.Controllers
         }
 
         [HttpPost]
-        public ActionResult SendShift(int shiftID, int senderID, int preference) //Bar - employee registers to a shift
+        public ActionResult SendShift(int shiftID, int preference) //Bar - employee registers to a shift
         {
-            if (!db.ShiftInProgress.Any()&& !db.BizUsers.Any())  // checking if open shift and user list is empty
+            if (!db.ShiftInProgress.Any() || !db.BizUsers.Any() || Session["user"] == null)  // checking if open shift and user list is empty and user in Session
                 return RedirectToAction("Index");
+
+            int senderID = ((BizUser)Session["user"]).ID;
             OpenShift tempShift = db.ShiftInProgress.Find(shiftID);
-            BizUser tempUser = db.BizUsers.Find(senderID);
-            if (tempShift!=null && tempUser!=null)
+            if (tempShift != null)
             {
-                tempShift.PotentialWorkers.Add(new UserPref() { User = tempUser, Preference = preference });
+                // a flag to check if there should be another
+                bool AddnewPref = true;
+                foreach (UserPref worker in tempShift.PotentialWorkers.ToList())
+                {
+                    if (worker.UserID==senderID)
+                    {
+                        worker.Preference = preference;
+                        AddnewPref = false;
+                    }
+                }
+                if (AddnewPref == true)
+                {
+                    tempShift.PotentialWorkers.Add(new UserPref() { UserID = senderID, Preference = preference });
+                }
             }
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -111,18 +154,19 @@ namespace BizWizProj.Controllers
                 return RedirectToAction("Index");
             openShiftList = db.ShiftInProgress.ToList(); //loading all date from open shift table
             List<ClosedShift> newCloseShiftsList = new List<ClosedShift>(); //creating new close shift list that gonna be added to close shift table 
-            for(int i=0;i<openShiftList.Count;i++)
+            for (int i = 0; i < openShiftList.Count; i++)
             {
-                newCloseShiftsList.Add(new ClosedShift(){
-                DayIndex=openShiftList[i].DayIndex,
-                ShiftIndex=openShiftList[i].ShiftIndex,
-                Start=openShiftList[i].Start,
-                End=openShiftList[i].End,
-                WeekDate=openShiftList[i].WeekDate,
-                ShiftManager=openShiftList[i].ShiftManager,
-                Workers=openShiftList[i].Workers,
-                Text=openShiftList[i].Text
-                }); 
+                newCloseShiftsList.Add(new ClosedShift()
+                {
+                    DayIndex = openShiftList[i].DayIndex,
+                    ShiftIndex = openShiftList[i].ShiftIndex,
+                    Start = openShiftList[i].Start,
+                    End = openShiftList[i].End,
+                    WeekDate = openShiftList[i].WeekDate,
+                    ShiftManager = openShiftList[i].ShiftManager,
+                    Workers = openShiftList[i].Workers,
+                    Text = openShiftList[i].Text
+                });
             }
             db.ShiftHistory.AddRange(newCloseShiftsList); //Adding all new close shift to close shift db
             db.ShiftInProgress.RemoveRange(openShiftList);// clearing open shift db
