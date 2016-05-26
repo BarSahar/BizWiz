@@ -12,6 +12,7 @@ using DayPilot.Web.Mvc;
 using DayPilot.Web.Mvc.Events.Calendar;
 using DayPilot.Web.Mvc.Enums;
 using BizWizProj.Authorization;
+using System.Globalization;
 
 namespace BizWizProj.Controllers
 {
@@ -61,22 +62,22 @@ namespace BizWizProj.Controllers
             {
                 switch (e.Command)
                 {
-                  
+
 
                     case "today":
                         StartDate = DateTime.Today;
                         Update(CallBackUpdateType.Full);
-                   
+
                         break;
                     case "navigate":
                         //Console.WriteLine(StartDate.ToString);
-                       // StartDate = (DateTime)e.Data["start"];
+                        // StartDate = (DateTime)e.Data["start"];
                         Update(CallBackUpdateType.Full);
                         break;
                 }
             }
 
-   
+
 
             protected override void OnInit(InitArgs e)
             {
@@ -108,18 +109,35 @@ namespace BizWizProj.Controllers
             var counter = 0;
             String workerssum;
 
-            if ((Session["user"] as BizWizProj.Models.BizUser).EmployeeType.Equals("4")){
+            if ((Session["user"] as BizWizProj.Models.BizUser).EmployeeType.Equals("4"))
+            {
                 workerssum = HoursSum.AllWorkers(db);
                 ViewData["Hours"] = workerssum;
             }
-            
+
             else
             {
                 counter = HoursSum.IniHours(db, (Session["user"] as BizWizProj.Models.BizUser).FullName);
                 ViewData["Hours"] = counter;
             }
-    
+
+            /* Start of System notices part */
+            ViewBag.NoticesForMe = "";
+            DateTime date = DateTime.ParseExact("12/15/2009", "MM/dd/yyyy", null);
+            //replace "Manager" with (HttpContext.Session["user"] as BizUser).EmployeeType
+            var notices = (from notif in db.Notices.ToList() where (notif.To.Equals("Manager") && DateOk(Convert.ToDateTime(notif.Date))) select notif).ToList();
+            ViewBag.NoticesForMe = notices;
+            /* End of System notices part */
+
             return View(db.ShiftHistory.ToList());
+        }
+
+        public bool DateOk(DateTime d)
+        {
+            DateTime now = DateTime.Now;
+            if ((now - d).TotalDays < 14)
+                return true;
+            return false;
         }
 
         // GET: ClosedShifts/Details/5

@@ -15,13 +15,13 @@ namespace BizWizProj.Models
         public int Id { get; set; }
         public string Subject { get; set; } //title of the notice
         public string Text { get; set; }   //body message
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
         public string From { get; set; }
         public string To { get; set; }//1,2,3 or all employee types
 
         public SystemNotices()
         {
-            this.Date = DateTime.Now;
+            this.Date = DateTime.Now.Date.ToShortDateString();
             this.From = (HttpContext.Current.Session["user"] as BizUser).FullName;
         }
     }

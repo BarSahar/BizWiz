@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -8,21 +9,28 @@ using System.Web;
 using System.Web.Mvc;
 using BizWizProj.Context;
 using BizWizProj.Models;
+using BizWizProj.Authorization;
+using System.Web.Routing;
 
 namespace BizWizProj.Controllers
 {
+    [MyAuthorize]
     public class SystemNoticesController : Controller
     {
         private DB db = new DB();
 
-
+        
         
 
 
         // GET: SystemNotices
         public ActionResult Index()
         {
+            ViewBag.NoticesForMe = "";
+            //replace "Manager" with (HttpContext.Session["user"] as BizUser).EmployeeType
+            var notices = (from notif in db.Notices.ToList() where notif.To.Equals("Manager") select notif).ToList();
             
+            ViewBag.NoticesForMe = notices;
             return View(db.Notices.ToList());
         }
 
