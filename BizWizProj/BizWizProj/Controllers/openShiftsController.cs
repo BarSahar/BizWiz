@@ -177,7 +177,7 @@ namespace BizWizProj.Controllers
         public void ModelTopen() //Avi ModelShift--->OpenShift
         {
             DateTime shiftDate = DateTime.Now.AddDays(7); //seting date for next week
-            if (!db.ShiftInProgress.Any())                 // preventing override of existing data in calendar
+            if (db.ShiftInProgress.Any())                 // preventing override of existing data in calendar
                 return;
             List<ModelShift> modelist = new List<ModelShift>();
             modelist = db.ModelShifts.ToList();               //loading all date from model-shift table 
@@ -187,9 +187,10 @@ namespace BizWizProj.Controllers
             {
                 for (int i = 0; i < modelist.Count; i++)
                 {
-                    int x = firstDayOfWeek.Day + (int)modelist[i].Start.DayOfWeek;
-                    DateTime tempStart = new DateTime(firstDayOfWeek.Year, firstDayOfWeek.Month, x, modelist[i].Start.Hour, modelist[i].Start.Minute, modelist[i].Start.Second);
-                    DateTime tempEnd = new DateTime(firstDayOfWeek.Year, firstDayOfWeek.Month, x, modelist[i].End.Hour, modelist[i].Start.Minute, modelist[i].Start.Second);
+                    DateTime ShiftDate = firstDayOfWeek.AddDays(modelist[i].Start.Day);
+
+                    DateTime tempStart = new DateTime(ShiftDate.Year, ShiftDate.Month, ShiftDate.Day, modelist[i].Start.Hour, modelist[i].Start.Minute, modelist[i].Start.Second);
+                    DateTime tempEnd = new DateTime(ShiftDate.Year, ShiftDate.Month, ShiftDate.Day, modelist[i].End.Hour, modelist[i].Start.Minute, modelist[i].Start.Second);
                     newlist.Add(new OpenShift()
                     {
                         DayIndex = (int)tempStart.DayOfWeek,
