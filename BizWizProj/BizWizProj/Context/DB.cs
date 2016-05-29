@@ -19,13 +19,11 @@ namespace BizWizProj.Context
             
         }
 
-        
         public DbSet<ModelShift> ModelShifts { get; set; }
         public DbSet<ClosedShift> ShiftHistory { get; set; }
         public DbSet<OpenShift> ShiftInProgress { get; set; }
         public DbSet<BizUser> BizUsers { get; set; }
         public DbSet<StockItem> Stocks { get; set; }
         public DbSet<SystemNotices> Notices { get; set; }
-
     }
 }

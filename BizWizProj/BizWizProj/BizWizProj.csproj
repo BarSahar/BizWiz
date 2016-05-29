@@ -280,6 +280,7 @@
     <Content Include="Views\SystemNotices\Index.cshtml" />
     <Content Include="Views\Email\EmailSent.cshtml" />
     <Content Include="Views\Email\SendEmail.cshtml" />
+    <Content Include="Views\OpenShifts\EditShift.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,79 @@
+﻿@model BizWizProj.Models.OpenShift
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+@*<script>
+    var testurl = "a" + "?Type=@ViewBag.Type";
+    var addurl = "b" + "?Type=@ViewBag.Type";
+    </script>*@
+
+<div class="box-body">
+    <h1>Select Workers:</h1>
+    <h3>Recommended number of employees: @Model.NumOfEmployees</h3>
+
+    @using (Html.BeginForm("OpenToClose", "OpenShifts"))
+    {
+        <ul class="list-group">
+            @{
+                foreach (BizWizProj.Models.UserPref user in Model.PotentialWorkers)
+                {
+                    bool Checked = false;
+                    if (Model.Workers.Any(w => w.ID == user.UserID))
+                    {
+                        Checked = true;
+                    }
+                    if (user.Preference == 0)
+                    {
+                        <li class="list-group-item">
+                        <input type="checkbox" id="@user.UserID" checked="@Checked">@user.UserName (no preference)
+                        </li>
+                    }
+                    if (user.Preference == 1)
+                    {
+                        <li class="list-group-item">
+                        <input type="checkbox" id="@user.UserID" checked="@Checked">@user.UserName (Want)
+                        </li>
+                    }
+                    if (user.Preference == 2)
+                    {
+                        <li class="list-group-item">
+                        <input type="checkbox" id="@user.UserID" checked="@Checked">@user.UserName (Don't Care)
+                        </li>
+                    }
+                    if (user.Preference == 3)
+                    {
+                        <li class="list-group-item">
+                        <input type="checkbox" id="@user.UserID" checked="@Checked">@user.UserName (Don't Want)
+                        </li>
+                    }
+                }
+             }
+        </ul>
+        <input type="submit" value="Close Shift" class="btn btn-default" />
+    }
+    
+    
+    @*
+        @{
+            int a;
+            for (a = 0; a < 5; a++)
+            {
+
+            }
+            if(Session["id"] != null)
+            {
+
+            }
+            if(Cookie)
+        }
+    *@
+
+</div>
+    </div>
+<br />
+
+

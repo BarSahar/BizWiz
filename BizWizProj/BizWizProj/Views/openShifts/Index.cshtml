@@ -4,6 +4,10 @@
 <br />
 <br />
 
+@{
+    String type = (Session["user"] as BizWizProj.Models.BizUser).EmployeeType;
+}
+
 <div id="dp">
     @Html.DayPilotCalendar("dp", new DayPilot.Web.Mvc.DayPilotCalendarConfig
 {
@@ -11,48 +15,26 @@
     ViewType = DayPilot.Web.Mvc.Enums.Calendar.ViewType.Week,
     TimeFormat = DayPilot.Web.Mvc.Enums.TimeFormat.Clock24Hours,
 
-    //EventClickHandling = DayPilot.Web.Mvc.Events.Calendar.EventClickHandlingType.JavaScript,
-    //EventClickJavaScript = "editEvent(e.value())",
-    //    OnEventRightClick
-    //EventSelectHandling
-    //EventSelectColor
-    //EventClickHandling = DayPilot.Web.Mvc.Events.Calendar.EventClickHandlingType.JavaScript,
-    //EventClickJavaScript = "editEvent(e.value());"
-    
+    EventClickHandling = DayPilot.Web.Mvc.Events.Calendar.EventClickHandlingType.JavaScript,
+    EventClickJavaScript = "EditShifts(e)",
 })
 </div>
 <br />
 @using (Html.BeginForm("OpenToClose", "OpenShifts"))
 {
-    <input type="submit" value="Close Shift" class="btn btn-default" />
+    string currentType = (Session["user"] as BizWizProj.Models.BizUser).EmployeeType;
+    if (currentType=="3"|| currentType=="4")
+    { 
+        <input type="submit" value="Close Shift" class="btn btn-default" />
+    }
 }
-
-@using (Html.BeginForm("SendShift", "OpenShifts"))
-{
-    <label for="shiftID">shiftID:</label>
-    <input type="text" name="shiftID" />
-    <br />
-    <label for="senderID">senderID:</label>
-    <input type="text" name="senderID" />
-    <br />
-    <label for="preference">preference:</label>
-    <input type="text" name="preference" />
-    <br />
-
-    <input type="submit" value="Close Shift" class="btn btn-default" />
-}
-
-
 
 <script type="text/javascript">
     dp.commandCallBack('nextWeek'); //Setting the Shift in progress to always be in next Week
-    
-
     dp.contextMenu = new DayPilot.Menu({
         items: [
             {
                 text: "Want", onclick: function (args) {
-                    debugger;
                     Post(this.source.value(), 1)
                     this.source.data.backColor = "green";
                     dp.events.update(this.source);
@@ -81,28 +63,29 @@
                 }
             },
         ]
-
     });
 
-
-    function Post(shiftID,pref) {
-
+    function Post(shiftID, pref) {
         $.post("OpenShifts/SendShift",
         {
             shiftID: shiftID,
-            preference:pref
+            preference: pref
         })
     }
 
-    function select(e) {
-        var m = new DayPilot.Modal();
-        m.closed = function () {
-            if (this.result == "OK") {
-                dp.commandCallBack('refresh');
-            }
-            dp.clearSelection();
-        };
-        m.showUrl('@Url.Action("Edit", "OpenShifts")');
+    function EditShifts(e) {
+        debugger;
+        var type = @type;
+        if (type == "3" || type == "4")
+        {
+            var m = new DayPilot.Modal();
+            m.closed = function () {
+                if (this.result == "OK") {
+                    dp.commandCallBack('refresh');
+                }
+                dp.clearSelection();
+            };
+            m.showUrl('@Url.Action("EditShift", "OpenShifts")?ShiftID=' + e.id());
+        }
     }
-
 </script>

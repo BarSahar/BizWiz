@@ -64,7 +64,7 @@ namespace BizWizProj.Controllers
                 int currentUserId = ((BizUser)CurrentSession["user"]).ID;
 
                 OpenShift tempShift = dc.ShiftInProgress.Find(int.Parse(e.Id));
-                if (tempShift.PotentialWorkers.Count>=0)
+                if (tempShift.PotentialWorkers.Count >= 0)
                 {
                     foreach (UserPref worker in tempShift.PotentialWorkers.ToList())
                     {
@@ -117,6 +117,24 @@ namespace BizWizProj.Controllers
             return View(db.ShiftInProgress.ToList());
         }
 
+        public ActionResult EditShift(string ShiftID)
+        {
+            OpenShift tempshift = db.ShiftInProgress.Find(int.Parse(ShiftID));
+            if (tempshift != null)
+            {
+                var potentialUsers = db.BizUsers.ToList()
+                    .Where(u => tempshift.PotentialWorkers.All(w => w.UserID != u.ID))
+                    .Select(u => new UserPref() { UserID = u.ID, Preference = 0, UserName = u.FullName });
+
+                foreach (UserPref user in potentialUsers)
+                {
+                    tempshift.PotentialWorkers.Add(user);
+                }
+                return View(tempshift);
+            }
+            return View();
+        }
+
         [HttpPost]
         public ActionResult SendShift(int shiftID, int preference) //Bar - employee registers to a shift
         {
@@ -131,7 +149,7 @@ namespace BizWizProj.Controllers
                 bool AddnewPref = true;
                 foreach (UserPref worker in tempShift.PotentialWorkers.ToList())
                 {
-                    if (worker.UserID==senderID)
+                    if (worker.UserID == senderID)
                     {
                         worker.Preference = preference;
                         AddnewPref = false;
@@ -139,7 +157,7 @@ namespace BizWizProj.Controllers
                 }
                 if (AddnewPref == true)
                 {
-                    tempShift.PotentialWorkers.Add(new UserPref() { UserID = senderID, Preference = preference });
+                    tempShift.PotentialWorkers.Add(new UserPref() { UserID = senderID, Preference = preference, UserName = db.BizUsers.Find(senderID).FullName });
                 }
             }
             db.SaveChanges();
