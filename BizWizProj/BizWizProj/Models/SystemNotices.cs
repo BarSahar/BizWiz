@@ -13,7 +13,9 @@ namespace BizWizProj.Models
     {
         [Key]
         public int Id { get; set; }
+        [Required(ErrorMessage = "This field can not be empty.")]
         public string Subject { get; set; } //title of the notice
+        [Required(ErrorMessage = "This field can not be empty.")]
         public string Text { get; set; }   //body message
         public string Date { get; set; }
         public string From { get; set; }
