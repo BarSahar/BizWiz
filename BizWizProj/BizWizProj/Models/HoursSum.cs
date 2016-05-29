@@ -14,62 +14,54 @@ namespace BizWizProj.Models
 {
     public class HoursSum
     {
-        static public int IniHours(DB db, string session_name)
+        static public int IniHours(DB db, string employee_name)
         {
             var counter = 0;
 
-            
 
 
-            List<ClosedShift> shiftList = db.ShiftHistory.ToList();
-            shiftList.Reverse(); //start from the end
-            if (shiftList != null)
+            var currentDay = DateTime.Now.Day;
+            var currentMonth = DateTime.Now.Month;
+            var currentYear = DateTime.Now.Year;
+
+
+            List<ClosedShift> shiftList = db.ShiftHistory
+                .Where(s => s.WeekDate.Month == currentMonth)
+                .Where(s => s.WeekDate.Year == currentYear)
+                .Where(s => s.WeekDate.Day <= currentDay)
+                .Where(s => s.Workers.Select(w => w.FullName).Contains(employee_name))
+                .ToList();
+
+            foreach (var shift in shiftList)
             {
-                foreach (var s_item in shiftList)
-                {
-                    if (s_item.WeekDate.Month == DateTime.Now.Month && s_item.WeekDate.Date.Year == DateTime.Now.Year)
-                    {
-                        if (DateTime.Now.Day <= s_item.WeekDate.Day) // wouldnt count the future days
-                        {
-                            ICollection<BizUser> names = s_item.Workers;
-                            if (names != null)
-                            {
-                                foreach (var u_item in names)
-                                {
-                                    //TODO : check if it works
-                                    if (u_item.FullName == session_name)
-                                        if ((s_item.End.Hour - s_item.Start.Hour) < 0)
-                                            counter += s_item.End.Hour - s_item.Start.Hour + 24;
-                                        else
-                                            counter += s_item.End.Hour - s_item.Start.Hour;
-                                }
-                            }
-                        }
-                    }
-                    else
-                        break;
-                }
+                if ((shift.End.Hour - shift.Start.Hour) < 0)
+                    counter += shift.End.Hour - shift.Start.Hour + 24;
+                else
+                    counter += shift.End.Hour - shift.Start.Hour;
             }
+            
             return counter;
         }
 
-        static public String AllWorkers(DB db)
+        static public List<UserHours> AllWorkers(DB db)
         {
             var counter = 0;
-            String WorkesrHours="";
+            String WorkesrHours = "";
             List<BizUser> WorkersList = db.BizUsers.ToList();
+            List<UserHours> lst1 = new List<UserHours>();
 
             if (WorkersList != null)
                 foreach (var s_item in WorkersList)
                 {
                     counter = IniHours(db, s_item.FullName);
                     WorkesrHours += s_item.FullName + " " + counter.ToString() + " MH. ";
+                    lst1.Add(new UserHours() { User = s_item, Hours = counter });
                 }
             else
-                return "No workers Listed";
-            
-            return WorkesrHours;
-            
+                return null;
+
+            return lst1;
+
         }
 
 

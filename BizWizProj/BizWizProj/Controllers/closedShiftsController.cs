@@ -106,20 +106,22 @@ namespace BizWizProj.Controllers
         // GET: ClosedShifts
         public ActionResult Index()
         {
-            var counter = 0;
-            String workerssum;
+            //List of workers and mounthly working hours
+            List<UserHours> lst1 = HoursSum.AllWorkers(db);
 
-            if ((Session["user"] as BizWizProj.Models.BizUser).EmployeeType.Equals("4"))
-            {
-                workerssum = HoursSum.AllWorkers(db);
-                ViewData["Hours"] = workerssum;
-            }
+            UserHours UserHt = new UserHours();
+            
+            ViewBag.UsersHours = lst1;
 
-            else
-            {
-                counter = HoursSum.IniHours(db, (Session["user"] as BizWizProj.Models.BizUser).FullName);
-                ViewData["Hours"] = counter;
-            }
+            BizUser thisUser=Session["user"] as BizWizProj.Models.BizUser;
+            UserHt.User = thisUser;
+            foreach (var user in lst1)
+                if (user.User.ID.Equals(thisUser.ID))
+                {
+                    UserHt = user;
+                    break;
+                }
+            ViewBag.CurrentUser = UserHt;
 
             /* Start of System notices part */
             ViewBag.NoticesForMe = "";
