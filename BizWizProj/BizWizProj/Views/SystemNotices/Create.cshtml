@@ -35,7 +35,11 @@
         <div class="form-group">
             @Html.LabelFor(model => model.To, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.To, new SelectList(new[] { "Employee", "Shift Manager", "SuperShift manager", "Manager" }),  new { @class = "form-control" } )
+                @Html.DropDownListFor(model => model.To, new[] {
+                    new SelectListItem() { Text = "Employee", Value = "1" },
+                    new SelectListItem() { Text = "Shift Manager", Value = "2" },
+                    new SelectListItem() { Text = "SuperShift manager", Value = "3" },
+                    new SelectListItem() { Text = "Manager", Value = "4" } },  new { @class = "form-control" } )
                 @Html.ValidationMessageFor(model => model.To, "", new { @class = "text-danger" })
             </div>
         </div>

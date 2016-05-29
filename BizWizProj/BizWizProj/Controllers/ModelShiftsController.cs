@@ -25,9 +25,7 @@ namespace BizWizProj.Controllers
 
         class Dpc : DayPilotCalendar
         {
-
             private DB dc = new DB();
-
             protected override void OnCommand(CommandArgs e)
             {
                 switch (e.Command)
@@ -46,31 +44,25 @@ namespace BizWizProj.Controllers
             {
                 int Id = Convert.ToInt32(e.Id);
                 var item = (from ev in dc.ModelShifts where ev.ID == Id select ev).First();
-                
+
                 dc.ModelShifts.Remove(item);
                 dc.SaveChanges();
                 Update();
             }
 
             protected override void OnInit(InitArgs e)
-            
             {
                 UpdateWithMessage("Welcome!", CallBackUpdateType.Full);
             }
 
             protected override void OnFinish()
             {
-
                 if (UpdateType == CallBackUpdateType.None)
-                {
                     return;
-                }
-
                 DataIdField = "Id";
                 DataStartField = "Start";
                 DataEndField = "End";
                 DataTextField = "Text";
-
                 Events = from e in dc.ModelShifts select e;
             }
         }

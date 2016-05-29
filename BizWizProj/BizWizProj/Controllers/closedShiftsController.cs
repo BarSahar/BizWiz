@@ -125,7 +125,7 @@ namespace BizWizProj.Controllers
             ViewBag.NoticesForMe = "";
             DateTime date = DateTime.ParseExact("12/15/2009", "MM/dd/yyyy", null);
             //replace "Manager" with (HttpContext.Session["user"] as BizUser).EmployeeType
-            var notices = (from notif in db.Notices.ToList() where (notif.To.Equals("Manager") && DateOk(Convert.ToDateTime(notif.Date))) select notif).ToList();
+            var notices = (from notif in db.Notices.ToList() where (notif.To.Equals((HttpContext.Session["user"] as BizUser).EmployeeType) && DateOk(Convert.ToDateTime(notif.Date))) select notif).ToList();
             ViewBag.NoticesForMe = notices;
             /* End of System notices part */
 

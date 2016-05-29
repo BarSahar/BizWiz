@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Index";
 }
-@{
+@*@{
     var message = "";
     if (ViewBag.NoticesForMe.Count > 0)
     {
@@ -15,7 +15,7 @@
                 + ViewBag.NoticesForMe[i].Text + "</font color><br><br>";
         }
     }
-}
+}*@
 
 
 
@@ -37,13 +37,13 @@
 
 <br />
 <br />
-<div id="wrapper" style="border:ridge; width:180px; padding: 5px;">
-    <marquee onmouseover="stop();" onmouseout="start();"  height="250px" direction="up" scrollamount="2" >
-        <div id="L" style="font-family:'Lucida Console';">
+@*<div id="wrapper" style="border:ridge; width:180px; padding: 5px;">
+        <marquee onmouseover="stop();" onmouseout="start();"  height="250px" direction="up" scrollamount="2" >
+            <div id="L" style="font-family:'Lucida Console';">
 
-        </div>
-    </marquee>
-</div>
+            </div>
+        </marquee>
+    </div>*@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -94,9 +94,9 @@
     }
 
 </table>
-<script type="text/javascript">
+@*<script type="text/javascript">
 
 
     document.getElementById("L").innerHTML = '@Html.Raw(message)';
 
-</script>
+</script>*@
