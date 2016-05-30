@@ -12,7 +12,7 @@ namespace BizWizProj.Models
         {
             try
             {
-                var _email = "vasserman2000@gmail.com";
+                var _email = "bizzwizz2017@gmail.com";
                 var _epass = ConfigurationManager.AppSettings["EmailPassword"];
                 var _dispName = "BizzWizz";
                 /*smtp*/
