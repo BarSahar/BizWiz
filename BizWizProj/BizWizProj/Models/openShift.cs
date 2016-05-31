@@ -18,7 +18,7 @@ namespace BizWizProj.Models
         public DateTime End { get; set; }
 
         public DateTime WeekDate { get; set; }
-        public BizUser ShiftManager { get; set; }
+        public virtual BizUser ShiftManager { get; set; }
 
         public virtual ICollection<BizUser> Workers { get; set; }
         public virtual ICollection<UserPref> PotentialWorkers { get; set; }
@@ -31,15 +31,18 @@ namespace BizWizProj.Models
         {
             string result = "";
             if (ShiftManager!=null)
-                result = result + "<b>" + ShiftManager.FullName + "</b>" + "<br>";
+                result = result + "Manager:" + ShiftManager.FullName + " \n";
+                //result = result + "Manager:" + ShiftManager.FullName;
             if (Workers!=null)
             {
+                if (Workers.Count>0)
+                    result = result + "Employees: \n";
                 foreach(BizUser user in Workers)
                 {
-                    result = result + user.FullName + "<br>";
+                    result = result + user.FullName + " \n";
                 }
             }
-            Text = result;
+             Text = result;
         }
     }
 }

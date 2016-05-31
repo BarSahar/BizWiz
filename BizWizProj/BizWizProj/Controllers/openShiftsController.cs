@@ -186,14 +186,15 @@ namespace BizWizProj.Controllers
                 if (formCollection[key]!=null)
                 {
                     BizUser temp = db.BizUsers.Find(int.Parse(formCollection[key]));
-                    //currentShift.ShiftManager = new BizUser() { ID = temp.ID, FullName = temp.FullName, Password = temp.Password, Email = temp.Email, PhoneNumber = temp.PhoneNumber, EmployeeType = temp.EmployeeType, ClosedShift = temp.ClosedShift, OpenShift = temp.OpenShift };
                     currentShift.ShiftManager = temp;
+                    currentShift.UpdateText();
+                    db.SaveChanges();
                     break;
                 }
             }
-            db.SaveChanges();
             return View("SucOpenShift");
         }
+
         [HttpPost]
         public ActionResult SaveShift_Employees(FormCollection formCollection, string shiftId) //Bar - SuperShiftManager assignes workers to a shift
         {
@@ -204,7 +205,6 @@ namespace BizWizProj.Controllers
                 if (formCollection[key].Contains("true"))
                 {
                     BizUser temp = db.BizUsers.Find(int.Parse(key));
-                    //currentShift.ShiftManager = new BizUser() { ID = temp.ID, FullName = temp.FullName, Password = temp.Password, Email = temp.Email, PhoneNumber = temp.PhoneNumber, EmployeeType = temp.EmployeeType, ClosedShift = temp.ClosedShift, OpenShift = temp.OpenShift };
                     if (temp!=null)
                         newlist.Add(temp);
                 }
@@ -214,7 +214,6 @@ namespace BizWizProj.Controllers
             db.SaveChanges();
             return View("SucOpenShift");
         }
-
 
         [HttpPost]
         public ActionResult OpenToClose() //Avi OpenShift-->CloseShift

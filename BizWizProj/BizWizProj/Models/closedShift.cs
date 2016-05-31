@@ -16,7 +16,7 @@ namespace BizWizProj.Models
         public DateTime End { get; set; }
 
         public DateTime WeekDate { get; set; }
-        public BizUser ShiftManager { get; set; }
+        public virtual BizUser ShiftManager { get; set; }
         public virtual ICollection<BizUser> Workers { get; set; }
 
 
