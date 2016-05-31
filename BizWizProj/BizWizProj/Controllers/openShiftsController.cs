@@ -236,6 +236,8 @@ namespace BizWizProj.Controllers
                     Workers = openShiftList[i].Workers,
                     Text = openShiftList[i].Text
                 });
+                //Remove Potential workers before deleting the table to prevent runtime exceptions
+                openShiftList[i].PotentialWorkers.Clear();
             }
             db.ShiftHistory.AddRange(newCloseShiftsList); //Adding all new close shift to close shift db
             db.ShiftInProgress.RemoveRange(openShiftList);// clearing open shift db
