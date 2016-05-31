@@ -28,6 +28,7 @@
                 dp.commandCallBack('refresh');
             }
             dp.clearSelection();
+            location.reload();
         };
         m.showUrl('@Url.Action("Create", "ModelShifts")?start=' + start + '&end=' + end);
     }

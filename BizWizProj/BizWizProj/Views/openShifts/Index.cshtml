@@ -74,16 +74,13 @@
     }
 
     function EditShifts(e) {
-        debugger;
         var type = @type;
         if (type == "3" || type == "4")
         {
             var m = new DayPilot.Modal();
             m.closed = function () {
-                if (this.result == "OK") {
-                    dp.commandCallBack('refresh');
-                }
-                dp.clearSelection();
+                dp.commandCallBack('refresh');
+                location.reload();
             };
             m.showUrl('@Url.Action("EditShift", "OpenShifts")?ShiftID=' + e.id());
         }

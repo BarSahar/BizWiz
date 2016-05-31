@@ -210,6 +210,7 @@ namespace BizWizProj.Controllers
                 }
             }
             currentShift.Workers = newlist;
+            currentShift.UpdateText();
             db.SaveChanges();
             return View("SucOpenShift");
         }

@@ -25,6 +25,22 @@ namespace BizWizProj.Models
 
         //Text to display Workers
         public string Text { get; set; }
+
+
+        public void UpdateText()
+        {
+            string result = "";
+            if (ShiftManager!=null)
+                result = result + "<b>" + ShiftManager.FullName + "</b>" + "<br>";
+            if (Workers!=null)
+            {
+                foreach(BizUser user in Workers)
+                {
+                    result = result + user.FullName + "<br>";
+                }
+            }
+            Text = result;
+        }
     }
 }
 
