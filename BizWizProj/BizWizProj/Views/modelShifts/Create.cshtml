@@ -7,10 +7,10 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>ModelShift</h4>
         <hr />
@@ -19,7 +19,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DayIndex, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.DayIndex, new { @Value = (Convert.ToDateTime(HttpContext.Current.Request.QueryString["end"]).Day.ToString()) })                                        
+                @Html.TextBoxFor(model => model.DayIndex, new { @Value = (Convert.ToDateTime(HttpContext.Current.Request.QueryString["end"]).Day.ToString()) })                                  
                 @Html.ValidationMessageFor(model => model.DayIndex, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -35,7 +35,14 @@
         <div class="form-group">
             @Html.LabelFor(model => model.NumOfEmployees, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.NumOfEmployees, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.NumOfEmployees, additionalViewData: new
+           {
+               htmlAttributes = new
+               {
+                   @class = "form-control",
+                   min = 0
+               }
+           })
                 @Html.ValidationMessageFor(model => model.NumOfEmployees, "", new { @class = "text-danger" })
             </div>
         </div>
