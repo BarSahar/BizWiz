@@ -14,5 +14,6 @@ namespace BizWizProj.Models
         public int UserID { get; set; }
         public string UserName { get; set; }
         public int Preference { get; set; }
+        public bool IsManager { get; set; }
     }
 }

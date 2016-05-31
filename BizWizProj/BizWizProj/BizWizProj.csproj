@@ -282,6 +282,8 @@
     <Content Include="Views\Email\EmailSent.cshtml" />
     <Content Include="Views\Email\SendEmail.cshtml" />
     <Content Include="Views\OpenShifts\EditShift.cshtml" />
+    <Content Include="Views\ModelShifts\SucModelShift.cshtml" />
+    <Content Include="Views\OpenShifts\SucOpenShift.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

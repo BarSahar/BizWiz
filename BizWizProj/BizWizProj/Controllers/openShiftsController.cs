@@ -117,19 +117,29 @@ namespace BizWizProj.Controllers
             return View(db.ShiftInProgress.ToList());
         }
 
-        public ActionResult EditShift(string ShiftID)
+        public ActionResult EditShift(string ShiftID) //Bar - for the supershift manager to edit the schedule
         {
             OpenShift tempshift = db.ShiftInProgress.Find(int.Parse(ShiftID));
             if (tempshift != null)
             {
-                var potentialUsers = db.BizUsers.ToList()
-                    .Where(u => tempshift.PotentialWorkers.All(w => w.UserID != u.ID))
-                    .Select(u => new UserPref() { UserID = u.ID, Preference = 0, UserName = u.FullName });
+                //Gathering remaining employees that didn't send shifts
+                var potentialEmps = db.BizUsers.ToList()
+                    .Where(u => tempshift.PotentialWorkers.All(w => w.UserID != u.ID) && u.EmployeeType == "1")
+                    .Select(u => new UserPref() { UserID = u.ID, Preference = 0, UserName = u.FullName, IsManager = false });
+                //Gathering remaining shift managers that didn't send shifts
+                var potentialManagers = db.BizUsers.ToList()
+                    .Where(u => tempshift.PotentialWorkers.All(w => w.UserID != u.ID) && (u.EmployeeType == "2" || u.EmployeeType == "3"))
+                    .Select(u => new UserPref() { UserID = u.ID, Preference = 0, UserName = u.FullName, IsManager = true });
 
-                foreach (UserPref user in potentialUsers)
+                var AllOtherUsers = potentialManagers.Concat(potentialEmps).ToList();
+                
+                //Adding those users to potential workers for this shift
+                foreach (UserPref user in AllOtherUsers)
                 {
                     tempshift.PotentialWorkers.Add(user);
                 }
+
+                tempshift.PotentialWorkers = tempshift.PotentialWorkers.OrderBy(u => u.IsManager).Reverse().ToList();
                 return View(tempshift);
             }
             return View();
@@ -157,12 +167,53 @@ namespace BizWizProj.Controllers
                 }
                 if (AddnewPref == true)
                 {
-                    tempShift.PotentialWorkers.Add(new UserPref() { UserID = senderID, Preference = preference, UserName = db.BizUsers.Find(senderID).FullName });
+                    bool isManager = false;
+                    if (db.BizUsers.Find(senderID).EmployeeType == "2" || db.BizUsers.Find(senderID).EmployeeType == "3")
+                        isManager = true;
+                    tempShift.PotentialWorkers.Add(new UserPref() { UserID = senderID, Preference = preference, UserName = db.BizUsers.Find(senderID).FullName, IsManager = isManager });
                 }
             }
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        
+        [HttpPost]
+        public ActionResult SaveShift_Manager(FormCollection formCollection, string shiftId) //Bar - SuperShiftManager assignes a shiftmanager to a shift
+        {
+            OpenShift currentShift = db.ShiftInProgress.Find(int.Parse(shiftId));
+            foreach(string key in formCollection.AllKeys)
+            {
+                if (formCollection[key]!=null)
+                {
+                    BizUser temp = db.BizUsers.Find(int.Parse(formCollection[key]));
+                    //currentShift.ShiftManager = new BizUser() { ID = temp.ID, FullName = temp.FullName, Password = temp.Password, Email = temp.Email, PhoneNumber = temp.PhoneNumber, EmployeeType = temp.EmployeeType, ClosedShift = temp.ClosedShift, OpenShift = temp.OpenShift };
+                    currentShift.ShiftManager = temp;
+                    break;
+                }
+            }
+            db.SaveChanges();
+            return View("SucOpenShift");
+        }
+        [HttpPost]
+        public ActionResult SaveShift_Employees(FormCollection formCollection, string shiftId) //Bar - SuperShiftManager assignes workers to a shift
+        {
+            OpenShift currentShift = db.ShiftInProgress.Find(int.Parse(shiftId));
+            List<BizUser> newlist = new List<BizUser>();
+            foreach (string key in formCollection.AllKeys)
+            {
+                if (formCollection[key].Contains("true"))
+                {
+                    BizUser temp = db.BizUsers.Find(int.Parse(key));
+                    //currentShift.ShiftManager = new BizUser() { ID = temp.ID, FullName = temp.FullName, Password = temp.Password, Email = temp.Email, PhoneNumber = temp.PhoneNumber, EmployeeType = temp.EmployeeType, ClosedShift = temp.ClosedShift, OpenShift = temp.OpenShift };
+                    if (temp!=null)
+                        newlist.Add(temp);
+                }
+            }
+            currentShift.Workers = newlist;
+            db.SaveChanges();
+            return View("SucOpenShift");
+        }
+
 
         [HttpPost]
         public ActionResult OpenToClose() //Avi OpenShift-->CloseShift

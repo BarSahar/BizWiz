@@ -108,7 +108,8 @@ namespace BizWizProj.Controllers
             {
                 db.ModelShifts.Add(ModelShift);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return View("SucModelShift");
             }
 
             return View(ModelShift);
