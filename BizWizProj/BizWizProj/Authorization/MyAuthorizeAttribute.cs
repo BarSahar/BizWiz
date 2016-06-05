@@ -13,6 +13,7 @@ namespace BizWizProj.Authorization
     {
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
+            httpContext.Session["returnUrl"] = httpContext.Request.RawUrl;
             if (httpContext.Session["user"] == null)
             {
                 return false;
