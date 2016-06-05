@@ -41,7 +41,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DayPilot.Web.Mvc">
-      <HintPath>..\..\..\..\..\Downloads\DayPilot.Web.Mvc.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\TutorialMvc5EventCalendar\Lib\DayPilot.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -284,6 +284,7 @@
     <Content Include="Views\OpenShifts\EditShift.cshtml" />
     <Content Include="Views\ModelShifts\SucModelShift.cshtml" />
     <Content Include="Views\OpenShifts\SucOpenShift.cshtml" />
+    <Content Include="Views\ClosedShifts\PopScreen.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

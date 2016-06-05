@@ -19,6 +19,43 @@ namespace BizWizProj.Controllers
     [MyAuthorize]
     public class ClosedShiftsController : Controller
     {
+        //Avi
+        public static int ShiftId;
+        public string OpenModelPopup() //Searcing for Employees That is not Working on Some Shift 
+        {
+            List<BizUser> BizzUsersList = db.BizUsers.ToList(); //loading all Users from db 
+            List<BizUser> NotWorkingUsers = new List<BizUser>(); //List of the Workers That not work on this Shift
+            ClosedShift ThisShift = db.ShiftHistory.Find(ShiftId);// Loading this Shift from db
+            bool flag = false;
+            foreach (BizUser user in BizzUsersList)
+            {
+                foreach (BizUser workerInShift in ThisShift.Workers)
+                {
+                    if (user.ID == workerInShift.ID)
+                        flag = true;
+                }
+                if (!flag)
+                    NotWorkingUsers.Add(user);
+                flag = false;
+            }
+            string workersNames = "Employees That is Not Working on This Shift: <br>";
+            if (!NotWorkingUsers.Any())
+                return workersNames;
+            int num = 1;
+            foreach (BizUser worker in NotWorkingUsers)
+            {
+                workersNames += num + ") " + worker.FullName + "\n";
+                num++;
+            }
+            return workersNames;
+        }
+        public ActionResult PopScreen()
+        {
+            ViewBag.HtmlStr = OpenModelPopup();
+            return View();
+        }
+
+
         public ClosedShiftsController()
         {
             db.Database.CreateIfNotExists();

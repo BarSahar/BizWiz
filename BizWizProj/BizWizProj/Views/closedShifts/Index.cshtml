@@ -227,6 +227,16 @@
                 dp.events.list = data;
                 dp.update();
             });
+
+            function PopIt(e) {
+                $.post("ClosedShifts/idSave", {
+                    shiftid: e.id()
+                })
+                var m = new DayPilot.Modal();
+                m.showUrl('@Url.Action("PopScreen", "ClosedShifts")');
+            }
+
+
         }
         document.getElementById("L").innerHTML = '@Html.Raw(message)';
     </script>
