@@ -25,9 +25,15 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Manage Shifts", "Index", "ModelShifts")</li>
-                    <li>@Html.ActionLink("Schedule in Progress", "Index", "OpenShifts")</li>
-                    <li>@Html.ActionLink("Watch Schedule History", "Index", "ClosedShifts")</li>
+                    <li class=" dropdown">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle">Shifts
+                            <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Manage Shifts", "Index", "ModelShifts")</li>
+                            <li>@Html.ActionLink("Schedule in Progress", "Index", "OpenShifts")</li>
+                            <li>@Html.ActionLink("Watch Schedule History", "Index", "ClosedShifts")</li>
+                        </ul>
+                    </li>
                     <li>@Html.ActionLink("Manage Employees", "Index", "BizUsers")</li>
                     <li>@Html.ActionLink("Manage Stock Items", "Index", "StockItems")</li>
                     <li>@Html.ActionLink("Send Notice", "Create", "SystemNotices")</li>
