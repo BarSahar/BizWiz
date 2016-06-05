@@ -5,20 +5,20 @@
 @{
     if (Session["user"]!=null)
         {
-            string s = (Session["user"] as BizWizProj.Models.BizUser).EmployeeType;
-            if (s.Equals("1"))
+            BizWizProj.Models.EmployeeType s = (Session["user"] as BizWizProj.Models.BizUser).EmployeeType;
+            if (s == BizWizProj.Models.EmployeeType.Employee)
             {
                 Layout = "~/Views/Shared/_LayoutEmployee.cshtml";
             }
-            if (s.Equals("2"))
+            if (s == BizWizProj.Models.EmployeeType.ShiftManager)
             {
                 Layout = "~/Views/Shared/_LayoutShiftManager.cshtml";
-            }        
-            if (s.Equals("3"))
+            }
+            if (s == BizWizProj.Models.EmployeeType.SuperShiftManager)
             {
                 Layout = "~/Views/Shared/_LayoutSuperShiftManager.cshtml";
             }
-            if (s.Equals("4"))
+            if (s == BizWizProj.Models.EmployeeType.Manager)
             {
                 Layout = "~/Views/Shared/_LayoutManager.cshtml";
             }

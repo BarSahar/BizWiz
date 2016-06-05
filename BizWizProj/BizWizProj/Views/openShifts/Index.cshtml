@@ -4,26 +4,36 @@
 <br />
 <br />
 
-@{
-    String type = (Session["user"] as BizWizProj.Models.BizUser).EmployeeType;
-}
-
 <div id="dp">
-    @Html.DayPilotCalendar("dp", new DayPilot.Web.Mvc.DayPilotCalendarConfig
-{
-    BackendUrl = Url.Action("Backend", "OpenShifts"),
-    ViewType = DayPilot.Web.Mvc.Enums.Calendar.ViewType.Week,
-    TimeFormat = DayPilot.Web.Mvc.Enums.TimeFormat.Clock24Hours,
+    @{
+        if (((BizWizProj.Models.BizUser)Session["user"]).EmployeeType == BizWizProj.Models.EmployeeType.Manager || ((BizWizProj.Models.BizUser)Session["user"]).EmployeeType == BizWizProj.Models.EmployeeType.SuperShiftManager)
+        {
+            @Html.DayPilotCalendar("dp", new DayPilot.Web.Mvc.DayPilotCalendarConfig
+            {
+            BackendUrl = Url.Action("Backend", "OpenShifts"),
+            ViewType = DayPilot.Web.Mvc.Enums.Calendar.ViewType.Week,
+            TimeFormat = DayPilot.Web.Mvc.Enums.TimeFormat.Clock24Hours,
+            EventClickHandling = DayPilot.Web.Mvc.Events.Calendar.EventClickHandlingType.JavaScript,
+            EventClickJavaScript = "EditShifts(e)",
+        })
+        }
+        else
+        {
+            @Html.DayPilotCalendar("dp", new DayPilot.Web.Mvc.DayPilotCalendarConfig
+            {
+            BackendUrl = Url.Action("Backend", "OpenShifts"),
+            ViewType = DayPilot.Web.Mvc.Enums.Calendar.ViewType.Week,
+            TimeFormat = DayPilot.Web.Mvc.Enums.TimeFormat.Clock24Hours,
+        })
+        }
+    }
 
-    EventClickHandling = DayPilot.Web.Mvc.Events.Calendar.EventClickHandlingType.JavaScript,
-    EventClickJavaScript = "EditShifts(e)",
-})
 </div>
 <br />
 @using (Html.BeginForm("OpenToClose", "OpenShifts"))
 {
-    string currentType = (Session["user"] as BizWizProj.Models.BizUser).EmployeeType;
-    if (currentType=="3"|| currentType=="4")
+    BizWizProj.Models.EmployeeType currentType = (Session["user"] as BizWizProj.Models.BizUser).EmployeeType;
+    if (currentType == BizWizProj.Models.EmployeeType.Manager || currentType == BizWizProj.Models.EmployeeType.SuperShiftManager)
     { 
         <input type="submit" value="Close Shift" class="btn btn-default" />
     }
@@ -58,7 +68,6 @@
             },
             {
                 text: "Refresh", onclick: function (args) {
-                    debugger;
                     dp.events.update(this.source);
                 }
             },
@@ -74,15 +83,11 @@
     }
 
     function EditShifts(e) {
-        var type = @type;
-        if (type == "3" || type == "4")
-        {
-            var m = new DayPilot.Modal();
-            m.closed = function () {
-                dp.commandCallBack('refresh');
-                location.reload();
-            };
-            m.showUrl('@Url.Action("EditShift", "OpenShifts")?ShiftID=' + e.id());
+        var m = new DayPilot.Modal();
+        m.closed = function () {
+            dp.commandCallBack('refresh');
+            location.reload();
+        };
+        m.showUrl('@Url.Action("EditShift", "OpenShifts")?ShiftID=' + e.id());
         }
-    }
 </script>

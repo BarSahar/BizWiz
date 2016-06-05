@@ -24,7 +24,7 @@ namespace BizWizProj.Controllers
             //TODO: change Password to "admin" "backdoor"
             if ("1".Equals(name) && "1".Equals(Password))
             {
-                Session["user"] = new BizUser() { FullName = name, EmployeeType ="4" };
+                Session["user"] = new BizUser() { FullName = name, EmployeeType = EmployeeType.Manager };
                     return RedirectToAction("Index","Home");
             }
             //for real users.

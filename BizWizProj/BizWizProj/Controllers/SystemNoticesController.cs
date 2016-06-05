@@ -27,9 +27,7 @@ namespace BizWizProj.Controllers
         public ActionResult Index()
         {
             ViewBag.NoticesForMe = "";
-            //replace "Manager" with (HttpContext.Session["user"] as BizUser).EmployeeType
             var notices = (from notif in db.Notices.ToList() where notif.To.Equals("Manager") select notif).ToList();
-            
             ViewBag.NoticesForMe = notices;
             return View(db.Notices.ToList());
         }

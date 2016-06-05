@@ -124,11 +124,11 @@ namespace BizWizProj.Controllers
             {
                 //Gathering remaining employees that didn't send shifts
                 var potentialEmps = db.BizUsers.ToList()
-                    .Where(u => tempshift.PotentialWorkers.All(w => w.UserID != u.ID) && u.EmployeeType == "1")
+                    .Where(u => tempshift.PotentialWorkers.All(w => w.UserID != u.ID) && u.EmployeeType == EmployeeType.Employee)
                     .Select(u => new UserPref() { UserID = u.ID, Preference = 0, UserName = u.FullName, IsManager = false });
                 //Gathering remaining shift managers that didn't send shifts
                 var potentialManagers = db.BizUsers.ToList()
-                    .Where(u => tempshift.PotentialWorkers.All(w => w.UserID != u.ID) && (u.EmployeeType == "2" || u.EmployeeType == "3"))
+                    .Where(u => tempshift.PotentialWorkers.All(w => w.UserID != u.ID) && (u.EmployeeType == EmployeeType.ShiftManager || u.EmployeeType == EmployeeType.SuperShiftManager))
                     .Select(u => new UserPref() { UserID = u.ID, Preference = 0, UserName = u.FullName, IsManager = true });
 
                 var AllOtherUsers = potentialManagers.Concat(potentialEmps).ToList();
@@ -168,7 +168,7 @@ namespace BizWizProj.Controllers
                 if (AddnewPref == true)
                 {
                     bool isManager = false;
-                    if (db.BizUsers.Find(senderID).EmployeeType == "2" || db.BizUsers.Find(senderID).EmployeeType == "3")
+                    if (db.BizUsers.Find(senderID).EmployeeType == EmployeeType.ShiftManager || db.BizUsers.Find(senderID).EmployeeType == EmployeeType.SuperShiftManager)
                         isManager = true;
                     tempShift.PotentialWorkers.Add(new UserPref() { UserID = senderID, Preference = preference, UserName = db.BizUsers.Find(senderID).FullName, IsManager = isManager });
                 }
