@@ -4,7 +4,7 @@
 }
 
 <h2>Login</h2>
-@using (Html.BeginForm())
+@using (Html.BeginForm(@*"Login", "Login", new { ReturnUrl = Request.QueryString["ReturnUrl"] }, FormMethod.Post, new { id = "form1" }*@))
 {
     <div>@Html.Label("Login name")</div>
     <div>@Html.TextBox("name")</div>
