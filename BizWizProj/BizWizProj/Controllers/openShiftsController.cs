@@ -227,11 +227,8 @@ namespace BizWizProj.Controllers
             {
                 newCloseShiftsList.Add(new ClosedShift()
                 {
-                    DayIndex = openShiftList[i].DayIndex,
-                    ShiftIndex = openShiftList[i].ShiftIndex,
                     Start = openShiftList[i].Start,
                     End = openShiftList[i].End,
-                    WeekDate = openShiftList[i].WeekDate,
                     ShiftManager = openShiftList[i].ShiftManager,
                     Workers = openShiftList[i].Workers,
                     Text = openShiftList[i].Text
@@ -264,10 +261,8 @@ namespace BizWizProj.Controllers
                     DateTime tempEnd = new DateTime(ShiftDate.Year, ShiftDate.Month, ShiftDate.Day, modelist[i].End.Hour, modelist[i].Start.Minute, modelist[i].Start.Second);
                     newlist.Add(new OpenShift()
                     {
-                        DayIndex = (int)tempStart.DayOfWeek,
                         Start = tempStart,
                         End = tempEnd,
-                        WeekDate = firstDayOfWeek
                     });
                 }
                 db.ShiftInProgress.AddRange(newlist);
@@ -300,7 +295,7 @@ namespace BizWizProj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,DayIndex,ShiftIndex,NumOfEmployees,Start,End")] OpenShift OpenShift)
+        public ActionResult Create([Bind(Include = "ID,NumOfEmployees,Start,End")] OpenShift OpenShift)
         {
             if (ModelState.IsValid)
             {
@@ -332,7 +327,7 @@ namespace BizWizProj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,DayIndex,ShiftIndex,NumOfEmployees,Start,End,WeekDate,Text")] OpenShift OpenShift)
+        public ActionResult Edit([Bind(Include = "ID,NumOfEmployees,Start,End,Text")] OpenShift OpenShift)
         {
             if (ModelState.IsValid)
             {

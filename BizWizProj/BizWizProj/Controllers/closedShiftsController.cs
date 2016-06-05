@@ -168,7 +168,7 @@ namespace BizWizProj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,DayIndex,ShiftIndex,Start,End,WeekDate")] ClosedShift ClosedShift)
+        public ActionResult Create([Bind(Include = "ID,Start,End")] ClosedShift ClosedShift)
         {
             if (ModelState.IsValid)
             {
@@ -200,7 +200,7 @@ namespace BizWizProj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,DayIndex,ShiftIndex,Start,End,WeekDate")] ClosedShift ClosedShift)
+        public ActionResult Edit([Bind(Include = "ID,Start,End")] ClosedShift ClosedShift)
         {
             if (ModelState.IsValid)
             {

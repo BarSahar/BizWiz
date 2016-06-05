@@ -17,18 +17,13 @@ namespace BizWizProj.Models
         static public int IniHours(DB db, string employee_name)
         {
             var counter = 0;
-
-
-
             var currentDay = DateTime.Now.Day;
             var currentMonth = DateTime.Now.Month;
             var currentYear = DateTime.Now.Year;
-
-
             List<ClosedShift> shiftList = db.ShiftHistory
-                .Where(s => s.WeekDate.Month == currentMonth)
-                .Where(s => s.WeekDate.Year == currentYear)
-                .Where(s => s.WeekDate.Day <= currentDay)
+                .Where(s => s.Start.Month == currentMonth)
+                .Where(s => s.Start.Year == currentYear)
+                .Where(s => s.Start.Day <= currentDay)
                 .Where(s => s.Workers.Select(w => w.FullName).Contains(employee_name))
                 .ToList();
 
