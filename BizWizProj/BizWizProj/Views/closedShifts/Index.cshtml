@@ -107,8 +107,7 @@
             <h4>Employee Hours</h4>
             <div>
                 @{
-             
-                    if (ViewBag.CurrentUser.User.EmployeeType.Equals("4"))
+                    if (ViewBag.CurrentUser.User.EmployeeType == BizWizProj.Models.EmployeeType.Manager)
                     {
                         foreach (var user in ViewBag.UsersHours)
                         {
@@ -186,7 +185,6 @@
 
     <div style="margin-left: 170px; margin-right:170px;">
         <div id="dap">
-
             @Html.DayPilotCalendar("dp", new DayPilot.Web.Mvc.DayPilotCalendarConfig
 {
 
