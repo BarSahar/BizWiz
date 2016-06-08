@@ -20,6 +20,7 @@ namespace BizWizProj.Controllers
     public class ClosedShiftsController : Controller
     {
         //Avi
+        #region
         public static int ShiftId;
         public string OpenModelPopup() //Searcing for Employees That is not Working on Some Shift 
         {
@@ -49,6 +50,8 @@ namespace BizWizProj.Controllers
             }
             return workersNames;
         }
+        #endregion
+
         public ActionResult PopScreen()
         {
             ViewBag.HtmlStr = OpenModelPopup();
@@ -113,9 +116,6 @@ namespace BizWizProj.Controllers
                         break;
                 }
             }
-
-
-
             protected override void OnInit(InitArgs e)
             {
                 UpdateWithMessage("Welcome!", CallBackUpdateType.Full);

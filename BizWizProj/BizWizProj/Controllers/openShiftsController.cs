@@ -117,7 +117,9 @@ namespace BizWizProj.Controllers
             return View(db.ShiftInProgress.ToList());
         }
 
-        public ActionResult EditShift(string ShiftID) //Bar - for the supershift manager to edit the schedule
+        //Bar - for the supershift manager to edit the schedule
+        #region
+        public ActionResult EditShift(string ShiftID) 
         {
             OpenShift tempshift = db.ShiftInProgress.Find(int.Parse(ShiftID));
             if (tempshift != null)
@@ -144,9 +146,11 @@ namespace BizWizProj.Controllers
             }
             return View();
         }
-
+        #endregion
+        //Bar - employee registers to a shift
+        #region
         [HttpPost]
-        public ActionResult SendShift(int shiftID, int preference) //Bar - employee registers to a shift
+        public ActionResult SendShift(int shiftID, int preference) 
         {
             if (!db.ShiftInProgress.Any() || !db.BizUsers.Any() || Session["user"] == null)  // checking if open shift and user list is empty and user in Session
                 return RedirectToAction("Index");
@@ -176,9 +180,11 @@ namespace BizWizProj.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        
+        #endregion
+        //Bar - SuperShiftManager assignes a shiftmanager to a shift
+        #region
         [HttpPost]
-        public ActionResult SaveShift_Manager(FormCollection formCollection, string shiftId) //Bar - SuperShiftManager assignes a shiftmanager to a shift
+        public ActionResult SaveShift_Manager(FormCollection formCollection, string shiftId) 
         {
             OpenShift currentShift = db.ShiftInProgress.Find(int.Parse(shiftId));
             foreach(string key in formCollection.AllKeys)
@@ -194,9 +200,11 @@ namespace BizWizProj.Controllers
             }
             return View("SucOpenShift");
         }
-
+        #endregion
+        //Bar - SuperShiftManager assignes workers to a shift
+        #region
         [HttpPost]
-        public ActionResult SaveShift_Employees(FormCollection formCollection, string shiftId) //Bar - SuperShiftManager assignes workers to a shift
+        public ActionResult SaveShift_Employees(FormCollection formCollection, string shiftId)
         {
             OpenShift currentShift = db.ShiftInProgress.Find(int.Parse(shiftId));
             List<BizUser> newlist = new List<BizUser>();
@@ -214,9 +222,11 @@ namespace BizWizProj.Controllers
             db.SaveChanges();
             return View("SucOpenShift");
         }
-
+        #endregion
+        //Avi OpenShift to CloseShift
+        #region
         [HttpPost]
-        public ActionResult OpenToClose() //Avi OpenShift-->CloseShift
+        public ActionResult OpenToClose() 
         {
             List<OpenShift> openShiftList = new List<OpenShift>();
             if (!db.ShiftInProgress.Any())  // checking if open shift is empty
@@ -241,8 +251,10 @@ namespace BizWizProj.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
-        public void ModelTopen() //Avi ModelShift--->OpenShift
+        #endregion
+        //Avi ModelShift to OpenShift
+        #region
+        public void ModelTopen() 
         {
             DateTime shiftDate = DateTime.Now.AddDays(7); //seting date for next week
             if (db.ShiftInProgress.Any())                 // preventing override of existing data in calendar
@@ -269,6 +281,7 @@ namespace BizWizProj.Controllers
                 db.SaveChanges();
             }
         }
+        #endregion
         // GET: OpenShifts/Details/5
         public ActionResult Details(int? id)
         {
