@@ -2,13 +2,18 @@
 @{
     ViewBag.Title = "Login";
 }
+<br /><br />
 
-<h2>Login</h2>
-@using (Html.BeginForm())
-{
-    <div>@Html.Label("Login name")</div>
-    <div>@Html.TextBox("name")</div>
-    <div>@Html.Label("Password")</div>
-    <div>@Html.Password("password")</div>
-    <input type="submit" value"Login"/>
-}
+
+<div style="text-align:center">
+    <h2>Login</h2>
+    @using (Html.BeginForm())
+    {
+        <div>@Html.Label("Login name")</div>
+        <div>@Html.TextBox("name")</div>
+        <div>@Html.Label("Password")</div>
+        <div>@Html.Password("password")</div>
+        <input type="submit" value"login" />
+    }
+</div>
+<br /><br /><br /><br /><br /><br /><br /><br />
