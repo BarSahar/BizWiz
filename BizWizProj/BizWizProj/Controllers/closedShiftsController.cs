@@ -102,12 +102,9 @@ namespace BizWizProj.Controllers
             {
                 switch (e.Command)
                 {
-
-
                     case "today":
                         StartDate = DateTime.Today;
                         Update(CallBackUpdateType.Full);
-
                         break;
                     case "navigate":
                         //Console.WriteLine(StartDate.ToString);
@@ -163,7 +160,6 @@ namespace BizWizProj.Controllers
             /* Start of System notices part */
             ViewBag.NoticesForMe = "";
             List<BizWizProj.Models.SystemNotices> notices;
-
             switch (((HttpContext.Session["user"] as BizUser).EmployeeType).ToString())
             {
                 case ("Manager"):
@@ -189,6 +185,7 @@ namespace BizWizProj.Controllers
             return View(db.ShiftHistory.ToList());
         }
 
+        //the function below is checking if a notice is out of date (older than 14 days)
         public bool DateOk(DateTime d)
         {
             DateTime now = DateTime.Now;
