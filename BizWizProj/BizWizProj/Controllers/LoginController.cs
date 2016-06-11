@@ -25,15 +25,16 @@ namespace BizWizProj.Controllers
             if ("1".Equals(name) && "1".Equals(Password))
             {
                 Session["user"] = new BizUser() { FullName = name, EmployeeType = EmployeeType.Manager };
-                    return RedirectToAction("Index","Home");
+                return Redirect(Session["returnUrl"].ToString());
             }
             //for real users.
             List<BizUser> userList = db.BizUsers.ToList();
             foreach (var item in userList)
             {
-                if(item.Email.Equals(name) && item.Password.Equals(Password))
+                if (item.Email.Equals(name) && item.Password.Equals(Password))
                 {
-                    Session["user"] = new BizUser() {
+                    Session["user"] = new BizUser()
+                    {
                         FullName = item.FullName,
                         Email = item.Email,
                         EmployeeType = item.EmployeeType,
