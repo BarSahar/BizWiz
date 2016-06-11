@@ -102,13 +102,14 @@ namespace BizWizProj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,DayIndex,ShiftIndex,NumOfEmployees,Start,End")] ModelShift ModelShift)
+        public ActionResult Create([Bind(Include = "ID,NumOfEmployees,Start,End")] ModelShift ModelShift)
         {
             if (ModelState.IsValid)
             {
                 db.ModelShifts.Add(ModelShift);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return View("SucModelShift");
             }
 
             return View(ModelShift);
@@ -134,7 +135,7 @@ namespace BizWizProj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,DayIndex,,NumOfEmployees,Start,End")] ModelShift ModelShift)
+        public ActionResult Edit([Bind(Include = "ID,NumOfEmployees,Start,End")] ModelShift ModelShift)
         {
             if (ModelState.IsValid)
             {

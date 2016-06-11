@@ -10,9 +10,6 @@ namespace BizWizProj.Models
     {
         [Key]
         public int ID { get; set; }
-        public int DayIndex { get; set; }
-        public int ShiftIndex { get; set; }
-        [Range(1, Int32.MaxValue)]
         public int NumOfEmployees { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }

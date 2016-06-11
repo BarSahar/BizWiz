@@ -1,9 +1,9 @@
 ﻿<script src="@Url.Content("~/Scripts/DayPilot/daypilot-all.min.js")" type="text/javascript"></script>
-<br />
-<br />
-<br />
-<br />
-
+@{
+    ViewBag.Title = "Index";
+}
+<br /><br />
+<h1 style="text-align:center">Shift Modelization</h1>
 <div id="dp">
     @Html.ActionLink("Create New shift", "Create")
     @Html.DayPilotCalendar("dp", new DayPilot.Web.Mvc.DayPilotCalendarConfig
@@ -28,6 +28,7 @@
                 dp.commandCallBack('refresh');
             }
             dp.clearSelection();
+            location.reload();
         };
         m.showUrl('@Url.Action("Create", "ModelShifts")?start=' + start + '&end=' + end);
     }

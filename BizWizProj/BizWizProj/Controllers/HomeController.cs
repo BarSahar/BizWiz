@@ -13,5 +13,13 @@ namespace BizWizProj.Controllers
         {
             return RedirectToAction("Index", "ClosedShifts");
         }
+        public ActionResult Contact()
+        {
+            return View();
+        }
+        public ActionResult About()
+        {
+            return View();
+        }
     }
 }

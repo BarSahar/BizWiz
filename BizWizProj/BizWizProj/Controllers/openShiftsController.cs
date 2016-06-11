@@ -117,26 +117,40 @@ namespace BizWizProj.Controllers
             return View(db.ShiftInProgress.ToList());
         }
 
-        public ActionResult EditShift(string ShiftID)
+        //Bar - for the supershift manager to edit the schedule
+        #region
+        public ActionResult EditShift(string ShiftID) 
         {
             OpenShift tempshift = db.ShiftInProgress.Find(int.Parse(ShiftID));
             if (tempshift != null)
             {
-                var potentialUsers = db.BizUsers.ToList()
-                    .Where(u => tempshift.PotentialWorkers.All(w => w.UserID != u.ID))
-                    .Select(u => new UserPref() { UserID = u.ID, Preference = 0, UserName = u.FullName });
+                //Gathering remaining employees that didn't send shifts
+                var potentialEmps = db.BizUsers.ToList()
+                    .Where(u => tempshift.PotentialWorkers.All(w => w.UserID != u.ID) && u.EmployeeType == EmployeeType.Employee)
+                    .Select(u => new UserPref() { UserID = u.ID, Preference = 0, UserName = u.FullName, IsManager = false });
+                //Gathering remaining shift managers that didn't send shifts
+                var potentialManagers = db.BizUsers.ToList()
+                    .Where(u => tempshift.PotentialWorkers.All(w => w.UserID != u.ID) && (u.EmployeeType == EmployeeType.ShiftManager || u.EmployeeType == EmployeeType.SuperShiftManager))
+                    .Select(u => new UserPref() { UserID = u.ID, Preference = 0, UserName = u.FullName, IsManager = true });
 
-                foreach (UserPref user in potentialUsers)
+                var AllOtherUsers = potentialManagers.Concat(potentialEmps).ToList();
+                
+                //Adding those users to potential workers for this shift
+                foreach (UserPref user in AllOtherUsers)
                 {
                     tempshift.PotentialWorkers.Add(user);
                 }
+
+                tempshift.PotentialWorkers = tempshift.PotentialWorkers.OrderBy(u => u.IsManager).Reverse().ToList();
                 return View(tempshift);
             }
             return View();
         }
-
+        #endregion
+        //Bar - employee registers to a shift
+        #region
         [HttpPost]
-        public ActionResult SendShift(int shiftID, int preference) //Bar - employee registers to a shift
+        public ActionResult SendShift(int shiftID, int preference) 
         {
             if (!db.ShiftInProgress.Any() || !db.BizUsers.Any() || Session["user"] == null)  // checking if open shift and user list is empty and user in Session
                 return RedirectToAction("Index");
@@ -157,15 +171,62 @@ namespace BizWizProj.Controllers
                 }
                 if (AddnewPref == true)
                 {
-                    tempShift.PotentialWorkers.Add(new UserPref() { UserID = senderID, Preference = preference, UserName = db.BizUsers.Find(senderID).FullName });
+                    bool isManager = false;
+                    if (db.BizUsers.Find(senderID).EmployeeType == EmployeeType.ShiftManager || db.BizUsers.Find(senderID).EmployeeType == EmployeeType.SuperShiftManager)
+                        isManager = true;
+                    tempShift.PotentialWorkers.Add(new UserPref() { UserID = senderID, Preference = preference, UserName = db.BizUsers.Find(senderID).FullName, IsManager = isManager });
                 }
             }
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        #endregion
+        //Bar - SuperShiftManager assignes a shiftmanager to a shift
+        #region
         [HttpPost]
-        public ActionResult OpenToClose() //Avi OpenShift-->CloseShift
+        public ActionResult SaveShift_Manager(FormCollection formCollection, string shiftId) 
+        {
+            OpenShift currentShift = db.ShiftInProgress.Find(int.Parse(shiftId));
+            foreach(string key in formCollection.AllKeys)
+            {
+                if (formCollection[key]!=null)
+                {
+                    BizUser temp = db.BizUsers.Find(int.Parse(formCollection[key]));
+                    currentShift.ShiftManager = temp;
+                    currentShift.UpdateText();
+                    db.SaveChanges();
+                    break;
+                }
+            }
+            return View("SucOpenShift");
+        }
+        #endregion
+        //Bar - SuperShiftManager assignes workers to a shift
+        #region
+        [HttpPost]
+        public ActionResult SaveShift_Employees(FormCollection formCollection, string shiftId)
+        {
+            OpenShift currentShift = db.ShiftInProgress.Find(int.Parse(shiftId));
+            List<BizUser> newlist = new List<BizUser>();
+            foreach (string key in formCollection.AllKeys)
+            {
+                if (formCollection[key].Contains("true"))
+                {
+                    BizUser temp = db.BizUsers.Find(int.Parse(key));
+                    if (temp!=null)
+                        newlist.Add(temp);
+                }
+            }
+            currentShift.Workers = newlist;
+            currentShift.UpdateText();
+            db.SaveChanges();
+            return View("SucOpenShift");
+        }
+        #endregion
+        //Avi OpenShift to CloseShift
+        #region
+        [HttpPost]
+        public ActionResult OpenToClose() 
         {
             List<OpenShift> openShiftList = new List<OpenShift>();
             if (!db.ShiftInProgress.Any())  // checking if open shift is empty
@@ -176,23 +237,24 @@ namespace BizWizProj.Controllers
             {
                 newCloseShiftsList.Add(new ClosedShift()
                 {
-                    DayIndex = openShiftList[i].DayIndex,
-                    ShiftIndex = openShiftList[i].ShiftIndex,
                     Start = openShiftList[i].Start,
                     End = openShiftList[i].End,
-                    WeekDate = openShiftList[i].WeekDate,
                     ShiftManager = openShiftList[i].ShiftManager,
                     Workers = openShiftList[i].Workers,
                     Text = openShiftList[i].Text
                 });
+                //Remove Potential workers before deleting the table to prevent runtime exceptions
+                openShiftList[i].PotentialWorkers.Clear();
             }
             db.ShiftHistory.AddRange(newCloseShiftsList); //Adding all new close shift to close shift db
             db.ShiftInProgress.RemoveRange(openShiftList);// clearing open shift db
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
-        public void ModelTopen() //Avi ModelShift--->OpenShift
+        #endregion
+        //Avi ModelShift to OpenShift
+        #region
+        public void ModelTopen() 
         {
             DateTime shiftDate = DateTime.Now.AddDays(7); //seting date for next week
             if (db.ShiftInProgress.Any())                 // preventing override of existing data in calendar
@@ -211,16 +273,15 @@ namespace BizWizProj.Controllers
                     DateTime tempEnd = new DateTime(ShiftDate.Year, ShiftDate.Month, ShiftDate.Day, modelist[i].End.Hour, modelist[i].Start.Minute, modelist[i].Start.Second);
                     newlist.Add(new OpenShift()
                     {
-                        DayIndex = (int)tempStart.DayOfWeek,
                         Start = tempStart,
                         End = tempEnd,
-                        WeekDate = firstDayOfWeek
                     });
                 }
                 db.ShiftInProgress.AddRange(newlist);
                 db.SaveChanges();
             }
         }
+        #endregion
         // GET: OpenShifts/Details/5
         public ActionResult Details(int? id)
         {
@@ -247,7 +308,7 @@ namespace BizWizProj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,DayIndex,ShiftIndex,NumOfEmployees,Start,End")] OpenShift OpenShift)
+        public ActionResult Create([Bind(Include = "ID,NumOfEmployees,Start,End")] OpenShift OpenShift)
         {
             if (ModelState.IsValid)
             {
@@ -279,7 +340,7 @@ namespace BizWizProj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,DayIndex,ShiftIndex,NumOfEmployees,Start,End,WeekDate,Text")] OpenShift OpenShift)
+        public ActionResult Edit([Bind(Include = "ID,NumOfEmployees,Start,End,Text")] OpenShift OpenShift)
         {
             if (ModelState.IsValid)
             {

@@ -19,6 +19,46 @@ namespace BizWizProj.Controllers
     [MyAuthorize]
     public class ClosedShiftsController : Controller
     {
+        //Avi
+        #region
+        public static int ShiftId;
+        public string OpenModelPopup() //Searcing for Employees That is not Working on Some Shift 
+        {
+            List<BizUser> BizzUsersList = db.BizUsers.ToList(); //loading all Users from db 
+            List<BizUser> NotWorkingUsers = new List<BizUser>(); //List of the Workers That not work on this Shift
+            ClosedShift ThisShift = db.ShiftHistory.Find(ShiftId);// Loading this Shift from db
+            bool flag = false;
+            foreach (BizUser user in BizzUsersList)
+            {
+                foreach (BizUser workerInShift in ThisShift.Workers)
+                {
+                    if (user.ID == workerInShift.ID)
+                        flag = true;
+                }
+                if (!flag)
+                    NotWorkingUsers.Add(user);
+                flag = false;
+            }
+            string workersNames = "Employees That is Not Working on This Shift: <br>";
+            if (!NotWorkingUsers.Any())
+                return workersNames;
+            int num = 1;
+            foreach (BizUser worker in NotWorkingUsers)
+            {
+                workersNames += num + ") " + worker.FullName + "\n";
+                num++;
+            }
+            return workersNames;
+        }
+        #endregion
+
+        public ActionResult PopScreen()
+        {
+            ViewBag.HtmlStr = OpenModelPopup();
+            return View();
+        }
+
+
         public ClosedShiftsController()
         {
             db.Database.CreateIfNotExists();
@@ -76,9 +116,6 @@ namespace BizWizProj.Controllers
                         break;
                 }
             }
-
-
-
             protected override void OnInit(InitArgs e)
             {
                 UpdateWithMessage("Welcome!", CallBackUpdateType.Full);
@@ -126,7 +163,6 @@ namespace BizWizProj.Controllers
             /* Start of System notices part */
             ViewBag.NoticesForMe = "";
             DateTime date = DateTime.ParseExact("12/15/2009", "MM/dd/yyyy", null);
-            //replace "Manager" with (HttpContext.Session["user"] as BizUser).EmployeeType
             var notices = (from notif in db.Notices.ToList() where (notif.To.Equals((HttpContext.Session["user"] as BizUser).EmployeeType) && DateOk(Convert.ToDateTime(notif.Date))) select notif).ToList();
             ViewBag.NoticesForMe = notices;
             /* End of System notices part */
@@ -168,7 +204,7 @@ namespace BizWizProj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,DayIndex,ShiftIndex,Start,End,WeekDate")] ClosedShift ClosedShift)
+        public ActionResult Create([Bind(Include = "ID,Start,End")] ClosedShift ClosedShift)
         {
             if (ModelState.IsValid)
             {
@@ -200,7 +236,7 @@ namespace BizWizProj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,DayIndex,ShiftIndex,Start,End,WeekDate")] ClosedShift ClosedShift)
+        public ActionResult Edit([Bind(Include = "ID,Start,End")] ClosedShift ClosedShift)
         {
             if (ModelState.IsValid)
             {

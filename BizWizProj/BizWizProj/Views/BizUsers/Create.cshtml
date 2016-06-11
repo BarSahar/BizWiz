@@ -52,10 +52,10 @@
             @Html.LabelFor(model => model.EmployeeType, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.EmployeeType, new[] {
-                    new SelectListItem() { Text = "Employee", Value = "1" },
-                    new SelectListItem() { Text = "Shift Manager", Value = "2" },
-                    new SelectListItem() { Text = "SuperShift manager", Value = "3" },
-                    new SelectListItem() { Text = "Manager", Value = "4" } }, new { @class = "form-control" })
+                    new SelectListItem() { Text = "Employee", Value = BizWizProj.Models.EmployeeType.Employee.ToString() },
+                    new SelectListItem() { Text = "Shift Manager", Value = BizWizProj.Models.EmployeeType.ShiftManager.ToString() },
+                    new SelectListItem() { Text = "SuperShift manager", Value = BizWizProj.Models.EmployeeType.SuperShiftManager.ToString() },
+                    new SelectListItem() { Text = "Manager", Value = BizWizProj.Models.EmployeeType.Manager.ToString() } }, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.EmployeeType, "", new { @class = "text-danger" })
             </div>
         </div>

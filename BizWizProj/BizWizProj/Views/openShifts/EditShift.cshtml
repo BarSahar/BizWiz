@@ -6,74 +6,99 @@
 <br />
 <br />
 <br />
-@*<script>
-    var testurl = "a" + "?Type=@ViewBag.Type";
-    var addurl = "b" + "?Type=@ViewBag.Type";
-    </script>*@
 
 <div class="box-body">
-    <h1>Select Workers:</h1>
+    <h1>Edit Shift Workers:</h1>
     <h3>Recommended number of employees: @Model.NumOfEmployees</h3>
 
-    @using (Html.BeginForm("OpenToClose", "OpenShifts"))
-    {
-        <ul class="list-group">
-            @{
-                foreach (BizWizProj.Models.UserPref user in Model.PotentialWorkers)
+    @*//Form to choose shift manager*@
+    <div class="well">
+        @using (Html.BeginForm("SaveShift_Manager", "OpenShifts", new { shiftId = Model.ID }, FormMethod.Post))
+        {
+            <h5>Select Shift Manager:</h5>
+            <ul class="list-group">
+                @{
+            foreach (BizWizProj.Models.UserPref user in Model.PotentialWorkers)
+            {
+                bool Checked = false;
+                string prefString = "";
+                if (Model.ShiftManager != null)
                 {
-                    bool Checked = false;
-                    if (Model.Workers.Any(w => w.ID == user.UserID))
+                    if (Model.ShiftManager.ID == user.UserID)
                     {
                         Checked = true;
                     }
-                    if (user.Preference == 0)
-                    {
-                        <li class="list-group-item">
-                        <input type="checkbox" id="@user.UserID" checked="@Checked">@user.UserName (no preference)
-                        </li>
-                    }
-                    if (user.Preference == 1)
-                    {
-                        <li class="list-group-item">
-                        <input type="checkbox" id="@user.UserID" checked="@Checked">@user.UserName (Want)
-                        </li>
-                    }
-                    if (user.Preference == 2)
-                    {
-                        <li class="list-group-item">
-                        <input type="checkbox" id="@user.UserID" checked="@Checked">@user.UserName (Don't Care)
-                        </li>
-                    }
-                    if (user.Preference == 3)
-                    {
-                        <li class="list-group-item">
-                        <input type="checkbox" id="@user.UserID" checked="@Checked">@user.UserName (Don't Want)
-                        </li>
-                    }
                 }
-             }
-        </ul>
-        <input type="submit" value="Close Shift" class="btn btn-default" />
-    }
-    
-    
-    @*
-        @{
-            int a;
-            for (a = 0; a < 5; a++)
-            {
-
+                if (user.IsManager)
+                {
+                    switch (user.Preference)
+                    {
+                        case 0:
+                            prefString = " (no preference)";
+                            break;
+                        case 1:
+                            prefString = " (Want)";
+                            break;
+                        case 2:
+                            prefString = " (Don't Care)";
+                            break;
+                        case 3:                            
+                            prefString = " (Don't Want)";
+                            break;
+                    }
+                    <li class="list-group-item">
+                        @Html.RadioButton("managerSel", @user.UserID.ToString(), Checked)
+                        @Html.Label(user.UserName+prefString)
+                    </li>
+                }
             }
-            if(Session["id"] != null)
-            {
-
-            }
-            if(Cookie)
+                }
+            </ul>
+            <input type="Submit" value="Save Shift Manager" class="btn btn-default pull-right" />
         }
-    *@
-
-</div>
     </div>
-<br />
 
-
+    <div class="well">
+        @*//Form to choose shift manager*@
+        @using (Html.BeginForm("SaveShift_Employees", "OpenShifts", new { shiftId = Model.ID }, FormMethod.Post))
+        {
+            <ul class="list-group">
+                @{
+            foreach (BizWizProj.Models.UserPref user in Model.PotentialWorkers)
+            {
+                bool Checked = false;
+                string prefString = "";
+                if (Model.Workers.Any(w => w.ID == user.UserID))
+                {
+                    Checked = true;
+                }
+                if (!user.IsManager)
+                {
+                    switch (user.Preference)
+                    {
+                        case 0:
+                            prefString = " (no preference)";
+                            break;
+                        case 1:
+                            prefString = " (Want)";
+                            break;
+                        case 2:
+                            prefString = " (Don't Care)";
+                            break;
+                        case 3:
+                            prefString = " (Don't Want)";
+                            break;
+                    }
+                    <li class="list-group-item">
+                        @Html.CheckBox(@user.UserID.ToString(), Checked)
+                        @Html.Label(user.UserName + prefString)
+                    </li>
+                }
+            }
+                }
+            </ul>
+            <input type="Submit" value="Save Employees" class="btn btn-default pull-right" />
+        }
+    </div>
+</div>
+<br/>

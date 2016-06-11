@@ -20,11 +20,12 @@ namespace BizWizProj.Controllers
         public ActionResult Login(string name, string Password)
         {
             DB db = new DB();
+
             //TODO: change Password to "admin" "backdoor"
             if ("1".Equals(name) && "1".Equals(Password))
             {
-                Session["user"] = new BizUser() { FullName = name, EmployeeType ="4" };
-                    return Redirect(Session["returnUrl"].ToString()); /*RedirectToAction("Index","Home");*/
+                Session["user"] = new BizUser() { FullName = name, EmployeeType = EmployeeType.Manager };
+                    return RedirectToAction("Index","Home");
             }
             //for real users.
             List<BizUser> userList = db.BizUsers.ToList();
