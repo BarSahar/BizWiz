@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Index";
 }
-<br /><br /><br />
+<br />
 <h1 style="text-align:center">Shift In Progress</h1>
 <div id="dp">
     @{
@@ -30,17 +30,38 @@
 
 </div>
 <br />
-@using (Html.BeginForm("OpenToClose", "OpenShifts"))
-{
-    BizWizProj.Models.EmployeeType currentType = (Session["user"] as BizWizProj.Models.BizUser).EmployeeType;
-    if (currentType == BizWizProj.Models.EmployeeType.Manager || currentType == BizWizProj.Models.EmployeeType.SuperShiftManager)
-    {
-        <div style="text-align:center">
-            <input type="submit" value="Close Shift" class="btn btn-default" />
-        </div>
-    }
-}
 
+<div id="block" style="margin-left:-62px">
+
+    @*Close Shifts*@
+    @using (Html.BeginForm("OpenToClose", "OpenShifts"))
+    {
+        BizWizProj.Models.EmployeeType currentType = (Session["user"] as BizWizProj.Models.BizUser).EmployeeType;
+        if (currentType == BizWizProj.Models.EmployeeType.Manager || currentType == BizWizProj.Models.EmployeeType.SuperShiftManager)
+        {
+            <div style="text-align:center">
+                <input type="submit" value="Close Shift" class="btn btn-default" style="margin-left: -43px; " />
+            </div>
+        }
+    }
+
+    @*Get Shifts*@
+    @using (Html.BeginForm("ModelTopen", "OpenShifts"))
+    {
+        BizWizProj.Models.EmployeeType currentType = (Session["user"] as BizWizProj.Models.BizUser).EmployeeType;
+        if (currentType == BizWizProj.Models.EmployeeType.Manager || currentType == BizWizProj.Models.EmployeeType.SuperShiftManager)
+        {
+            <div style="text-align:center">
+                <input type="submit" value="Get Shifts" class="btn btn-default" style="margin-top: -62px; margin-left: 162px; " id="getBtn" onclick="GetShiftHide()" />
+            </div>
+
+
+
+        }
+    }
+
+
+</div>
 <script type="text/javascript">
     dp.commandCallBack('nextWeek'); //Setting the Shift in progress to always be in next Week
     dp.contextMenu = new DayPilot.Menu({
@@ -91,5 +112,10 @@
             location.reload();
         };
         m.showUrl('@Url.Action("EditShift", "OpenShifts")?ShiftID=' + e.id());
-        }
+    }
+   
+    function GetShiftHide() {
+        debugger
+        $('#getBtn').hide();
+    }
 </script>

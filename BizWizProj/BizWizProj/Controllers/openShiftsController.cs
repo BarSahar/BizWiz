@@ -57,6 +57,7 @@ namespace BizWizProj.Controllers
                 Update();
             }
 
+            //Function to Color the OpenShifts according to the current user's preference
             protected override void OnBeforeEventRender(BeforeEventRenderArgs e)
             {
                 if (CurrentSession["user"] == null || !dc.ShiftInProgress.Any())
@@ -66,6 +67,7 @@ namespace BizWizProj.Controllers
                 OpenShift tempShift = dc.ShiftInProgress.Find(int.Parse(e.Id));
                 if (tempShift.PotentialWorkers.Count >= 0)
                 {
+                    //Checks if the current user has a preference to this shift
                     foreach (UserPref worker in tempShift.PotentialWorkers.ToList())
                     {
                         if (worker.UserID == currentUserId)
@@ -113,7 +115,7 @@ namespace BizWizProj.Controllers
         // GET: OpenShifts
         public ActionResult Index()
         {
-            ModelTopen();
+         
             return View(db.ShiftInProgress.ToList());
         }
 
@@ -133,33 +135,36 @@ namespace BizWizProj.Controllers
                     .Where(u => tempshift.PotentialWorkers.All(w => w.UserID != u.ID) && (u.EmployeeType == EmployeeType.ShiftManager || u.EmployeeType == EmployeeType.SuperShiftManager))
                     .Select(u => new UserPref() { UserID = u.ID, Preference = 0, UserName = u.FullName, IsManager = true });
 
+                //potential employees + potential shift managers to one list
                 var AllOtherUsers = potentialManagers.Concat(potentialEmps).ToList();
                 
-                //Adding those users to potential workers for this shift
+                //Adding those "other" users to potential workers for this shift
                 foreach (UserPref user in AllOtherUsers)
                 {
                     tempshift.PotentialWorkers.Add(user);
                 }
 
+                //Ordering potentialWorkers list so that shift managers are at the start
                 tempshift.PotentialWorkers = tempshift.PotentialWorkers.OrderBy(u => u.IsManager).Reverse().ToList();
                 return View(tempshift);
             }
             return View();
         }
         #endregion
-        //Bar - employee registers to a shift
+        //Bar - employee registers to a shift (sends a preference)
         #region
         [HttpPost]
         public ActionResult SendShift(int shiftID, int preference) 
         {
-            if (!db.ShiftInProgress.Any() || !db.BizUsers.Any() || Session["user"] == null)  // checking if open shift and user list is empty and user in Session
+            //Checking if open shift list and user list is empty and user in Session
+            if (!db.ShiftInProgress.Any() || !db.BizUsers.Any() || Session["user"] == null)
                 return RedirectToAction("Index");
 
             int senderID = ((BizUser)Session["user"]).ID;
             OpenShift tempShift = db.ShiftInProgress.Find(shiftID);
             if (tempShift != null)
             {
-                // a flag to check if there should be another
+                //a flag to check if this user is sending a new preference or updating a previous one
                 bool AddnewPref = true;
                 foreach (UserPref worker in tempShift.PotentialWorkers.ToList())
                 {
@@ -172,6 +177,7 @@ namespace BizWizProj.Controllers
                 if (AddnewPref == true)
                 {
                     bool isManager = false;
+                    //Checking that user is kinf of shift manager or an employee
                     if (db.BizUsers.Find(senderID).EmployeeType == EmployeeType.ShiftManager || db.BizUsers.Find(senderID).EmployeeType == EmployeeType.SuperShiftManager)
                         isManager = true;
                     tempShift.PotentialWorkers.Add(new UserPref() { UserID = senderID, Preference = preference, UserName = db.BizUsers.Find(senderID).FullName, IsManager = isManager });
@@ -217,6 +223,7 @@ namespace BizWizProj.Controllers
                         newlist.Add(temp);
                 }
             }
+            //newlist overwrites previous "Workers" field. to prevent dupliceties
             currentShift.Workers = newlist;
             currentShift.UpdateText();
             db.SaveChanges();
@@ -254,12 +261,13 @@ namespace BizWizProj.Controllers
         #endregion
         //Avi ModelShift to OpenShift
         #region
-        public void ModelTopen() 
+        [HttpPost]
+        public ActionResult ModelTopen() 
         {
             DateTime shiftDate = DateTime.Now.AddDays(7); //seting date for next week
             if (db.ShiftInProgress.Any())                 // preventing override of existing data in calendar
-                return;
-            List<ModelShift> modelist = new List<ModelShift>();
+                return RedirectToAction("Index"); ;
+            List<ModelShift> modelist = new List<ModelShift>(); //creating list of modelShift
             modelist = db.ModelShifts.ToList();               //loading all date from model-shift table 
             DateTime firstDayOfWeek = shiftDate.AddDays(-(int)shiftDate.DayOfWeek); // seting first day of next week 
             List<OpenShift> newlist = new List<OpenShift>();
@@ -280,6 +288,7 @@ namespace BizWizProj.Controllers
                 db.ShiftInProgress.AddRange(newlist);
                 db.SaveChanges();
             }
+            return RedirectToAction("Index");
         }
         #endregion
         // GET: OpenShifts/Details/5
