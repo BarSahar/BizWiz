@@ -27,4 +27,8 @@ namespace BizWizProj.Models
             this.From = (HttpContext.Current.Session["user"] as BizUser).FullName;
         }
     }
+    public enum To
+    {
+        Employee, ShiftManager, SuperShiftManager, Manager
+    }
 }

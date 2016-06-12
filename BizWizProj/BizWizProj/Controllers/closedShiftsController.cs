@@ -22,7 +22,7 @@ namespace BizWizProj.Controllers
         //Avi-Searcing for Employees That is not Working on Some Shift 
         #region
         public static int ShiftId;
-        public string OpenModelPopup() 
+        public string OpenModelPopup()
         {
             List<BizUser> BizzUsersList = db.BizUsers.ToList(); //loading all Users from db 
             List<BizUser> NotWorkingUsers = new List<BizUser>(); //List of the Workers That not work on this Shift
@@ -154,22 +154,28 @@ namespace BizWizProj.Controllers
             ViewBag.CurrentUser = UserHt;
 
             /* Start of System notices part */
-            ViewBag.NoticesForMe = "";
-            List<BizWizProj.Models.SystemNotices> notices;
+            ViewBag.NoticesForMe = ""; //declaring an empty variable in ViewBag
+            /*Declaring an empty list (that will hold relevant for every employee
+            type notices, which will be sent then to an index view of ClosedShifts)*/
+            List<BizWizProj.Models.SystemNotices> notices; 
             switch (((HttpContext.Session["user"] as BizUser).EmployeeType).ToString())
             {
+                /*Manager can view all notices in the system*/
                 case ("Manager"):
                     notices = (from notif in db.Notices.ToList() where (DateOk(Convert.ToDateTime(notif.Date))) select notif).ToList();
                     ViewBag.NoticesForMe = notices;
                     break;
+                /*SSM can view all notices except those which were assigned to users of type Manager*/
                 case ("SuperShiftManager"):
                     notices = (from notif in db.Notices.ToList() where (!notif.To.Equals("Manager") && DateOk(Convert.ToDateTime(notif.Date))) select notif).ToList();
                     ViewBag.NoticesForMe = notices;
                     break;
+                /*SM can view all notices except those which were assigned to users of type Manager and SSM*/
                 case ("ShiftManager"):
                     notices = (from notif in db.Notices.ToList() where (!notif.To.Equals("Manager") && !notif.To.Equals("SuperShiftManager") && DateOk(Convert.ToDateTime(notif.Date))) select notif).ToList();
                     ViewBag.NoticesForMe = notices;
                     break;
+                /*Users of employee type 'Employee' can view notices assigned to them only*/
                 case ("Employee"):
                     notices = (from notif in db.Notices.ToList() where (notif.To.Equals(((HttpContext.Session["user"] as BizUser).EmployeeType).ToString()) && DateOk(Convert.ToDateTime(notif.Date))) select notif).ToList();
                     ViewBag.NoticesForMe = notices;
@@ -181,7 +187,7 @@ namespace BizWizProj.Controllers
             return View(db.ShiftHistory.ToList());
         }
 
-        //the function below is checking if a notice is out of date (older than 14 days)
+        //the function below is checking if a notice is out of date (i.e: older than 14 days)
         public bool DateOk(DateTime d)
         {
             DateTime now = DateTime.Now;
