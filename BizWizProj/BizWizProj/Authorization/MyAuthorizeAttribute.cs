@@ -13,7 +13,13 @@ namespace BizWizProj.Authorization
     {
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            httpContext.Session["returnUrl"] = httpContext.Request.RawUrl;
+            httpContext.Session["returnUrl"] = httpContext.Request.RawUrl; //when attempting
+            //to visit a page which requests to be authorized in order to enter it, then a
+            //user will be redirected to "/login/login" while the return URL will be saved in
+            //Session["returnUrl"] and after successful login a user will be redirected back to 
+            //(previously unauthorised) requested page. This will happen in LoginController
+            //in this line:
+            // return Redirect(Session["returnUrl"].ToString());
             if (httpContext.Session["user"] == null)
                 return false;
             return true;
