@@ -113,10 +113,6 @@ namespace BizWizProj.Controllers
                         break;
                 }
             }
-            protected override void OnInit(InitArgs e)
-            {
-                UpdateWithMessage("Welcome!", CallBackUpdateType.Full);
-            }
 
             protected override void OnFinish()
             {

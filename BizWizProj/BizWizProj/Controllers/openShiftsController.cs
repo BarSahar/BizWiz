@@ -90,11 +90,6 @@ namespace BizWizProj.Controllers
                 }
             }
 
-            protected override void OnInit(InitArgs e)
-            {
-                UpdateWithMessage("Welcome!", CallBackUpdateType.Full);
-            }
-
             protected override void OnFinish()
             {
                 if (UpdateType == CallBackUpdateType.None)
