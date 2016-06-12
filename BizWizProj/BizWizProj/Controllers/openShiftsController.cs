@@ -115,7 +115,7 @@ namespace BizWizProj.Controllers
         // GET: OpenShifts
         public ActionResult Index()
         {
-            ModelTopen();
+         
             return View(db.ShiftInProgress.ToList());
         }
 
@@ -261,12 +261,13 @@ namespace BizWizProj.Controllers
         #endregion
         //Avi ModelShift to OpenShift
         #region
-        public void ModelTopen() 
+        [HttpPost]
+        public ActionResult ModelTopen() 
         {
             DateTime shiftDate = DateTime.Now.AddDays(7); //seting date for next week
             if (db.ShiftInProgress.Any())                 // preventing override of existing data in calendar
-                return;
-            List<ModelShift> modelist = new List<ModelShift>();
+                return RedirectToAction("Index"); ;
+            List<ModelShift> modelist = new List<ModelShift>(); //creating list of modelShift
             modelist = db.ModelShifts.ToList();               //loading all date from model-shift table 
             DateTime firstDayOfWeek = shiftDate.AddDays(-(int)shiftDate.DayOfWeek); // seting first day of next week 
             List<OpenShift> newlist = new List<OpenShift>();
@@ -287,6 +288,7 @@ namespace BizWizProj.Controllers
                 db.ShiftInProgress.AddRange(newlist);
                 db.SaveChanges();
             }
+            return RedirectToAction("Index");
         }
         #endregion
         // GET: OpenShifts/Details/5
