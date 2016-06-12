@@ -102,12 +102,9 @@ namespace BizWizProj.Controllers
             {
                 switch (e.Command)
                 {
-
-
                     case "today":
                         StartDate = DateTime.Today;
                         Update(CallBackUpdateType.Full);
-
                         break;
                     case "navigate":
                         //Console.WriteLine(StartDate.ToString);
@@ -147,10 +144,10 @@ namespace BizWizProj.Controllers
             List<UserHours> lst1 = HoursSum.AllWorkers(db);
 
             UserHours UserHt = new UserHours();
-            
+
             ViewBag.UsersHours = lst1;
 
-            BizUser thisUser=Session["user"] as BizWizProj.Models.BizUser;
+            BizUser thisUser = Session["user"] as BizWizProj.Models.BizUser;
             UserHt.User = thisUser;
             foreach (var user in lst1)
                 if (user.User.ID.Equals(thisUser.ID))
@@ -162,14 +159,33 @@ namespace BizWizProj.Controllers
 
             /* Start of System notices part */
             ViewBag.NoticesForMe = "";
-            DateTime date = DateTime.ParseExact("12/15/2009", "MM/dd/yyyy", null);
-            var notices = (from notif in db.Notices.ToList() where (notif.To.Equals((HttpContext.Session["user"] as BizUser).EmployeeType) && DateOk(Convert.ToDateTime(notif.Date))) select notif).ToList();
-            ViewBag.NoticesForMe = notices;
+            List<BizWizProj.Models.SystemNotices> notices;
+            switch (((HttpContext.Session["user"] as BizUser).EmployeeType).ToString())
+            {
+                case ("Manager"):
+                    notices = (from notif in db.Notices.ToList() where (DateOk(Convert.ToDateTime(notif.Date))) select notif).ToList();
+                    ViewBag.NoticesForMe = notices;
+                    break;
+                case ("SuperShiftManager"):
+                    notices = (from notif in db.Notices.ToList() where (!notif.To.Equals("Manager") && DateOk(Convert.ToDateTime(notif.Date))) select notif).ToList();
+                    ViewBag.NoticesForMe = notices;
+                    break;
+                case ("ShiftManager"):
+                    notices = (from notif in db.Notices.ToList() where (!notif.To.Equals("Manager") && !notif.To.Equals("SuperShiftManager") && DateOk(Convert.ToDateTime(notif.Date))) select notif).ToList();
+                    ViewBag.NoticesForMe = notices;
+                    break;
+                case ("Employee"):
+                    notices = (from notif in db.Notices.ToList() where (notif.To.Equals(((HttpContext.Session["user"] as BizUser).EmployeeType).ToString()) && DateOk(Convert.ToDateTime(notif.Date))) select notif).ToList();
+                    ViewBag.NoticesForMe = notices;
+                    break;
+            }
+
             /* End of System notices part */
 
             return View(db.ShiftHistory.ToList());
         }
 
+        //the function below is checking if a notice is out of date (older than 14 days)
         public bool DateOk(DateTime d)
         {
             DateTime now = DateTime.Now;

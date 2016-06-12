@@ -13,10 +13,9 @@ namespace BizWizProj.Authorization
     {
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
+            httpContext.Session["returnUrl"] = httpContext.Request.RawUrl;
             if (httpContext.Session["user"] == null)
-            {
                 return false;
-            }
             return true;
         }
         public override void OnAuthorization(AuthorizationContext filterContext)
@@ -25,7 +24,7 @@ namespace BizWizProj.Authorization
             if (filterContext.HttpContext.Session["user"] == null)
             {
                 filterContext.Result = new RedirectToRouteResult(
-                                  new RouteValueDictionary 
+                                  new RouteValueDictionary
                                    {
                                        { "action", "Login" },
                                        { "controller", "Login" }

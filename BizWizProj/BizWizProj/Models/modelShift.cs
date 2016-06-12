@@ -10,6 +10,7 @@ namespace BizWizProj.Models
     {
         [Key]
         public int ID { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "At least one employee required")]
         public int NumOfEmployees { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
