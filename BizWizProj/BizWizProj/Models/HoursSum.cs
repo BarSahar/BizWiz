@@ -14,18 +14,20 @@ namespace BizWizProj.Models
 {
     public class HoursSum
     {
-        static public int IniHours(DB db, string employee_name)
+        static public int IniHours(DB db, BizUser user)
         {
             var counter = 0;
             var currentDay = DateTime.Now.Day;
             var currentMonth = DateTime.Now.Month;
             var currentYear = DateTime.Now.Year;
+
             List<ClosedShift> shiftList = db.ShiftHistory
-                .Where(s => s.Start.Month == currentMonth)
-                .Where(s => s.Start.Year == currentYear)
-                .Where(s => s.Start.Day <= currentDay)
-                .Where(s => s.Workers.Select(w => w.FullName).Contains(employee_name))
+                            .Where(s => s.Start.Month == currentMonth)
+                            .Where(s => s.Start.Year == currentYear)
+                            .Where(s => s.Start.Day <= currentDay)
+                            .Where(s => s.Workers.Select(w => w.ID.ToString()).Contains(user.ID.ToString()))
                 .ToList();
+
 
             foreach (var shift in shiftList)
             {
@@ -48,7 +50,7 @@ namespace BizWizProj.Models
             if (WorkersList != null)
                 foreach (var s_item in WorkersList)
                 {
-                    counter = IniHours(db, s_item.FullName);
+                    counter = IniHours(db, s_item);
                     WorkesrHours += s_item.FullName + " " + counter.ToString() + " MH. ";
                     lst1.Add(new UserHours() { User = s_item, Hours = counter });
                 }

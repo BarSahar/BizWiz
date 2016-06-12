@@ -242,7 +242,7 @@ namespace BizWizProj.Controllers
                     Start = openShiftList[i].Start,
                     End = openShiftList[i].End,
                     ShiftManager = openShiftList[i].ShiftManager,
-                    Workers = openShiftList[i].Workers,
+                    Workers = openShiftList[i].Workers.ToList(),
                     Text = openShiftList[i].Text
                 });
                 //Remove Potential workers before deleting the table to prevent runtime exceptions
