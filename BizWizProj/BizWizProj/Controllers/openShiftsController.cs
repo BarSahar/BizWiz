@@ -259,7 +259,7 @@ namespace BizWizProj.Controllers
         [HttpPost]
         public ActionResult ModelTopen() 
         {
-            DateTime shiftDate = DateTime.Now.AddDays(7); //seting date for next week
+            DateTime shiftDate = DateTime.Now.AddDays(7); //setting date for next week
             if (db.ShiftInProgress.Any())                 // preventing override of existing data in calendar
                 return RedirectToAction("Index"); ;
             List<ModelShift> modelist = new List<ModelShift>(); //creating list of modelShift
@@ -270,7 +270,7 @@ namespace BizWizProj.Controllers
             {
                 for (int i = 0; i < modelist.Count; i++)
                 {
-                    DateTime ShiftDate = firstDayOfWeek.AddDays(modelist[i].Start.Day);
+                    DateTime ShiftDate = firstDayOfWeek.AddDays(modelist[i].Start.Day-1);
 
                     DateTime tempStart = new DateTime(ShiftDate.Year, ShiftDate.Month, ShiftDate.Day, modelist[i].Start.Hour, modelist[i].Start.Minute, modelist[i].Start.Second);
                     DateTime tempEnd = new DateTime(ShiftDate.Year, ShiftDate.Month, ShiftDate.Day, modelist[i].End.Hour, modelist[i].Start.Minute, modelist[i].Start.Second);
