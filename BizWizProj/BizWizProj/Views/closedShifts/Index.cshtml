@@ -13,7 +13,8 @@
     </title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="https://rawgit.com/minddust/bootstrap-progressbar/master/bootstrap-progressbar.js"></script>  
+    <script src="js/progressbar.js"></script>
+    <script src="https://raw.githubusercontent.com/minddust/bootstrap-progressbar/master/bootstrap-progressbar.js"></script>  
     <script type="text/javascript">
 
         !function ($) {
@@ -86,7 +87,7 @@
                             <div>
                                 @user.User.FullName  @user.Hours hours
                             </div>
-
+                          
                             <div id="@user.User.ID" class=" progress">
                                 <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="30" style="width: 0%; ">
                                     <span class="sr-only">0% Complete</span>
@@ -115,7 +116,7 @@
                             </script>
                         </div>
                     }
-                }
+}
 
             </div>
         </div>
