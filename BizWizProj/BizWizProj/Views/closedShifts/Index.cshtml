@@ -13,8 +13,7 @@
     </title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="js/progressbar.js"></script>
-    <script src="https://raw.githubusercontent.com/minddust/bootstrap-progressbar/master/bootstrap-progressbar.js"></script>  
+    <script src="https://rawgit.com/minddust/bootstrap-progressbar/master/bootstrap-progressbar.js"></script>  
     <script type="text/javascript">
 
         !function ($) {
@@ -68,13 +67,8 @@
 
 </head>
 <body>
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-
+    <br /><br />
+    <h1 style=" margin-left: 423px; margin-bottom: 34px; margin-top: -13px;">BizzWizz Home</h1>
     <div style="float:left; width: 170px;">
         <div id="nav">
         </div>
@@ -92,7 +86,7 @@
                             <div>
                                 @user.User.FullName  @user.Hours hours
                             </div>
-                          
+
                             <div id="@user.User.ID" class=" progress">
                                 <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="30" style="width: 0%; ">
                                     <span class="sr-only">0% Complete</span>
@@ -121,7 +115,7 @@
                             </script>
                         </div>
                     }
-}
+                }
 
             </div>
         </div>
@@ -172,7 +166,7 @@
 })
         </div>
     </div>
-    <div id="wrapper" style="border: ridge; margin: -230px 0px 0px 0px; margin-left: -18px; background-color: #ad1d28; border-color: #911821; width: 170px; padding: 5px; ">
+    <div id="wrapper" style="border: ridge; margin: -217px 0px 0px 0px; margin-left: -2px; background-color: #ad1d28; border-color: #911821; width: 146px; padding: 5px; ">
         <marquee onmouseover="stop();" onmouseout="start();" height="200px" direction="up" scrollamount="2">
             <div id="L" style="font-family:'Lucida Console';"></div>
         </marquee>
@@ -184,6 +178,7 @@
         nav.selectMode = "week";
         nav.init();
 
+        dp.commandCallBack('today');
         nav.onTimeRangeSelected = function (args) {
 
             dp.startDate = args.day;
