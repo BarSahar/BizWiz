@@ -2,6 +2,11 @@
 @{
     ViewBag.Title = "Index";
 }
+
+
+
+}
+
 <br />
 <h1 style="text-align:center">Shift In Progress</h1>
 <div id="dp">
@@ -10,21 +15,21 @@
         {
             @Html.DayPilotCalendar("dp", new DayPilot.Web.Mvc.DayPilotCalendarConfig
             {
-            BackendUrl = Url.Action("Backend", "OpenShifts"),
-            ViewType = DayPilot.Web.Mvc.Enums.Calendar.ViewType.Week,
-            TimeFormat = DayPilot.Web.Mvc.Enums.TimeFormat.Clock24Hours,
-            EventClickHandling = DayPilot.Web.Mvc.Events.Calendar.EventClickHandlingType.JavaScript,
-            EventClickJavaScript = "EditShifts(e)",
-        })
+                BackendUrl = Url.Action("Backend", "OpenShifts"),
+                ViewType = DayPilot.Web.Mvc.Enums.Calendar.ViewType.Week,
+                TimeFormat = DayPilot.Web.Mvc.Enums.TimeFormat.Clock24Hours,
+                EventClickHandling = DayPilot.Web.Mvc.Events.Calendar.EventClickHandlingType.JavaScript,
+                EventClickJavaScript = "EditShifts(e)",
+            })
         }
         else
         {
             @Html.DayPilotCalendar("dp", new DayPilot.Web.Mvc.DayPilotCalendarConfig
             {
-            BackendUrl = Url.Action("Backend", "OpenShifts"),
-            ViewType = DayPilot.Web.Mvc.Enums.Calendar.ViewType.Week,
-            TimeFormat = DayPilot.Web.Mvc.Enums.TimeFormat.Clock24Hours,
-        })
+                BackendUrl = Url.Action("Backend", "OpenShifts"),
+                ViewType = DayPilot.Web.Mvc.Enums.Calendar.ViewType.Week,
+                TimeFormat = DayPilot.Web.Mvc.Enums.TimeFormat.Clock24Hours,
+            })
         }
     }
 
@@ -63,6 +68,14 @@
 
 </div>
 <script type="text/javascript">
+
+
+
+        @if ((string)Session["msg"] == "true")
+        {
+            System.Web.HttpContext.Current.Response.Write("<SCRIPT> alert('there is already a Shift schedule in this date')</SCRIPT>");
+            Session["msg"] = "false";
+        }
     dp.commandCallBack('nextWeek'); //Setting the Shift in progress to always be in next Week
     dp.contextMenu = new DayPilot.Menu({
         items: [
@@ -89,8 +102,8 @@
                     dp.events.update(this.source);
                 }
             },
-            
-     
+
+
         ]
     });
 
@@ -110,7 +123,7 @@
         };
         m.showUrl('@Url.Action("EditShift", "OpenShifts")?ShiftID=' + e.id());
     }
-   
 
-    
+
+
 </script>

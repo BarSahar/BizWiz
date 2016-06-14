@@ -263,24 +263,31 @@ namespace BizWizProj.Controllers
             if (db.ShiftInProgress.Any())                 // preventing override of existing data in calendar
                 return RedirectToAction("Index"); ;
             List<ModelShift> modelist = new List<ModelShift>(); //creating list of modelShift
-            modelist = db.ModelShifts.ToList();               //loading all date from model-shift table 
+            modelist = db.ModelShifts.ToList();               //loading all date from "model-shift" table 
             DateTime firstDayOfWeek = shiftDate.AddDays(-(int)shiftDate.DayOfWeek); // seting first day of next week 
-            List<OpenShift> newlist = new List<OpenShift>();
-            if (modelist.Any())
+            List<OpenShift> CloseShiftlist = new List<OpenShift>(); //creating list of "close shift"
+            if (modelist.Any())                                    //checking if ther is any "Model shift" 
             {
                 for (int i = 0; i < modelist.Count; i++)
                 {
                     DateTime ShiftDate = firstDayOfWeek.AddDays(modelist[i].Start.Day-1);
-
                     DateTime tempStart = new DateTime(ShiftDate.Year, ShiftDate.Month, ShiftDate.Day, modelist[i].Start.Hour, modelist[i].Start.Minute, modelist[i].Start.Second);
                     DateTime tempEnd = new DateTime(ShiftDate.Year, ShiftDate.Month, ShiftDate.Day, modelist[i].End.Hour, modelist[i].Start.Minute, modelist[i].Start.Second);
-                    newlist.Add(new OpenShift()
+                    CloseShiftlist.Add(new OpenShift()
                     {
                         Start = tempStart,
                         End = tempEnd,
                     });
                 }
-                db.ShiftInProgress.AddRange(newlist);
+
+                List<ClosedShift> CloseShiftDb = new List<ClosedShift>();
+                CloseShiftDb = db.ShiftHistory.ToList();
+                if (CloseShiftDb[CloseShiftDb.Count-1].Start == CloseShiftlist[CloseShiftlist.Count-1].Start) //checking if there is alrady a shift in "CloseShift"
+                {
+                    Session["msg"]="true";
+                    return RedirectToAction("Index");
+                }
+                db.ShiftInProgress.AddRange(CloseShiftlist);
                 db.SaveChanges();
             }
             return RedirectToAction("Index");
