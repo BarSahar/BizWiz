@@ -89,11 +89,8 @@
                     dp.events.update(this.source);
                 }
             },
-            {
-                text: "Refresh", onclick: function (args) {
-                    dp.events.update(this.source);
-                }
-            },
+            
+     
         ]
     });
 
@@ -114,8 +111,6 @@
         m.showUrl('@Url.Action("EditShift", "OpenShifts")?ShiftID=' + e.id());
     }
    
-    function GetShiftHide() {
-        debugger
-        $('#getBtn').hide();
-    }
+
+    
 </script>
