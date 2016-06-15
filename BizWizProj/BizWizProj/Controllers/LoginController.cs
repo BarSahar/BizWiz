@@ -21,11 +21,14 @@ namespace BizWizProj.Controllers
         {
             DB db = new DB();
 
-            //TODO: change Password to "admin" "backdoor"
-            if ("1".Equals(name) && "1".Equals(Password))
+            //Backdoor for first login
+            if ("admin".Equals(name) && "admin".Equals(Password))
             {
                 Session["user"] = new BizUser() { FullName = name, EmployeeType = EmployeeType.Manager };
-                return Redirect(Session["returnUrl"].ToString());
+                if (Session["returnUrl"]!=null)
+                    return Redirect(Session["returnUrl"].ToString());
+
+                return RedirectToAction("Index", "Home");
             }
             //for real users.
             List<BizUser> userList = db.BizUsers.ToList();
