@@ -118,6 +118,11 @@ namespace BizWizProj.Controllers
                 }
             }
 
+            protected override void OnBeforeHeaderRender(BeforeHeaderRenderArgs e)
+            {
+                e.InnerHtml = e.Date.DayOfWeek.ToString() + "\n" + e.Date.ToShortDateString();
+            }
+
             protected override void OnFinish()
             {
 
