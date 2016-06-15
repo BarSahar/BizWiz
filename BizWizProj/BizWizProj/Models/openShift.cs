@@ -25,7 +25,6 @@ namespace BizWizProj.Models
             string result = "";
             if (ShiftManager!=null)
                 result = result + "Manager:" + ShiftManager.FullName + " \n";
-                //result = result + "Manager:" + ShiftManager.FullName;
             if (Workers!=null)
             {
                 if (Workers.Count>0)
