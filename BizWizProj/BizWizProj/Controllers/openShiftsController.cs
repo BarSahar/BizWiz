@@ -277,16 +277,21 @@ namespace BizWizProj.Controllers
                     {
                         Start = tempStart,
                         End = tempEnd,
+                        NumOfEmployees = modelist[i].NumOfEmployees,
                     });
-                }
 
+                }
+                
                 List<ClosedShift> CloseShiftDb = new List<ClosedShift>();
+                if (CloseShiftDb.Any())
+                {
                 CloseShiftDb = db.ShiftHistory.ToList();
                 if (CloseShiftDb[CloseShiftDb.Count-1].Start == CloseShiftlist[CloseShiftlist.Count-1].Start) //checking if there is alrady a shift in "CloseShift"
                 {
                     Session["msg"]="true";
                     return RedirectToAction("Index");
                 }
+            }
                 db.ShiftInProgress.AddRange(CloseShiftlist);
                 db.SaveChanges();
             }
