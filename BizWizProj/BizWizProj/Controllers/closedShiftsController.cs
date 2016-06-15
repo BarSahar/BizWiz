@@ -22,6 +22,10 @@ namespace BizWizProj.Controllers
         //Avi-Searcing for Employees That is not Working on Some Shift 
         #region
         public static int ShiftId;
+        public void idSave (int shiftid)
+        {
+            ShiftId = shiftid;
+        }
         public string OpenModelPopup()
         {
             List<BizUser> BizzUsersList = db.BizUsers.ToList(); //loading all Users from db 
