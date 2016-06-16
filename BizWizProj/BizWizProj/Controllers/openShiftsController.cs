@@ -60,7 +60,7 @@ namespace BizWizProj.Controllers
 
             protected override void OnBeforeHeaderRender(BeforeHeaderRenderArgs e)
             {
-                e.InnerHtml = e.Date.DayOfWeek.ToString()+ "\n" +e.Date.ToShortDateString();
+                e.InnerHtml = e.Date.DayOfWeek.ToString() + " " + e.Date.ToShortDateString();
             }
 
             //Function to Color the OpenShifts according to the current user's preference
