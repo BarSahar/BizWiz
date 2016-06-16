@@ -211,7 +211,7 @@
 
 
         }
-        document.getElementById("L").innerHTML = '@Html.Raw(message)';
+        document.getElementById("L").innerHTML = '@Html.Raw(HttpUtility.JavaScriptStringEncode(message))';
     </script>
 
 </body>
