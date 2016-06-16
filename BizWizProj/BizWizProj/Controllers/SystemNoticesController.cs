@@ -19,19 +19,14 @@ namespace BizWizProj.Controllers
     {
         private DB db = new DB();
 
-        
-        
-
-
         // GET: SystemNotices
         public ActionResult Index()
         {
             ViewBag.NoticesForMe = "";
             var notices = (from notif in db.Notices.ToList() where notif.To.Equals("Manager") select notif).ToList();
             ViewBag.NoticesForMe = notices;
-            return View(db.Notices.ToList());
+            return RedirectToAction("Create", "SystemNotices");
         }
-
         // GET: SystemNotices/Details/5
         public ActionResult Details(int? id)
         {

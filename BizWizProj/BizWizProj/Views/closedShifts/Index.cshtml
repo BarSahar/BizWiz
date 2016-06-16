@@ -13,8 +13,7 @@
     </title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="js/progressbar.js"></script>
-    <script src="https://raw.githubusercontent.com/minddust/bootstrap-progressbar/master/bootstrap-progressbar.js"></script>  
+
     <script type="text/javascript">
 
         !function ($) {
@@ -62,8 +61,6 @@
             // ====================
 
         }(window.jQuery);
-
-
     </script>
 
 </head>
@@ -164,6 +161,9 @@
     BackendUrl = Url.Action("Backend", "ClosedShifts"),
     ViewType = DayPilot.Web.Mvc.Enums.Calendar.ViewType.Week,
     TimeFormat = DayPilot.Web.Mvc.Enums.TimeFormat.Clock24Hours,
+    EventClickHandling = DayPilot.Web.Mvc.Events.Calendar.EventClickHandlingType.JavaScript,
+    EventClickJavaScript = "PopIt(e)",
+    
 })
         </div>
     </div>
@@ -201,17 +201,21 @@
                 dp.update();
             });
 
-            function PopIt(e) {
-                $.post("ClosedShifts/idSave", {
-                    shiftid: e.id()
-                })
-                var m = new DayPilot.Modal();
-                m.showUrl('@Url.Action("PopScreen", "ClosedShifts")');
-            }
+           
+
+        
 
 
         }
-        document.getElementById("L").innerHTML = '@Html.Raw(HttpUtility.JavaScriptStringEncode(message))';
+        function PopIt(e) {
+            debugger
+            $.post("ClosedShifts/idSave", {    
+                shiftid: e.id()
+            })
+            var m = new DayPilot.Modal();
+            m.showUrl('@Url.Action("PopScreen", "ClosedShifts")');
+        }
+        document.getElementById("L").innerHTML = '@Html.Raw(message)';
     </script>
 
 </body>

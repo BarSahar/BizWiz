@@ -22,6 +22,10 @@ namespace BizWizProj.Controllers
         //Avi-Searcing for Employees That is not Working on Some Shift 
         #region
         public static int ShiftId;
+        public void idSave (int shiftid)
+        {
+            ShiftId = shiftid;
+        }
         public string OpenModelPopup()
         {
             List<BizUser> BizzUsersList = db.BizUsers.ToList(); //loading all Users from db 
@@ -114,6 +118,11 @@ namespace BizWizProj.Controllers
                 }
             }
 
+            protected override void OnBeforeHeaderRender(BeforeHeaderRenderArgs e)
+            {
+                e.InnerHtml = e.Date.DayOfWeek.ToString() + "\n" + e.Date.ToShortDateString();
+            }
+
             protected override void OnFinish()
             {
 
@@ -163,21 +172,25 @@ namespace BizWizProj.Controllers
                 /*Manager can view all notices in the system*/
                 case ("Manager"):
                     notices = (from notif in db.Notices.ToList() where (DateOk(Convert.ToDateTime(notif.Date))) select notif).ToList();
+                    notices.Reverse();
                     ViewBag.NoticesForMe = notices;
                     break;
                 /*SSM can view all notices except those which were assigned to users of type Manager*/
                 case ("SuperShiftManager"):
                     notices = (from notif in db.Notices.ToList() where (!notif.To.Equals("Manager") && DateOk(Convert.ToDateTime(notif.Date))) select notif).ToList();
+                    notices.Reverse();
                     ViewBag.NoticesForMe = notices;
                     break;
                 /*SM can view all notices except those which were assigned to users of type Manager and SSM*/
                 case ("ShiftManager"):
                     notices = (from notif in db.Notices.ToList() where (!notif.To.Equals("Manager") && !notif.To.Equals("SuperShiftManager") && DateOk(Convert.ToDateTime(notif.Date))) select notif).ToList();
+                    notices.Reverse();
                     ViewBag.NoticesForMe = notices;
                     break;
                 /*Users of employee type 'Employee' can view notices assigned to them only*/
                 case ("Employee"):
                     notices = (from notif in db.Notices.ToList() where (notif.To.Equals(((HttpContext.Session["user"] as BizUser).EmployeeType).ToString()) && DateOk(Convert.ToDateTime(notif.Date))) select notif).ToList();
+                    notices.Reverse();
                     ViewBag.NoticesForMe = notices;
                     break;
             }
