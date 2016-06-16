@@ -212,7 +212,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DayPilot\daypilot-all.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -247,10 +246,6 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LayoutManager.cshtml" />
-    <Content Include="Views\ClosedShifts\Create.cshtml" />
-    <Content Include="Views\ClosedShifts\Delete.cshtml" />
-    <Content Include="Views\ClosedShifts\Details.cshtml" />
-    <Content Include="Views\ClosedShifts\Edit.cshtml" />
     <Content Include="Views\ClosedShifts\Index.cshtml" />
     <Content Include="Views\ModelShifts\Create.cshtml" />
     <Content Include="Views\ModelShifts\Delete.cshtml" />
