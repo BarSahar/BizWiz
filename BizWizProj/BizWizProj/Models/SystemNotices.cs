@@ -20,7 +20,6 @@ namespace BizWizProj.Models
         public string Date { get; set; }
         public string From { get; set; }
         public EmployeeType To { get; set; }
-       //1,2,3 or all employee types
 
         public SystemNotices()
         {

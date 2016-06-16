@@ -49,7 +49,7 @@ namespace BizWizProj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,FullName,Password,Email,PhoneNumber,To")] BizUser bizUser)
+        public ActionResult Create([Bind(Include = "ID,FullName,Password,Email,PhoneNumber,EmployeeType")] BizUser bizUser)
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +81,7 @@ namespace BizWizProj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,FullName,Password,Email,PhoneNumber,To")] BizUser bizUser)
+        public ActionResult Edit([Bind(Include = "ID,FullName,Password,Email,PhoneNumber,EmployeeType")] BizUser bizUser)
         {
             if (ModelState.IsValid)
             {
