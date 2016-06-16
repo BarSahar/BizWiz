@@ -29,6 +29,7 @@ namespace BizWizProj.Controllers
         class Dpc : DayPilotCalendar
         {
             private DB dc = new DB();
+
             protected override void OnEventClick(EventClickArgs e)
             {
                 base.OnEventClick(e);
@@ -55,6 +56,11 @@ namespace BizWizProj.Controllers
                 dc.ShiftInProgress.Remove(item);
                 dc.SaveChanges();
                 Update();
+            }
+
+            protected override void OnBeforeHeaderRender(BeforeHeaderRenderArgs e)
+            {
+                e.InnerHtml = e.Date.DayOfWeek.ToString()+ "\n" +e.Date.ToShortDateString();
             }
 
             //Function to Color the OpenShifts according to the current user's preference
@@ -250,6 +256,12 @@ namespace BizWizProj.Controllers
             }
             db.ShiftHistory.AddRange(newCloseShiftsList); //Adding all new close shift to close shift db
             db.ShiftInProgress.RemoveRange(openShiftList);// clearing open shift db
+            db.Notices.Add(new SystemNotices()
+            {
+                Subject = "Next week Schedule is ready!",
+                Text = "Hi Everyone, the Schedule for next week is now finalised. Give it a look as soon as possible so there are no surprises",
+                To = To.Employee.ToString(),
+            });
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -265,7 +277,7 @@ namespace BizWizProj.Controllers
             List<ModelShift> modelist = new List<ModelShift>(); //creating list of modelShift
             modelist = db.ModelShifts.ToList();               //loading all date from "model-shift" table 
             DateTime firstDayOfWeek = shiftDate.AddDays(-(int)shiftDate.DayOfWeek); // seting first day of next week 
-            List<OpenShift> CloseShiftlist = new List<OpenShift>(); //creating list of "close shift"
+            List<OpenShift> OpenShiftlist = new List<OpenShift>(); //creating list of "close shift"
             if (modelist.Any())                                    //checking if ther is any "Model shift" 
             {
                 for (int i = 0; i < modelist.Count; i++)
@@ -273,7 +285,7 @@ namespace BizWizProj.Controllers
                     DateTime ShiftDate = firstDayOfWeek.AddDays(modelist[i].Start.Day-1);
                     DateTime tempStart = new DateTime(ShiftDate.Year, ShiftDate.Month, ShiftDate.Day, modelist[i].Start.Hour, modelist[i].Start.Minute, modelist[i].Start.Second);
                     DateTime tempEnd = new DateTime(ShiftDate.Year, ShiftDate.Month, ShiftDate.Day, modelist[i].End.Hour, modelist[i].Start.Minute, modelist[i].Start.Second);
-                    CloseShiftlist.Add(new OpenShift()
+                    OpenShiftlist.Add(new OpenShift()
                     {
                         Start = tempStart,
                         End = tempEnd,
@@ -286,13 +298,23 @@ namespace BizWizProj.Controllers
                 CloseShiftDb = db.ShiftHistory.ToList();
                 if (CloseShiftDb.Any())
                 {
+<<<<<<< HEAD
                 if (CloseShiftDb[CloseShiftDb.Count-1].Start == CloseShiftlist[CloseShiftlist.Count-1].Start) //checking if there is alrady a shift in "CloseShift"
+=======
+                    if (CloseShiftDb[CloseShiftDb.Count - 1].Start == OpenShiftlist[OpenShiftlist.Count - 1].Start) //checking if there is alrady a shift in "CloseShift"
+>>>>>>> 2d7bd290dbce0b7a2bc8ab612d732b9d258b03fb
                 {
                     Session["msg"]="true";
                     return RedirectToAction("Index");
                 }
             }
-                db.ShiftInProgress.AddRange(CloseShiftlist);
+                db.ShiftInProgress.AddRange(OpenShiftlist);
+                db.Notices.Add(new SystemNotices()
+                {
+                    Subject = "New Schedule in progress",
+                    Text = "Hi Everyone, a new Schedule has opened. Kindly send your preferences as soon as possible",
+                    To = To.Employee.ToString(),
+                });
                 db.SaveChanges();
             }
             return RedirectToAction("Index");
