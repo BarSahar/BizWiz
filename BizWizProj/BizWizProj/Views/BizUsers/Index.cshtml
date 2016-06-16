@@ -45,24 +45,7 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.EmployeeType)
-            @switch (Convert.ToInt32(item.EmployeeType))
-            {
-                case 1:
-                    @Html.DisplayText("Employee");
-                    break;
-                case 2:
-                    @Html.DisplayText("Shift manager");
-                    break;
-                case 3:
-                    @Html.DisplayText("SuperShift manager");
-                    break;
-                case 4:
-                    @Html.DisplayText("Manager");
-                    break;
-                default:
-                    @Html.DisplayText("Undefined");
-                    break;
-            }
+
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
