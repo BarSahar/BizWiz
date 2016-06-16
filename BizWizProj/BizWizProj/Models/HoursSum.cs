@@ -21,12 +21,26 @@ namespace BizWizProj.Models
             var currentMonth = DateTime.Now.Month;
             var currentYear = DateTime.Now.Year;
 
-            List<ClosedShift> shiftList = db.ShiftHistory
-                            .Where(s => s.Start.Month == currentMonth)
-                            .Where(s => s.Start.Year == currentYear)
-                            .Where(s => s.Start.Day <= currentDay)
-                            .Where(s => s.Workers.Select(w => w.ID.ToString()).Contains(user.ID.ToString()))
-                .ToList();
+            List<ClosedShift> shiftList;
+            if (user.EmployeeType == BizWizProj.Models.EmployeeType.Employee)
+            {
+                shiftList = db.ShiftHistory
+                           .Where(s => s.Start.Month == currentMonth)
+                           .Where(s => s.Start.Year == currentYear)
+                           .Where(s => s.Start.Day <= currentDay)
+                           .Where(s => s.Workers.Select(w => w.ID.ToString()).Contains(user.ID.ToString()))
+               .ToList();
+            }
+            else
+            {
+                shiftList = db.ShiftHistory
+                          .Where(s => s.Start.Month == currentMonth)
+                          .Where(s => s.Start.Year == currentYear)
+                          .Where(s => s.Start.Day <= currentDay)
+                          .Where(s => s.ShiftManager.ID==user.ID)
+              .ToList();
+            }
+           
 
 
             foreach (var shift in shiftList)
