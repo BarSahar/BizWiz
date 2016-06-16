@@ -40,6 +40,11 @@ namespace BizWizProj.Controllers
                 }
             }
 
+            protected override void OnBeforeHeaderRender(BeforeHeaderRenderArgs e)
+            {
+                e.InnerHtml = e.Date.DayOfWeek.ToString();
+            }
+
             protected override void OnEventDelete(EventDeleteArgs e)
             {
                 int Id = Convert.ToInt32(e.Id);

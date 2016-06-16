@@ -19,7 +19,17 @@ namespace BizWizProj.Models
         public string Text { get; set; }   //body message
         public string Date { get; set; }
         public string From { get; set; }
-        public string To { get; set; }//1,2,3 or all employee types
+
+        public EmployeeType To
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+            }
+        }//1,2,3 or all employee types
 
         public SystemNotices()
         {
