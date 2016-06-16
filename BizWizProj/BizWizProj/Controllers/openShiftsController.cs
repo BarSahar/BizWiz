@@ -160,6 +160,11 @@ namespace BizWizProj.Controllers
             //Checking if open shift list and user list is empty and user in Session
             if (!db.ShiftInProgress.Any() || !db.BizUsers.Any() || Session["user"] == null)
                 return RedirectToAction("Index");
+            //Checking if admin accidentally sent a shift.
+            //It is a copy of the previous line of code but seperated to another "if"
+            //to improve code readabillity
+            if((Session["user"] as BizUser).EmployeeType==EmployeeType.Manager)
+                return RedirectToAction("Index");
 
             int senderID = ((BizUser)Session["user"]).ID;
             OpenShift tempShift = db.ShiftInProgress.Find(shiftID);
