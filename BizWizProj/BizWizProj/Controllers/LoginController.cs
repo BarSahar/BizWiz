@@ -20,7 +20,6 @@ namespace BizWizProj.Controllers
         public ActionResult Login(string name, string Password)
         {
             DB db = new DB();
-
             //Backdoor for first login
             if ("admin".Equals(name) && "admin".Equals(Password))
             {

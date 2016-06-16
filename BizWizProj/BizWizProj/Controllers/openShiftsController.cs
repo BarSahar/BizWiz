@@ -283,9 +283,9 @@ namespace BizWizProj.Controllers
                 }
                 
                 List<ClosedShift> CloseShiftDb = new List<ClosedShift>();
+                CloseShiftDb = db.ShiftHistory.ToList();
                 if (CloseShiftDb.Any())
                 {
-                CloseShiftDb = db.ShiftHistory.ToList();
                 if (CloseShiftDb[CloseShiftDb.Count-1].Start == CloseShiftlist[CloseShiftlist.Count-1].Start) //checking if there is alrady a shift in "CloseShift"
                 {
                     Session["msg"]="true";
