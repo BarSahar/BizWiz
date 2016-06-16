@@ -215,7 +215,7 @@
             var m = new DayPilot.Modal();
             m.showUrl('@Url.Action("PopScreen", "ClosedShifts")');
         }
-        document.getElementById("L").innerHTML = '@Html.Raw(message)';
+        document.getElementById("L").innerHTML = '@Html.Raw(HttpUtility.JavaScriptStringEncode(message))';
     </script>
 
 </body>
