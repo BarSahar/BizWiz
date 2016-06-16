@@ -81,20 +81,24 @@
                     {
                         foreach (var user in ViewBag.UsersHours)
                         {
-                            <div>
-                                @user.User.FullName  @user.Hours hours
-                            </div>
-
-                            <div id="@user.User.ID" class=" progress">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="30" style="width: 0%; ">
-                                    <span class="sr-only">0% Complete</span>
+                            if (user.User.EmployeeType != BizWizProj.Models.EmployeeType.Manager)
+                            {
+                                <div>
+                                    @user.User.FullName  @user.Hours hours
                                 </div>
-                                <script>
-                                    var temp1 = @user.User.ID;
-                                    var temp2 = temp1.toString();
-                                    $("#"+temp2).progressbar( @user.Hours);
-                                </script>
-                            </div>
+
+                                <div id="@user.User.ID" class=" progress">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="30" style="width: 0%; ">
+                                        <span class="sr-only">0% Complete</span>
+                                    </div>
+                                    <script>
+                                        var temp1 = @user.User.ID;
+                                        var temp2 = temp1.toString();
+                                        $("#"+temp2).progressbar( @user.Hours);
+                                    </script>
+                                </div>
+                            }
+
                         }
                     }
                     else
