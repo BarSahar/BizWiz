@@ -29,9 +29,12 @@ namespace BizWizProj.Controllers
         public string OpenModelPopup()
         {
             List<BizUser> BizzUsersList = db.BizUsers.ToList(); //loading all Users from db 
+            if (!BizzUsersList.Any())
+                return "";
             List<BizUser> NotWorkingUsers = new List<BizUser>(); //List of the Workers That not work on this Shift
             ClosedShift ThisShift = db.ShiftHistory.Find(ShiftId);// Loading this Shift from db
             bool flag = false;
+
             foreach (BizUser user in BizzUsersList)
             {
                 foreach (BizUser workerInShift in ThisShift.Workers)
@@ -43,13 +46,13 @@ namespace BizWizProj.Controllers
                     NotWorkingUsers.Add(user);
                 flag = false;
             }
-            string workersNames = "Employees That is Not Working on This Shift: <br>";
+            string workersNames = "<br><br>";
             if (!NotWorkingUsers.Any())
                 return workersNames;
             int num = 1;
             foreach (BizUser worker in NotWorkingUsers)
             {
-                workersNames += num + ") " + worker.FullName + "\n";
+                workersNames += num + ") Name: " + worker.FullName + " Email: " + worker.Email +"<br>";
                 num++;
             }
             return workersNames;
