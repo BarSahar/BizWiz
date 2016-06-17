@@ -74,32 +74,7 @@ namespace BizWizProj.Controllers
         {
             return new Dpc().CallBack(this);
         }
-        //TODO: maybe remove below this
-        public ActionResult Events(DateTime? start, DateTime? end)
-        {
-            var events = from ev in db.ShiftHistory.AsEnumerable() where !(ev.End <= start || ev.Start >= end) select ev;
-
-            var result = events
-            .Select(e => new JsonEvent()
-            {
-                start = e.Start.ToString("s"),
-                end = e.End.ToString("s"),
-                text = e.Text,
-                id = e.ID.ToString()
-            })
-            .ToList();
-            return new JsonResult { Data = result };
-        }
-
-        private class JsonEvent
-        {
-            public string id { get; set; }
-            public string text { get; set; }
-            public string start { get; set; }
-            public string end { get; set; }
-        }
-        //TODO: maybe remove above this
-
+    
         class Dpc : DayPilotCalendar
         {
 
@@ -114,8 +89,6 @@ namespace BizWizProj.Controllers
                         Update(CallBackUpdateType.Full);
                         break;
                     case "navigate":
-                        //Console.WriteLine(StartDate.ToString);
-                        // StartDate = (DateTime)e.Data["start"];
                         Update(CallBackUpdateType.Full);
                         break;
                 }

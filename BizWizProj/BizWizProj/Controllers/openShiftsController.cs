@@ -230,7 +230,7 @@ namespace BizWizProj.Controllers
                 }
             }
             //newlist overwrites previous "Workers" field. to prevent dupliceties
-            currentShift.Workers = newlist;
+            currentShift.Workers = newlist.ToList();
             currentShift.UpdateText();
             db.SaveChanges();
             return View("SucOpenShift");

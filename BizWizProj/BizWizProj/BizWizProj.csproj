@@ -259,7 +259,6 @@
     <Content Include="Views\Shared\_LayoutEmployee.cshtml" />
     <Content Include="Views\Shared\_LayoutShiftManager.cshtml" />
     <Content Include="Views\Shared\_LayoutSuperShiftManager.cshtml" />
-    <Content Include="Views\Email\OpenShifts\Index.cshtml" />
     <Content Include="Views\BizUsers\Create.cshtml" />
     <Content Include="Views\BizUsers\Delete.cshtml" />
     <Content Include="Views\BizUsers\Details.cshtml" />
@@ -272,10 +271,11 @@
     <Content Include="Views\SystemNotices\Index.cshtml" />
     <Content Include="Views\Email\EmailSent.cshtml" />
     <Content Include="Views\Email\SendEmail.cshtml" />
-    <Content Include="Views\Email\OpenShifts\EditShift.cshtml" />
     <Content Include="Views\ModelShifts\SucModelShift.cshtml" />
-    <Content Include="Views\Email\OpenShifts\SucOpenShift.cshtml" />
     <Content Include="Views\ClosedShifts\PopScreen.cshtml" />
+    <Content Include="Views\openShifts\EditShift.cshtml" />
+    <Content Include="Views\openShifts\Index.cshtml" />
+    <Content Include="Views\openShifts\SucOpenShift.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

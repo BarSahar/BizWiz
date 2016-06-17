@@ -126,19 +126,7 @@
             dp.startDate = args.day;
             dp.update();
             dp.commandCallBack('navigate');
-            loadEvents();
         };
-        function loadEvents() {
-            $.post("ClosedShifts/Events",
-            {
-                start: dp.visibleStart().toString(),
-                end: dp.visibleEnd().toString()
-            },
-            function (data) {
-                dp.events.list = data;
-                dp.update();
-            });
-        }
         function PopIt(e) {
             debugger
             $.post("ClosedShifts/idSave", {    
