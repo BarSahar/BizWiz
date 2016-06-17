@@ -60,7 +60,7 @@ namespace BizWizProj.Controllers
 
             protected override void OnBeforeHeaderRender(BeforeHeaderRenderArgs e)
             {
-                e.InnerHtml = e.Date.DayOfWeek.ToString()+ "\n" +e.Date.ToShortDateString();
+                e.InnerHtml = e.Date.DayOfWeek.ToString() + " " + e.Date.ToShortDateString();
             }
 
             //Function to Color the OpenShifts according to the current user's preference
@@ -159,6 +159,11 @@ namespace BizWizProj.Controllers
         {
             //Checking if open shift list and user list is empty and user in Session
             if (!db.ShiftInProgress.Any() || !db.BizUsers.Any() || Session["user"] == null)
+                return RedirectToAction("Index");
+            //Checking if admin accidentally sent a shift.
+            //It is a copy of the previous line of code but seperated to another "if"
+            //to improve code readabillity
+            if((Session["user"] as BizUser).EmployeeType==EmployeeType.Manager)
                 return RedirectToAction("Index");
 
             int senderID = ((BizUser)Session["user"]).ID;
@@ -260,7 +265,7 @@ namespace BizWizProj.Controllers
             {
                 Subject = "Next week Schedule is ready!",
                 Text = "Hi Everyone, the Schedule for next week is now finalised. Give it a look as soon as possible so there are no surprises",
-                To = To.Employee.ToString(),
+                To = EmployeeType.Employee,
             });
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -298,11 +303,7 @@ namespace BizWizProj.Controllers
                 CloseShiftDb = db.ShiftHistory.ToList();
                 if (CloseShiftDb.Any())
                 {
-<<<<<<< HEAD
-                if (CloseShiftDb[CloseShiftDb.Count-1].Start == CloseShiftlist[CloseShiftlist.Count-1].Start) //checking if there is alrady a shift in "CloseShift"
-=======
                     if (CloseShiftDb[CloseShiftDb.Count - 1].Start == OpenShiftlist[OpenShiftlist.Count - 1].Start) //checking if there is alrady a shift in "CloseShift"
->>>>>>> 2d7bd290dbce0b7a2bc8ab612d732b9d258b03fb
                 {
                     Session["msg"]="true";
                     return RedirectToAction("Index");
@@ -313,7 +314,7 @@ namespace BizWizProj.Controllers
                 {
                     Subject = "New Schedule in progress",
                     Text = "Hi Everyone, a new Schedule has opened. Kindly send your preferences as soon as possible",
-                    To = To.Employee.ToString(),
+                    To = EmployeeType.Employee,
                 });
                 db.SaveChanges();
             }

@@ -120,7 +120,7 @@ namespace BizWizProj.Controllers
 
             protected override void OnBeforeHeaderRender(BeforeHeaderRenderArgs e)
             {
-                e.InnerHtml = e.Date.DayOfWeek.ToString() + "\n" + e.Date.ToShortDateString();
+                e.InnerHtml = e.Date.DayOfWeek.ToString() + " " + e.Date.ToShortDateString();
             }
 
             protected override void OnFinish()
@@ -189,7 +189,7 @@ namespace BizWizProj.Controllers
                     break;
                 /*Users of employee type 'Employee' can view notices assigned to them only*/
                 case ("Employee"):
-                    notices = (from notif in db.Notices.ToList() where (notif.To.Equals(((HttpContext.Session["user"] as BizUser).EmployeeType).ToString()) && DateOk(Convert.ToDateTime(notif.Date))) select notif).ToList();
+                    notices = (from notif in db.Notices.ToList() where (notif.To.Equals(((HttpContext.Session["user"] as BizUser).EmployeeType)) && DateOk(Convert.ToDateTime(notif.Date))) select notif).ToList();
                     notices.Reverse();
                     ViewBag.NoticesForMe = notices;
                     break;
