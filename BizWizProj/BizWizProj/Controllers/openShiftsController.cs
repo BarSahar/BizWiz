@@ -219,7 +219,20 @@ namespace BizWizProj.Controllers
         public ActionResult SaveShift_Employees(FormCollection formCollection, string shiftId)
         {
             OpenShift currentShift = db.ShiftInProgress.Find(int.Parse(shiftId));
-            List<int> newlist = new List<int>();
+            currentShift.Workers.Clear();
+            foreach (string key in formCollection.AllKeys)
+            {
+                if (formCollection[key].Contains("true"))
+                {
+                    BizUser temp = db.BizUsers.Find(int.Parse(key));
+                    //Make sure that key (id) is valid before adding it to "workers"
+                    if (temp != null)
+                        currentShift.Workers.Add(new Worker() { userID = int.Parse(key) });
+                }
+            }
+
+            /*
+            List<Worker> newlist = new List<Worker>();
             foreach (string key in formCollection.AllKeys)
             {
                 if (formCollection[key].Contains("true"))
@@ -227,11 +240,12 @@ namespace BizWizProj.Controllers
                     BizUser temp = db.BizUsers.Find(int.Parse(key));
                     //Make sure that key (id) is valid before adding it to "workers"
                     if (temp!=null)
-                        newlist.Add(int.Parse(key));
+                        newlist.Add(new Worker() { userID = int.Parse(key) });
                 }
             }
             //newlist overwrites previous "Workers" field. to prevent dupliceties
             currentShift.Workers = newlist;
+            */
             currentShift.UpdateText();
             db.SaveChanges();
             return View("SucOpenShift");

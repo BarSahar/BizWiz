@@ -37,9 +37,9 @@ namespace BizWizProj.Controllers
 
             foreach (BizUser user in BizzUsersList)
             {
-                foreach (int workerInShiftID in ThisShift.Workers)
+                foreach (Worker worker in ThisShift.Workers)
                 {
-                    if (user.ID == workerInShiftID)
+                    if (user.ID == worker.userID)
                         flag = true;
                 }
                 if (!flag)

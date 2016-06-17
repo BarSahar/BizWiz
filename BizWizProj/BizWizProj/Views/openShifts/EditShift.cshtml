@@ -65,7 +65,7 @@
                 string prefString = "";
                 if (Model.Workers != null)
                 {
-                    if (Model.Workers.Any(w => w == user.UserID))
+                    if (Model.Workers.Any(w => w.userID == user.UserID))
                     {
                         Checked = true;
                     }

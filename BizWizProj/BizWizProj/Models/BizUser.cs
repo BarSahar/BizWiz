@@ -21,8 +21,6 @@ namespace BizWizProj.Models
         public string PhoneNumber { get; set; }
         [Required(ErrorMessage = "This field can not be empty.")]
         public EmployeeType EmployeeType { get; set; }
-        public virtual ICollection<OpenShift> OpenShift { get; set; }
-        public virtual ICollection<ClosedShift> ClosedShift { get; set; }
     }
 
     public enum EmployeeType
