@@ -28,7 +28,7 @@ namespace BizWizProj.Models
                            .Where(s => s.Start.Month == currentMonth)
                            .Where(s => s.Start.Year == currentYear)
                            .Where(s => s.Start.Day <= currentDay)
-                           .Where(s => s.Workers.Select(w => w.ID.ToString()).Contains(user.ID.ToString()))
+                           .Where(s => s.Workers.Select(w => w.ToString()).Contains(user.ID.ToString()))
                .ToList();
             }
             else
