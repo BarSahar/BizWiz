@@ -242,14 +242,11 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LayoutManager.cshtml" />
     <Content Include="Views\ClosedShifts\Index.cshtml" />
     <Content Include="Views\ModelShifts\Create.cshtml" />
-    <Content Include="Views\ModelShifts\Delete.cshtml" />
-    <Content Include="Views\ModelShifts\Details.cshtml" />
     <Content Include="Views\ModelShifts\Edit.cshtml" />
     <Content Include="Views\ModelShifts\Index.cshtml" />
     <Content Include="Views\StockItems\Create.cshtml" />
@@ -261,11 +258,7 @@
     <Content Include="Views\Shared\_LayoutEmployee.cshtml" />
     <Content Include="Views\Shared\_LayoutShiftManager.cshtml" />
     <Content Include="Views\Shared\_LayoutSuperShiftManager.cshtml" />
-    <Content Include="Views\OpenShifts\Create.cshtml" />
-    <Content Include="Views\OpenShifts\Delete.cshtml" />
-    <Content Include="Views\OpenShifts\Details.cshtml" />
-    <Content Include="Views\OpenShifts\Edit.cshtml" />
-    <Content Include="Views\OpenShifts\Index.cshtml" />
+    <Content Include="Views\Email\OpenShifts\Index.cshtml" />
     <Content Include="Views\BizUsers\Create.cshtml" />
     <Content Include="Views\BizUsers\Delete.cshtml" />
     <Content Include="Views\BizUsers\Details.cshtml" />
@@ -278,9 +271,9 @@
     <Content Include="Views\SystemNotices\Index.cshtml" />
     <Content Include="Views\Email\EmailSent.cshtml" />
     <Content Include="Views\Email\SendEmail.cshtml" />
-    <Content Include="Views\OpenShifts\EditShift.cshtml" />
+    <Content Include="Views\Email\OpenShifts\EditShift.cshtml" />
     <Content Include="Views\ModelShifts\SucModelShift.cshtml" />
-    <Content Include="Views\OpenShifts\SucOpenShift.cshtml" />
+    <Content Include="Views\Email\OpenShifts\SucOpenShift.cshtml" />
     <Content Include="Views\ClosedShifts\PopScreen.cshtml" />
   </ItemGroup>
   <ItemGroup />
