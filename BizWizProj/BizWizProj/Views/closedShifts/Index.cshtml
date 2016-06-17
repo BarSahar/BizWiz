@@ -9,6 +9,8 @@
     </title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="Scripts/progressbar_filling.js"></script>
+ 
 </head>
 <body>
 
@@ -29,21 +31,21 @@
                         {
                             if (user.User.EmployeeType != BizWizProj.Models.EmployeeType.Manager)
                             {
-                            <div>
-                                @user.User.FullName  @user.Hours hours
-                            </div>
-
-                            <div id="@user.User.ID" class=" progress">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="30" style="width: 0%; ">
-                                    <span class="sr-only">0% Complete</span>
+                                <div>
+                                    @user.User.FullName  @user.Hours hours
                                 </div>
-                                <script>
-                                    var temp1 = @user.User.ID;
-                                    var temp2 = temp1.toString();
-                                    $("#"+temp2).progressbar( @user.Hours);
-                                </script>
-                            </div>
-                        }
+
+                                <div id="@user.User.ID" class=" progress">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="30" style="width: 0%; ">
+                                        <span class="sr-only">0% Complete</span>
+                                    </div>
+                                    <script>
+                                        var temp1 = @user.User.ID;
+                                        var temp2 = temp1.toString();
+                                        $("#"+temp2).progressbar( @user.Hours);
+                                    </script>
+                                </div>
+                            }
 
                         }
                     }
@@ -104,7 +106,7 @@
     TimeFormat = DayPilot.Web.Mvc.Enums.TimeFormat.Clock24Hours,
     EventClickHandling = DayPilot.Web.Mvc.Events.Calendar.EventClickHandlingType.JavaScript,
     EventClickJavaScript = "PopIt(e)",
-    
+
 })
         </div>
     </div>
@@ -140,7 +142,7 @@
         }
         function PopIt(e) {
             debugger
-            $.post("ClosedShifts/idSave", {    
+            $.post("ClosedShifts/idSave", {
                 shiftid: e.id()
             })
             var m = new DayPilot.Modal();
@@ -148,5 +150,9 @@
         }
         document.getElementById("L").innerHTML = '@Html.Raw(message)';
     </script>
+
+
+   
+
 </body>
 </html>
