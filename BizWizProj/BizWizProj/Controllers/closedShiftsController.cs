@@ -43,13 +43,13 @@ namespace BizWizProj.Controllers
                     NotWorkingUsers.Add(user);
                 flag = false;
             }
-            string workersNames = "Employees That is Not Working on This Shift: <br>";
+            string workersNames = "<br><br>";
             if (!NotWorkingUsers.Any())
                 return workersNames;
             int num = 1;
             foreach (BizUser worker in NotWorkingUsers)
             {
-                workersNames += num + ") " + worker.FullName + "\n";
+                workersNames += num + ") " + worker.FullName + " Email: " + worker.Email +"<br>";
                 num++;
             }
             return workersNames;
