@@ -37,13 +37,13 @@
                         case 2:
                             prefString = " (Don't Care)";
                             break;
-                        case 3:                            
+                        case 3:
                             prefString = " (Don't Want)";
                             break;
                     }
                     <li class="list-group-item">
                         @Html.RadioButton("managerSel", @user.UserID.ToString(), Checked)
-                        @Html.Label(user.UserName+prefString)
+                        @Html.Label(user.UserName + prefString)
                     </li>
                 }
             }
@@ -63,9 +63,12 @@
             {
                 bool Checked = false;
                 string prefString = "";
-                if (Model.Workers.Any(w => w.ID == user.UserID))
+                if (Model.Workers != null)
                 {
-                    Checked = true;
+                    if (Model.Workers.Any(w => w == user.UserID))
+                    {
+                        Checked = true;
+                    }
                 }
                 if (!user.IsManager)
                 {
@@ -96,4 +99,4 @@
         }
     </div>
 </div>
-<br/>
+<br />

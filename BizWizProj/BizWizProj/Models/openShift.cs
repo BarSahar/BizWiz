@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BizWizProj.Context;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace BizWizProj.Models
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public virtual BizUser ShiftManager { get; set; }
-        public virtual ICollection<int> Workers { get; set; }
+        public virtual ICollection<Worker> Workers { get; set; }
         public virtual ICollection<UserPref> PotentialWorkers { get; set; }
         //Text to display Workers
         public string Text { get; set; }
@@ -22,6 +23,7 @@ namespace BizWizProj.Models
 
         public void UpdateText()
         {
+            DB db = new DB();
             string result = "";
             if (ShiftManager!=null)
                 result = result + "Manager:" + ShiftManager.FullName + " \n";
@@ -29,9 +31,11 @@ namespace BizWizProj.Models
             {
                 if (Workers.Count>0)
                     result = result + "Employees: \n";
-                foreach(BizUser user in Workers)
+                foreach(Worker temp in Workers)
                 {
-                    result = result + user.FullName + " \n";
+                    BizUser tempUser = db.BizUsers.Find(temp.userID);
+                    if (tempUser!=null)
+                        result = result + tempUser.FullName + " \n";
                 }
             }
              Text = result;
