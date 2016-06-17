@@ -41,6 +41,9 @@
                     <li>@Html.ActionLink("Send Notice", "Create", "SystemNotices")</li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    <li class="navbar-brand">
+                        <ul>Welcome @((Session["user"] as BizWizProj.Models.BizUser).FullName) </ul>
+                    </li>
                     <li>@Html.ActionLink("Logout", "Logout", "Login")</li>
                 </ul>
             </div>
