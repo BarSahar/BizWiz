@@ -14,7 +14,7 @@ namespace BizWizProj.Models
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public virtual BizUser ShiftManager { get; set; }
-        public virtual ICollection<BizUser> Workers { get; set; }
+        public virtual ICollection<int> Workers { get; set; }
         public virtual ICollection<UserPref> PotentialWorkers { get; set; }
         //Text to display Workers
         public string Text { get; set; }
